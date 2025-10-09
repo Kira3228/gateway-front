@@ -19,7 +19,7 @@
       solo
       @input="handleInput"
       :type="inputType"
-      :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+      :append-icon="appendIcon"
       @click:append="toggleShowPassword"
     />
   </div>
@@ -63,6 +63,13 @@ export default {
   computed: {
     inputType(): `password` | `text` {
       return this.showPassword ? `password` : `text`;
+    },
+    appendIcon() {
+      if (!this.showPassword) {
+        return "";
+      } else {
+        return this.showPassword ? "mdi-eye-off" : "mdi-eye";
+      }
     },
   },
   mounted() {},
