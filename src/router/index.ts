@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import MenuVue from "../shared/UI/Menu/Menu.vue"
 import Menu2Vue from "../shared/UI/Menu/Menu2.vue"
 import MessageList from "../pages/MessageList.page.vue"
+import Layout from "../layout/Layout.vue"
 
 Vue.use(VueRouter)
 
@@ -10,22 +11,28 @@ const routes: Array<RouteConfig> = [
   {
     path: `/`,
     redirect: ``,
-    component: Menu2Vue,
+    component: Layout,
     children: [
       {
-        path: '/',
-        name: `main`,
-        component: MessageList
-      },
-      {
-        path: '/1',
-        name: `1`,
-        component: MessageList
-      },
-      {
-        path: '/2',
-        name: `2`,
-        component: MessageList
+        path: `dash`,
+        name: `dash`,
+        children: [
+          {
+            path: 'stats',
+            name: `stats`,
+            component: MessageList
+          },
+          {
+            path: 'charts',
+            name: `charts`,
+            component: MessageList
+          },
+          {
+            path: 'alerts',
+            name: `alerts`,
+            component: MessageList
+          },
+        ]
       },
     ]
   }
