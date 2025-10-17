@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import MenuVue from "../shared/UI/Menu/Menu.vue"
-import Menu2Vue from "../shared/UI/Menu/Menu2.vue"
 import MessageList from "../pages/MessageList.page.vue"
 import Layout from "../layout/Layout.vue"
-
+import EmptyRouterView from '../shared/UI/EmptyRouterView.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -16,13 +14,13 @@ const routes: Array<RouteConfig> = [
       {
         path: `dash`,
         name: `dash`,
+        component: EmptyRouterView,
         meta: { breadcrumb: `Дашборд` },
         children: [
           {
             path: 'stats',
             name: `stats`,
             meta: { breadcrumb: `Статистика` },
-
             component: MessageList
           },
           {
@@ -36,11 +34,42 @@ const routes: Array<RouteConfig> = [
             path: 'alerts',
             name: `alerts`,
             meta: { breadcrumb: `Уведомления` },
-
             component: MessageList
           },
         ]
       },
+      {
+        path: "msg_list",
+        name: "msg_list",
+        component: EmptyRouterView,
+        meta: { breadcrumb: `Сообщения` },
+        children: [
+          {
+            path: 'msg_detail',
+            name: `msg_detail`,
+            meta: { breadcrumb: `Детали` },
+            component: MessageList
+          },
+          {
+            path: 'msg_filters',
+            name: `msg_filters`,
+            meta: { breadcrumb: `Фильтры` },
+            component: MessageList
+          },
+          {
+            path: 'msg_view_preset',
+            name: `msg_view_preset`,
+            meta: { breadcrumb: `Режим отображения` },
+            component: MessageList
+          },
+          {
+            path: 'msg_export',
+            name: `msg_export`,
+            meta: { breadcrumb: `Экспорт сообщений` },
+            component: MessageList
+          }
+        ]
+      }
     ]
   }
 ]

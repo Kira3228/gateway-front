@@ -21,7 +21,10 @@
                 @click="handleMenuClick(item.to, item.title)"
               >
                 <v-list-item-content>
-                  <v-list-item-title dense>{{ item.title }}</v-list-item-title>
+                  <div class="tw-flex">
+                    <span class="material-icons"> priority_high </span>
+                    <v-list-item-title dense>{{ item.title }}</v-list-item-title>
+                  </div>
                 </v-list-item-content>
               </v-list-item>
             </template>

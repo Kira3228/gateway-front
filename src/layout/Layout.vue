@@ -2,7 +2,12 @@
   <div class="tw-flex">
     <menu-vue></menu-vue>
     <div class="tw-flex tw-flex-col tw-min-w-full">
+      <text-input-vue placeholder="Поиск" isSearch class="tw-w-1/3"></text-input-vue>
+      <v-divider></v-divider>
       <v-breadcrumbs :items="breadcrumbs" divider="/">
+        <template v-slot:divider>
+          <v-icon>mdi-forward</v-icon>
+        </template>
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item
             :exact="item.exact"
@@ -13,6 +18,8 @@
           </v-breadcrumbs-item>
         </template>
       </v-breadcrumbs>
+      <v-divider></v-divider>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -21,10 +28,11 @@
 import MenuVue from "@/shared/UI/Menu/Menu2.vue";
 import { TBreadcrumbs } from "@/store/breadcrumbs/breadcrumbs.store";
 import Vue from "vue";
+import TextInputVue from "@/shared/UI/TextInput/TextInput.vue";
 
 export default Vue.extend({
   name: `Layout`,
-  components: { MenuVue },
+  components: { MenuVue, TextInputVue },
   data() {
     return {
       fullPath: this.$route.fullPath as string,

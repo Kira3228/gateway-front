@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <data-table-vue></data-table-vue>
-  </div>
+  <data-table-vue></data-table-vue>
 </template>
 <script lang="ts">
 import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";

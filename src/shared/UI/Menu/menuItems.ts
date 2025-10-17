@@ -26,27 +26,27 @@ export const menuItems: TMenuItem[] = [
   {
     title: `Сообщения`,
     icon: ``,
-    to: ``,
+    to: `/msg_list`,
     subMenu: [
       {
         title: `Детали`,
         icon: ``,
-        to: `/msg_detail`,
+        to: `/msg_list/msg_detail`,
       },
       {
         title: `Фильтры`,
         icon: ``,
-        to: `/msg_filters`
+        to: `/msg_list/msg_filters`
       },
       {
         title: `Режим отображения`,
         icon: ``,
-        to: `/msg_view_preset`
+        to: `/msg_list/msg_view_preset`
       },
       {
         title: `Экспорт сообщений`,
         icon: ``,
-        to: `/msg_export`
+        to: `/msg_list/msg_export`
       }
     ]
   },

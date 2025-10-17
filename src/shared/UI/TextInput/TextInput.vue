@@ -11,6 +11,7 @@
     </v-textarea>
     <v-text-field
       v-else
+      rounded
       dense
       :label="label"
       :placeholder="placeholder"
@@ -18,18 +19,23 @@
       color="primary"
       solo
       @input="handleInput"
-      :type="inputType"
-      :append-icon="appendIcon"
-      @click:append="toggleShowPassword"
-    />
+    >
+      <template v-if="isSearch" v-slot:append>
+        <v-btn icon dark color="primary" @click.stop="">
+          <span class="material-icons"> search </span>
+        </v-btn>
+      </template>
+    </v-text-field>
   </div>
 </template>
 
 <script lang="ts">
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
   name: `TextInput`,
   props: {
-    password: {
+    isSearch: {
       type: Boolean,
       default: false,
     },
@@ -53,44 +59,14 @@ export default {
   data() {
     return {
       localValue: this.value,
-      showPassword: this.password,
     };
   },
-  created() {
-    // this.debounce = useDebounce();
-    console.log(this.showPassword);
-  },
-  computed: {
-    inputType(): `password` | `text` {
-      return this.showPassword ? `password` : `text`;
-    },
-    appendIcon() {
-      if (!this.showPassword) {
-        return "";
-      } else {
-        return this.showPassword ? "mdi-eye-off" : "mdi-eye";
-      }
-    },
-  },
-  mounted() {},
+  created() {},
   methods: {
     handleInput(newValue: string) {
       this.$emit(`input`, newValue);
-      //   if (this.debounce) {
-      //     this.debounce.debounce(() => {
-      //       this.$emit("debounce", newValue);
-      //     }, 500);
-      //   }
-      // },
-    },
-    beforeDestroy() {
-      // if (this.debounce) {
-      //   this.debounce.destroy();
-      // }
-    },
-    toggleShowPassword() {
-      this.showPassword = !this.showPassword;
     },
   },
-};
+  beforeDestroy() {},
+});
 </script>
