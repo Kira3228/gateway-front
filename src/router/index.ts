@@ -16,20 +16,27 @@ const routes: Array<RouteConfig> = [
       {
         path: `dash`,
         name: `dash`,
+        meta: { breadcrumb: `Дашборд` },
         children: [
           {
             path: 'stats',
             name: `stats`,
+            meta: { breadcrumb: `Статистика` },
+
             component: MessageList
           },
           {
             path: 'charts',
             name: `charts`,
+            meta: { breadcrumb: `Графики` },
+
             component: MessageList
           },
           {
             path: 'alerts',
             name: `alerts`,
+            meta: { breadcrumb: `Уведомления` },
+
             component: MessageList
           },
         ]

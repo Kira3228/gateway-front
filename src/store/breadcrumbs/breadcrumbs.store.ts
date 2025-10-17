@@ -1,14 +1,14 @@
-import { Module, MutationTree } from "vuex"
+import { GetterTree, Module, MutationTree } from "vuex"
 import { RootState } from ".."
 
 const state: InitialState = {
-  breadcrubms: []
+  breadcrumbs: []
 }
 
 type InitialState = {
-  breadcrubms: TBreadcrumbs[]
+  breadcrumbs: TBreadcrumbs[]
 }
-type TBreadcrumbs = {
+export type TBreadcrumbs = {
   href: string,
   text: string | number,
   to: string | object,
@@ -17,13 +17,23 @@ type TBreadcrumbs = {
 
 const mutations: MutationTree<InitialState> = {
   SET_BREADCRUMBS(state: InitialState, newBreadcrumbs: TBreadcrumbs) {
-    if (!state.breadcrubms.includes(newBreadcrumbs)) {
-      state.breadcrubms = [...state.breadcrubms, newBreadcrumbs]
-      console.log(`newBreadcrumbs`, newBreadcrumbs.title);
+    const exists = state.breadcrumbs.some(b => b.to === newBreadcrumbs.to)
+    if (!exists) {
+      state.breadcrumbs = [...state.breadcrumbs, newBreadcrumbs]
     }
+  },
+  RESET_BREADCRUMBS(state: InitialState) {
+    state.breadcrumbs = []
+  },
+  REMOVE_FROM_INDEX(state: InitialState, index: number) {
+    state.breadcrumbs = state.breadcrumbs.slice(0, index + 1)
   }
 }
 
+const getters: GetterTree<InitialState, RootState> = {
+  getBreadCrumbs: (state) => {
+  }
+}
 const breadcrumbsStore: Module<InitialState, RootState> = {
   namespaced: true,
   state,
