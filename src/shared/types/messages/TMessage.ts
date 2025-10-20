@@ -1,7 +1,7 @@
 import { MessageStatusEnum } from "./MessageStatusEnum"
 import { SecurityLabelEnum } from "./SecurityLabel.enum"
+
 export type TMessage = {
-  id: string | string
   messageId: string
   messageType: "TEXT" | "BINARY",
   messageCategory: "normal" | "urgent" | "low",

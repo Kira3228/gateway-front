@@ -21,8 +21,8 @@
                 @click="handleMenuClick(item.to, item.title)"
               >
                 <v-list-item-content>
-                  <div class="tw-flex">
-                    <span class="material-icons"> priority_high </span>
+                  <div class="tw-flex tw-gap-2">
+                    <span class="material-icons"> {{ item.icon }} </span>
                     <v-list-item-title dense>{{ item.title }}</v-list-item-title>
                   </div>
                 </v-list-item-content>
@@ -38,7 +38,10 @@
                 link
                 :to="sub.to"
               >
-                <v-list-item-title>{{ sub.title }}</v-list-item-title>
+                <div class="tw-flex tw-gap-2">
+                  <span class="material-icons"> {{ sub.icon }} </span>
+                  <v-list-item-title>{{ sub.title }}</v-list-item-title>
+                </div>
               </v-list-item>
             </v-list>
           </v-menu>

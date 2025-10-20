@@ -3,34 +3,34 @@ import { TMenuItem } from "./menu.type";
 export const menuItems: TMenuItem[] = [
   {
     title: `Дашборд`,
-    icon: '',
+    icon: 'dashboard',
     to: '/dash',
     subMenu: [
       {
         title: `Статистика`,
-        icon: ``,
+        icon: `leaderboard`,
         to: `/dash/stats`,
       },
       {
         title: `Графики`,
-        icon: ``,
+        icon: `show_chart`,
         to: `/dash/charts`,
       },
       {
         title: `Уведомления`,
-        icon: ``,
+        icon: `priority_high`,
         to: `/dash/alerts`,
       },
     ]
-  },
+  }, 
   {
     title: `Сообщения`,
-    icon: ``,
+    icon: `message`,
     to: `/msg_list`,
     subMenu: [
       {
         title: `Детали`,
-        icon: ``,
+        icon: `info`,
         to: `/msg_list/msg_detail`,
       },
       {
@@ -40,12 +40,12 @@ export const menuItems: TMenuItem[] = [
       },
       {
         title: `Режим отображения`,
-        icon: ``,
+        icon: `settings`,
         to: `/msg_list/msg_view_preset`
       },
       {
         title: `Экспорт сообщений`,
-        icon: ``,
+        icon: `file_download`,
         to: `/msg_list/msg_export`
       }
     ]

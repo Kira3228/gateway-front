@@ -1,22 +1,36 @@
-import { ActionTree, MutationTree } from "vuex"
+import { ActionTree, Module, MutationTree } from "vuex"
 import { RootState } from ".."
-import { fetchMessages } from "@/shared/api/messages"
-import { IMessageRespone } from "./types/TMessage.response"
+import { fetchMessageHeaders, fetchMessages } from "@/shared/api/messages"
+import { TMessage } from "@/shared/types/messages/TMessage"
+import { THeaderColumn } from "@/shared/types/common/THeader"
+import { TExceptions } from "@/shared/types/common/TExceptions"
 
-type InitialState = {
-  data: IMessageRespone
-  isLoading: boolean,
+export type InitialState = {
+  items: TMessage[]
+  page: number
+  totalPages: number
+  headers: THeaderColumn[]
+  preset: string
+  presetList: string[]
+  exceptions: TExceptions[]
+  default_filters: Record<string, any>
+  isLoading: boolean
   error: boolean
 }
 
 const state: InitialState = {
-  data: {
-    messages: [],
-    page: 1,
-    totalPages: 0
+  items: [],
+  page: 1,
+  totalPages: 0,
+  headers: [],
+  preset: "",
+  default_filters: {
+
   },
-  isLoading: false,
-  error: false
+  exceptions: [],
+  presetList: [],
+  error: false,
+  isLoading: false
 }
 
 
@@ -27,24 +41,62 @@ const mutations: MutationTree<any> = {
   SET_ERROR(state: InitialState, newState: boolean) {
     state.error = newState
   },
+  SET_ITEMS(state: InitialState, newState: TMessage[]) {
+    state.items = [...newState]
+  },
+  SET_HEADERS(state: InitialState, newHeaders: THeaderColumn[]) {
+    state.headers = [...newHeaders]
+  }
 }
 
-const actions: ActionTree<any, RootState> = {
-  async loadItems({ commit }) {
+const actions: ActionTree<InitialState, RootState> = {
+  async loadItems({ commit, state }) {
     try {
       commit(`SET_IS_LOADING`, true)
-      const data = await fetchMessages()
+      const data = await fetchMessages({
+        page: state.page
+      })
+      console.log(data);
+
       if (data && data) {
-        commit(``)
+        commit(`SET_ITEMS`, data.messages)
+        commit(`SET_TOTAL_PAGES`, data.totalPages ?? 0)
       }
       else {
-        commit(``)
+        commit(`SET_ITEMS`, [])
+        commit(`SET_TOTAL_PAGES`, 0)
       }
     } catch (error) {
       commit(`SET_ERROR`, true)
     }
     finally {
-      commit(`SET_IS_LOADING`, true)
+      commit(`SET_IS_LOADING`, false)
     }
-  }
+  },
+
+  async getHeaders({ commit, state, dispatch }) {
+    try {
+      const headers = await fetchMessageHeaders({ presetName: state.preset })
+
+      if (headers) {
+        commit(`SET_HEADERS`, headers)
+      }
+      else {
+        commit(`SET_HEADERS`, [])
+      }
+      dispatch(`getSort`)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  },
 }
+
+const messageStore: Module<InitialState, RootState> = {
+  namespaced: true,
+  state,
+  actions,
+  mutations
+}
+
+export default messageStore
