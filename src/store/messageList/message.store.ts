@@ -42,6 +42,8 @@ const mutations: MutationTree<any> = {
     state.error = newState
   },
   SET_ITEMS(state: InitialState, newState: TMessage[]) {
+    console.log(newState);
+
     state.items = [...newState]
   },
   SET_HEADERS(state: InitialState, newHeaders: THeaderColumn[]) {
@@ -59,7 +61,7 @@ const actions: ActionTree<InitialState, RootState> = {
       console.log(data);
 
       if (data && data) {
-        commit(`SET_ITEMS`, data.messages)
+        commit(`SET_ITEMS`, data.items)
         commit(`SET_TOTAL_PAGES`, data.totalPages ?? 0)
       }
       else {
@@ -77,6 +79,7 @@ const actions: ActionTree<InitialState, RootState> = {
   async getHeaders({ commit, state, dispatch }) {
     try {
       const headers = await fetchMessageHeaders({ presetName: state.preset })
+      console.log(headers);
 
       if (headers) {
         commit(`SET_HEADERS`, headers)

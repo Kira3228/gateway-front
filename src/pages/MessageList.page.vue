@@ -1,5 +1,5 @@
 <template>
-  <data-table-vue :headers="[]" :items="items"></data-table-vue>
+  <data-table-vue :headers="headers" :items="items"></data-table-vue>
 </template>
 <script lang="ts">
 import { TMessage } from "@/shared/types/messages/TMessage";
@@ -12,11 +12,15 @@ export default Vue.extend({
   },
   mounted() {
     this.$store.dispatch(`messageStore/loadItems`);
+    this.$store.dispatch(`messageStore/getHeaders`);
   },
   methods: {},
   computed: {
     items(): TMessage[] {
       return this.$store.state.messageStore.items;
+    },
+    headers() {
+      return this.$store.state.messageStore.headers;
     },
   },
 });

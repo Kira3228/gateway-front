@@ -1,8 +1,8 @@
 import { TMessage } from "./TMessage"
 
 export type IMessageRespone = {
-  messages: TMessage[]
   totalCount: number
+  items: TMessage[]
   page: number
   totalPages: number
   limit: number
