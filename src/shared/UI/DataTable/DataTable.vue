@@ -16,8 +16,11 @@
       dense
       :sort-by.sync="localSortByList"
       :sort-desc.sync="sortDescFields"
+      @click:row="handleRowClick"
     >
     </v-data-table>
+
+    <slot name="modal"></slot>
 
     <v-pagination v-model="localPage" :total-visible="7" :length="paginationLength">
     </v-pagination>
@@ -97,6 +100,9 @@ export default Vue.extend({
       this.localPage = newPage;
       this.$emit("update:page", newPage);
       this.$emit("page-changed", newPage);
+    },
+    handleRowClick(data: any) {
+      this.$emit(`click-row`, data);
     },
 
     getColor(status: string): string {

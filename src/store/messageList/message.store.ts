@@ -4,8 +4,10 @@ import { fetchMessageHeaders, fetchMessages } from "@/shared/api/messages"
 import { TMessage } from "@/shared/types/messages/TMessage"
 import { THeaderColumn } from "@/shared/types/common/THeader"
 import { TExceptions } from "@/shared/types/common/TExceptions"
+import { TMessageExt } from "@/shared/types/message-ext/TMessageExt"
+import { fetchMessageExts } from "@/shared/api/messageExt"
 
-export type InitialState = {
+export type TInitialState = {
   items: TMessage[]
   page: number
   totalPages: number
@@ -16,42 +18,43 @@ export type InitialState = {
   default_filters: Record<string, any>
   isLoading: boolean
   error: boolean
+  ext: TMessageExt
 }
 
-const state: InitialState = {
+const state: TInitialState = {
   items: [],
   page: 1,
   totalPages: 0,
   headers: [],
   preset: "",
-  default_filters: {
-
-  },
+  default_filters: {},
   exceptions: [],
   presetList: [],
   error: false,
-  isLoading: false
+  isLoading: false,
+  ext: {
+
+  }
 }
 
 
 const mutations: MutationTree<any> = {
-  SET_IS_LOADING(state: InitialState, newState: boolean) {
+  SET_IS_LOADING(state: TInitialState, newState: boolean) {
     state.isLoading = newState
   },
-  SET_ERROR(state: InitialState, newState: boolean) {
+  SET_ERROR(state: TInitialState, newState: boolean) {
     state.error = newState
   },
-  SET_ITEMS(state: InitialState, newState: TMessage[]) {
+  SET_ITEMS(state: TInitialState, newState: TMessage[]) {
     console.log(newState);
-
     state.items = [...newState]
   },
-  SET_HEADERS(state: InitialState, newHeaders: THeaderColumn[]) {
+  SET_HEADERS(state: TInitialState, newHeaders: THeaderColumn[]) {
     state.headers = [...newHeaders]
   }
 }
 
-const actions: ActionTree<InitialState, RootState> = {
+const actions: ActionTree<TInitialState, RootState> = {
   async loadItems({ commit, state }) {
     try {
       commit(`SET_IS_LOADING`, true)
@@ -76,6 +79,7 @@ const actions: ActionTree<InitialState, RootState> = {
     }
   },
 
+
   async getHeaders({ commit, state, dispatch }) {
     try {
       const headers = await fetchMessageHeaders({ presetName: state.preset })
@@ -93,9 +97,11 @@ const actions: ActionTree<InitialState, RootState> = {
       console.error(error)
     }
   },
+
+
 }
 
-const messageStore: Module<InitialState, RootState> = {
+const messageStore: Module<TInitialState, RootState> = {
   namespaced: true,
   state,
   actions,
