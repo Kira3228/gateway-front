@@ -46,8 +46,6 @@ export default Vue.extend({
       return this.$route.fullPath;
     },
     breadcrumbs() {
-      console.log(this.$route.matched);
-
       return this.$route.matched
         .filter((route) => route.meta && route.meta.breadcrumb)
         .map((route, index, arr) => ({
@@ -70,7 +68,6 @@ export default Vue.extend({
           text: title,
         });
       }
-      console.log(this.items);
     },
     handleBreadcrumbClick(item: TBreadcrumbs) {
       const index = this.items.findIndex((b: TBreadcrumbs) => b.to === item.to);

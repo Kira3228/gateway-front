@@ -40,7 +40,6 @@ export const buildURL = (base: string, params?: Record<string, any>): string => 
 
 export const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {
   const final = buildURL(url, params);
-  console.log(final);
 
   const res = await fetch(final)
   if (!res.ok) {

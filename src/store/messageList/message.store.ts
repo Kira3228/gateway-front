@@ -6,6 +6,7 @@ import { THeaderColumn } from "@/shared/types/common/THeader"
 import { TExceptions } from "@/shared/types/common/TExceptions"
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt"
 import { fetchMessageExts } from "@/shared/api/messageExt"
+import { httpGet } from "@/shared/api/http"
 
 export type TInitialState = {
   items: TMessage[]
@@ -33,7 +34,18 @@ const state: TInitialState = {
   error: false,
   isLoading: false,
   ext: {
-
+    id: 0,
+    createdAt: new Date(),
+    receiving_at: new Date(),
+    received_at: new Date(),
+    sending_at: new Date(),
+    sent_at: new Date(),
+    delivered_at: new Date(),
+    read_at: null,
+    totalFilesCount: 0,
+    totalSizeBytes: 0,
+    checksum: "",
+    metadata: "",
   }
 }
 
@@ -46,11 +58,13 @@ const mutations: MutationTree<any> = {
     state.error = newState
   },
   SET_ITEMS(state: TInitialState, newState: TMessage[]) {
-    console.log(newState);
     state.items = [...newState]
   },
   SET_HEADERS(state: TInitialState, newHeaders: THeaderColumn[]) {
     state.headers = [...newHeaders]
+  },
+  SET_EXTS(state: TInitialState, newExts: TMessageExt) {
+    state.ext = { ...newExts }
   }
 }
 
@@ -61,15 +75,14 @@ const actions: ActionTree<TInitialState, RootState> = {
       const data = await fetchMessages({
         page: state.page
       })
-      console.log(data);
 
       if (data && data) {
         commit(`SET_ITEMS`, data.items)
-        commit(`SET_TOTAL_PAGES`, data.totalPages ?? 0)
+        // commit(`SET_TOTAL_PAGES`, data.totalPages ?? 0)
       }
       else {
         commit(`SET_ITEMS`, [])
-        commit(`SET_TOTAL_PAGES`, 0)
+        // commit(`SET_TOTAL_PAGES`, 0)
       }
     } catch (error) {
       commit(`SET_ERROR`, true)
@@ -79,11 +92,9 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-
   async getHeaders({ commit, state, dispatch }) {
     try {
       const headers = await fetchMessageHeaders({ presetName: state.preset })
-      console.log(headers);
 
       if (headers) {
         commit(`SET_HEADERS`, headers)
@@ -91,12 +102,21 @@ const actions: ActionTree<TInitialState, RootState> = {
       else {
         commit(`SET_HEADERS`, [])
       }
-      dispatch(`getSort`)
     }
     catch (error) {
       console.error(error)
     }
   },
+
+  async getExts({ commit, state, dispatch }, messageId: string) {
+    try {
+      const data = await fetchMessageExts({ messageId: messageId })
+      commit(`SET_EXTS`, data)
+      return data
+    } catch (error) {
+
+    }
+  }
 
 
 }

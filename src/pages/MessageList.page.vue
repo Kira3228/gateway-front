@@ -1,18 +1,11 @@
 <template>
   <data-table-vue :headers="headers" :items="items" @click-row="handleRowClick">
     <template v-slot:modal>
-      <v-dialog v-model="dialog" max-width="500px">
-        <v-card>
-          <v-card-title>Детали строки</v-card-title>
-          <v-card-text>
-            <p>ID: {{ dialogData.messageId }}</p>
-            <p>Сообщение: {{ dialogData.messageType }}</p>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" text @click="dialog = false">Закрыть</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <dialog-window-vue
+        :value="dialog"
+        @close-click="handleCloseClick"
+        :messageData="messageExts"
+      ></dialog-window-vue>
     </template>
   </data-table-vue>
 </template>
@@ -20,25 +13,34 @@
 import { TMessage } from "@/shared/types/messages/TMessage";
 import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
 import Vue from "vue";
+import DialogWindowVue from "@/widgets/dialog-window/DialogWindow.vue";
+import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
 export default Vue.extend({
   name: `MessageListPage`,
   components: {
     DataTableVue,
+    DialogWindowVue,
   },
   data() {
     return {
       dialog: false,
-      dialogData: {} as TMessage,
     };
   },
-  mounted() {
-    this.$store.dispatch(`messageStore/loadItems`);
-    this.$store.dispatch(`messageStore/getHeaders`);
+  async mounted() {
+    await this.$store.dispatch(`messageStore/loadItems`);
+    await this.$store.dispatch(`messageStore/getHeaders`);
   },
   methods: {
-    handleRowClick(data: TMessage) {
-      this.dialog = true;
-      this.dialogData = { ...data };
+    async handleRowClick(data: TMessage) {
+      try {
+        await this.$store.dispatch(`messageStore/getExts`, data.messageId);
+        this.dialog = true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    handleCloseClick(isOpen: boolean) {
+      this.dialog = isOpen;
     },
   },
   computed: {
@@ -47,6 +49,17 @@ export default Vue.extend({
     },
     headers() {
       return this.$store.state.messageStore.headers;
+    },
+    messageExts(): TMessageExt {
+      const data = this.$store.state.messageStore.ext;
+      console.log(`computed`, data);
+
+      return data;
+    },
+  },
+  watch: {
+    messageExts(newVal) {
+      console.log(123132213123, newVal);
     },
   },
 });

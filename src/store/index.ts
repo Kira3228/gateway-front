@@ -3,7 +3,7 @@ import Vuex, { StoreOptions } from 'vuex'
 import breadcrumbsStore from './breadcrumbs/breadcrumbs.store'
 import messageStore from './messageList/message.store'
 
-import type { InitialState as messageState } from './messageList/message.store'
+import type { TInitialState as messageState } from './messageList/message.store'
 Vue.use(Vuex)
 
 export interface RootState {

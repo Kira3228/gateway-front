@@ -84,7 +84,6 @@ export default Vue.extend({
     },
     handleMenuClick(to?: string, title?: string) {
       this.$emit(`menu-click`, { to, title });
-      console.log("Переход на:", { to, title });
     },
   },
 });

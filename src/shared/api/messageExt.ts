@@ -3,5 +3,5 @@ import { TMessageExt } from "../types/message-ext/TMessageExt"
 import { httpGet } from "./http"
 
 export const fetchMessageExts = async (params: { messageId: string }) => {
-  return httpGet<TMessageExt>(`${BASE_URL}/extended/all`, params)
+  return httpGet<TMessageExt>(`${BASE_URL}/messages/extended/${params.messageId}`)
 } 
