@@ -2,6 +2,8 @@
   <data-table-vue :headers="headers" :items="items" @click-row="handleRowClick">
     <template v-slot:modal>
       <dialog-window-vue
+        v-if="dialog && messageExts.id"
+        :key="messageExts.id"
         :value="dialog"
         @close-click="handleCloseClick"
         :messageData="messageExts"
@@ -29,11 +31,13 @@ export default Vue.extend({
   async mounted() {
     await this.$store.dispatch(`messageStore/loadItems`);
     await this.$store.dispatch(`messageStore/getHeaders`);
+    console.log(`Отформатировано`, this.formattedData);
   },
   methods: {
     async handleRowClick(data: TMessage) {
       try {
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
+
         this.dialog = true;
       } catch (error) {
         console.log(error);
@@ -51,16 +55,15 @@ export default Vue.extend({
       return this.$store.state.messageStore.headers;
     },
     messageExts(): TMessageExt {
-      const data = this.$store.state.messageStore.ext;
-      console.log(`computed`, data);
-
+      const data = this.$store.getters["messageStore/messages"];
       return data;
+    },
+    formattedData() {
+      return this.$store.getters["messageStore/messages"];
     },
   },
   watch: {
-    messageExts(newVal) {
-      console.log(123132213123, newVal);
-    },
+    messageExts(newVal) {},
   },
 });
 </script>

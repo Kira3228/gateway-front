@@ -1,4 +1,4 @@
-import { ActionTree, Module, MutationTree } from "vuex"
+import { ActionTree, GetterTree, Module, MutationTree } from "vuex"
 import { RootState } from ".."
 import { fetchMessageHeaders, fetchMessages } from "@/shared/api/messages"
 import { TMessage } from "@/shared/types/messages/TMessage"
@@ -7,6 +7,8 @@ import { TExceptions } from "@/shared/types/common/TExceptions"
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt"
 import { fetchMessageExts } from "@/shared/api/messageExt"
 import { httpGet } from "@/shared/api/http"
+import { observable } from "vue/types/umd"
+import { formatDate } from "@/shared/utils/formatDate"
 
 export type TInitialState = {
   items: TMessage[]
@@ -121,10 +123,25 @@ const actions: ActionTree<TInitialState, RootState> = {
 
 }
 
+const getters: GetterTree<TInitialState, RootState> = {
+  messages: (state: TInitialState): TMessageExt => {
+    const fdata = Object.fromEntries(
+      Object.entries(state.ext).map(([key, value]) => [
+        key,
+        formatDate(value)
+      ])
+    ) as TMessageExt
+    console.log(fdata);
+
+    return fdata
+  }
+}
+
 const messageStore: Module<TInitialState, RootState> = {
   namespaced: true,
   state,
   actions,
+  getters,
   mutations
 }
 
