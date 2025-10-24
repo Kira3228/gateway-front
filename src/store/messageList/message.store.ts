@@ -6,9 +6,9 @@ import { THeaderColumn } from "@/shared/types/common/THeader"
 import { TExceptions } from "@/shared/types/common/TExceptions"
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt"
 import { fetchMessageExts } from "@/shared/api/messageExt"
-import { httpGet } from "@/shared/api/http"
-import { observable } from "vue/types/umd"
 import { formatDate } from "@/shared/utils/formatDate"
+import { fetchMessageFiles } from "@/shared/api/messageFile"
+import { TMessageFile } from "@/shared/types/common/TMessageFile"
 
 export type TInitialState = {
   items: TMessage[]
@@ -22,6 +22,7 @@ export type TInitialState = {
   isLoading: boolean
   error: boolean
   ext: TMessageExt
+  files: TMessageFile[]
 }
 
 const state: TInitialState = {
@@ -48,11 +49,12 @@ const state: TInitialState = {
     totalSizeBytes: 0,
     checksum: "",
     metadata: "",
-  }
+  },
+  files: []
 }
 
 
-const mutations: MutationTree<any> = {
+const mutations: MutationTree<TInitialState> = {
   SET_IS_LOADING(state: TInitialState, newState: boolean) {
     state.isLoading = newState
   },
@@ -67,6 +69,9 @@ const mutations: MutationTree<any> = {
   },
   SET_EXTS(state: TInitialState, newExts: TMessageExt) {
     state.ext = { ...newExts }
+  },
+  SET_FILES(state: TInitialState, newFiles: TMessageFile[]) {
+    state.files = [...newFiles]
   }
 }
 
@@ -94,7 +99,7 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getHeaders({ commit, state, dispatch }) {
+  async getHeaders({ commit, state }) {
     try {
       const headers = await fetchMessageHeaders({ presetName: state.preset })
 
@@ -110,16 +115,26 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getExts({ commit, state, dispatch }, messageId: string) {
+  async getExts({ commit }, messageId: string) {
     try {
       const data = await fetchMessageExts({ messageId: messageId })
+
       commit(`SET_EXTS`, data)
       return data
     } catch (error) {
 
     }
-  }
+  },
 
+  async getMessageFile({ commit }, id: number) {
+    try {
+      const files = await fetchMessageFiles(id)
+
+      commit(`SET_FILES`, files)
+    } catch (error) {
+
+    }
+  }
 
 }
 
@@ -131,7 +146,6 @@ const getters: GetterTree<TInitialState, RootState> = {
         formatDate(value)
       ])
     ) as TMessageExt
-    console.log(fdata);
 
     return fdata
   }

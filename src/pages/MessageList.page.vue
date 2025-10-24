@@ -7,6 +7,7 @@
         :value="dialog"
         @close-click="handleCloseClick"
         :messageData="messageExts"
+        :messageFiles="messageFiles"
       ></dialog-window-vue>
     </template>
   </data-table-vue>
@@ -31,14 +32,14 @@ export default Vue.extend({
   async mounted() {
     await this.$store.dispatch(`messageStore/loadItems`);
     await this.$store.dispatch(`messageStore/getHeaders`);
-    console.log(`Отформатировано`, this.formattedData);
   },
   methods: {
     async handleRowClick(data: TMessage) {
       try {
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
-
+        await this.$store.dispatch(`messageStore/getMessageFile`, data.id);
         this.dialog = true;
+        console.log(`dialog: `, this.dialog);
       } catch (error) {
         console.log(error);
       }
@@ -60,6 +61,9 @@ export default Vue.extend({
     },
     formattedData() {
       return this.$store.getters["messageStore/messages"];
+    },
+    messageFiles() {
+      return this.$store.state.messageStore.files;
     },
   },
   watch: {
