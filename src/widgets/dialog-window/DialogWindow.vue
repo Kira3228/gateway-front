@@ -1,92 +1,48 @@
 <template>
   <v-dialog
-    class=""
     fullscreen
     hide-overlay
     @click:outside="handleCloseClick"
     @keydown="handleCloseClick"
     v-model="localValue"
-    max-width="500px"
     transition="dialog-bottom-transition"
   >
-    <v-card class="">
-      <v-toolbar dark color="primary">
+    <v-card class="dialog-root">
+      <v-toolbar class="flex-grow-0" dark color="primary">
         <v-btn icon dark @click="handleCloseClick"><v-icon>mdi-close</v-icon></v-btn>
         <v-toolbar-title>Settings</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-card>
-        <div class="">
-          <div class="tw-max-w-xs tw-flex-col">
-            <div class="card">
-              <p class="card-text header">ID:</p>
-              <p class="card-text">{{ messageData.id }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text header">Контрольная сумма:</p>
-              <p class="card-text wrap-text">{{ messageData.checksum }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Создано:</p>
-              <p>{{ messageData.createdAt }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Доставлено: {{ messageData.delivered_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Метаданные: {{ messageData.metadata }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Прочитано: {{ messageData.read_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Получено: {{ messageData.received_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Получение: {{ messageData.receiving_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Отправка: {{ messageData.sending_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Отправлено: {{ messageData.sent_at }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Количесво файлов: {{ messageData.totalFilesCount }}</p>
-            </div>
-            <div class="card">
-              <p class="card-text">Размер: {{ messageData.totalSizeBytes }} байт</p>
-            </div>
-          </div>
-        </div>
-      </v-card>
-      <v-responsive>
-        <v-card elevation="">
+      <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
+        <message-data-card-vue :messageData="messageData"></message-data-card-vue>
+        <v-card width="100%">
+          <v-card-title> Файлы сообщения </v-card-title>
           <v-virtual-scroll
             elevation="0"
             :bench="0"
-            :items="messageFiles"
-            height="630"
-            item-height="64"
+            :items="testData"
+            item-height="100"
+            height="780"
+            max-width="auto"
+            class="flex-grow-1"
+            style="min-height: 0"
           >
             <template v-slot:default="{ item }">
-              <v-list-item :key="item.id">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <strong>ID {{ item.fileName }}</strong>
-                  </v-list-item-title>
-                </v-list-item-content>
-
-                <v-list-item-action>
-                  <v-icon small> mdi-open-in-new </v-icon>
-                </v-list-item-action>
-              </v-list-item>
-              <v-divider></v-divider>
+              <list-item-vue :key="item.id" :item="item"></list-item-vue>
             </template>
           </v-virtual-scroll>
         </v-card>
-      </v-responsive>
+
+        <v-card width="100%">
+          <v-card-title> Итория изменений </v-card-title>
+          <p>Старый статус -> Новый статус</p>
+          <p>Причина</p>
+          <p>Дата</p>
+          <p>Пользователь изменивший статус</p>
+          <p>metadata</p>
+        </v-card>
+      </div>
     </v-card>
   </v-dialog>
 </template>
@@ -94,11 +50,17 @@
 <script lang="ts">
 import { TMessageFile } from "@/shared/types/common/TMessageFile";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
+import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import Vue from "vue";
 import { PropType } from "vue/types/v3-component-props";
+import MessageDataCardVue from "../MessageData/MessageDataCard.vue";
 import { mock } from "./mock";
 export default Vue.extend({
   name: `DialogWindow`,
+  components: {
+    ListItemVue,
+    MessageDataCardVue,
+  },
   props: {
     value: {
       type: Boolean,
@@ -129,7 +91,7 @@ export default Vue.extend({
   data() {
     return {
       localValue: this.value,
-      testData: mock,
+      c: mock,
     };
   },
   computed: {
@@ -138,9 +100,12 @@ export default Vue.extend({
     },
   },
   methods: {
-    handleCloseClick() {
-      this.localValue = false;
-      this.$emit(`close-click`, false);
+    handleCloseClick(e: KeyboardEvent & PointerEvent) {
+      if (e.key === `Escape` || e.pointerType === `mouse`) {
+        console.log(e);
+        this.localValue = false;
+        this.$emit(`close-click`, false);
+      }
     },
   },
   watch: {
@@ -157,6 +122,31 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
+.dialog-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.dialog-content {
+  flex: 1 1 auto;
+  display: flex;
+  min-height: 0;
+}
+.left-card {
+  width: auto; // фикс или auto
+  flex-shrink: 0;
+  height: 100%;
+}
+.right-block {
+}
+.scroll-card,
+.virtual-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
 .card {
   margin: 10px 0px 0px 16px;
   display: flex;
