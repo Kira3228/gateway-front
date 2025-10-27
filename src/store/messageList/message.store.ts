@@ -9,6 +9,9 @@ import { fetchMessageExts } from "@/shared/api/messageExt"
 import { formatDate } from "@/shared/utils/formatDate"
 import { fetchMessageFiles } from "@/shared/api/messageFile"
 import { TMessageFile } from "@/shared/types/common/TMessageFile"
+import { fetchHistory } from "@/shared/api/status-history"
+import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
+import { MessageStatusEnum } from "@/shared/types/messages/MessageStatusEnum"
 
 export type TInitialState = {
   items: TMessage[]
@@ -23,6 +26,7 @@ export type TInitialState = {
   error: boolean
   ext: TMessageExt
   files: TMessageFile[]
+  statusHistory: TStatusHistory
 }
 
 const state: TInitialState = {
@@ -50,7 +54,18 @@ const state: TInitialState = {
     checksum: "",
     metadata: "",
   },
-  files: []
+  files: [],
+  statusHistory: {
+    changeDatetime: "",
+    changedByUserId: 0,
+    id: 0,
+    messageId: 0,
+    metadata: "",
+    newStatus: "",
+    oldStatus: "",
+    reason: "",
+    user: { createdAt: "", fullName: "", id: 0, isActive: false, updatedAt: "", userName: "", userType: "" }
+  }
 }
 
 
@@ -72,6 +87,9 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_FILES(state: TInitialState, newFiles: TMessageFile[]) {
     state.files = [...newFiles]
+  },
+  SET_HISTORY(state: TInitialState, newHistory: TStatusHistory) {
+    state.statusHistory = { ...newHistory }
   }
 }
 
@@ -128,10 +146,19 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getMessageFile({ commit }, id: number) {
     try {
-      const files = await fetchMessageFiles(id)
 
+      const files = await fetchMessageFiles(id)
       commit(`SET_FILES`, files)
     } catch (error) {
+
+    }
+  },
+  async getStatusHistory({ commit }, id: number) {
+    try {
+      const history = await fetchHistory(id)
+      commit(`SET_HISTORY`, history)
+    } catch (error) {
+      console.error(error);
 
     }
   }
