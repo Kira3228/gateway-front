@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot="{ hover }" class="tw-m-2">
-    <v-card :elevation="hover ? 20 : 10">
+    <v-sheet rounded="xl" :elevation="hover ? 2 : 1">
       <v-list-item primary>
         <v-list-item-content>
           <p class="tw-text-base">{{ item.fileName }}</p>
@@ -17,7 +17,7 @@
           </v-btn>
         </v-list-item-action>
       </v-list-item>
-    </v-card>
+    </v-sheet>
   </v-hover>
 </template>
 

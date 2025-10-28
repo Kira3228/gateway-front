@@ -6,8 +6,9 @@
         :key="messageExts.id"
         :value="dialog"
         @close-click="handleCloseClick"
-        :messageData="messageExts"
-        :messageFiles="messageFiles"
+        :message-data="messageExts"
+        :message-files="messageFiles"
+        :status-history="statusHistory"
       ></dialog-window-vue>
     </template>
   </data-table-vue>
@@ -18,6 +19,7 @@ import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
 import Vue from "vue";
 import DialogWindowVue from "@/widgets/dialog-window/DialogWindow.vue";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
+import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
 export default Vue.extend({
   name: `MessageListPage`,
   components: {
@@ -38,6 +40,8 @@ export default Vue.extend({
       try {
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
         await this.$store.dispatch(`messageStore/getMessageFile`, data.id);
+        await this.$store.dispatch(`messageStore/getStatusHistory`, data.id);
+
         this.dialog = true;
         console.log(`dialog: `, this.dialog);
       } catch (error) {
@@ -64,6 +68,12 @@ export default Vue.extend({
     },
     messageFiles() {
       return this.$store.state.messageStore.files;
+    },
+    statusHistory() {
+      const history = this.$store.state.messageStore.statusHistory;
+      console.log(`ЖОПА`, history);
+
+      return history;
     },
   },
   watch: {

@@ -16,7 +16,7 @@
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card-vue :messageData="messageData"></message-data-card-vue>
-        <v-card width="100%">
+        <v-sheet width="100%">
           <v-card-title> Файлы сообщения </v-card-title>
           <v-virtual-scroll
             elevation="0"
@@ -32,16 +32,28 @@
               <list-item-vue :key="item.id" :item="item"></list-item-vue>
             </template>
           </v-virtual-scroll>
-        </v-card>
+        </v-sheet>
 
-        <v-card width="100%">
+        <v-sheet :rounded="true" elevation="4" width="100%" height="100%">
           <v-card-title> Итория изменений </v-card-title>
-          <p>Старый статус -> Новый статус</p>
+          <sheet-vue v-for="item in statusHistory" :key="item.id">
+            <div>
+              <p>{{ item.oldStatus }} => {{ item.newStatus }}</p>
+              <p>{{ item.reason }}</p>
+              <p>{{ item.changeDatetime }}</p>
+              <p>{{ item.user }}</p>
+              <p>{{ item.metadata }}</p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </sheet-vue>
           <p>Причина</p>
           <p>Дата</p>
           <p>Пользователь изменивший статус</p>
           <p>metadata</p>
-        </v-card>
+        </v-sheet>
       </div>
     </v-card>
   </v-dialog>
@@ -49,10 +61,12 @@
 
 <script lang="ts">
 import { TMessageFile } from "@/shared/types/common/TMessageFile";
+import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
+import SheetVue from "@/shared/UI/Sheet/Sheet.vue";
 import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
+import { Prop, PropType } from "vue/types/v3-component-props";
 import MessageDataCardVue from "../MessageData/MessageDataCard.vue";
 import { mock } from "./mock";
 export default Vue.extend({
@@ -60,6 +74,7 @@ export default Vue.extend({
   components: {
     ListItemVue,
     MessageDataCardVue,
+    SheetVue,
   },
   props: {
     value: {
@@ -86,6 +101,10 @@ export default Vue.extend({
     messageFiles: {
       type: Array as PropType<TMessageFile[]>,
       default: () => [],
+    },
+    statusHistory: {
+      type: Array as PropType<TStatusHistory[]>,
+      default: [],
     },
   },
   data() {
@@ -137,8 +156,6 @@ export default Vue.extend({
   width: auto; // фикс или auto
   flex-shrink: 0;
   height: 100%;
-}
-.right-block {
 }
 .scroll-card,
 .virtual-scroll {

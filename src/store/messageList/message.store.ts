@@ -26,7 +26,7 @@ export type TInitialState = {
   error: boolean
   ext: TMessageExt
   files: TMessageFile[]
-  statusHistory: TStatusHistory
+  statusHistory: TStatusHistory[]
 }
 
 const state: TInitialState = {
@@ -55,17 +55,7 @@ const state: TInitialState = {
     metadata: "",
   },
   files: [],
-  statusHistory: {
-    changeDatetime: "",
-    changedByUserId: 0,
-    id: 0,
-    messageId: 0,
-    metadata: "",
-    newStatus: "",
-    oldStatus: "",
-    reason: "",
-    user: { createdAt: "", fullName: "", id: 0, isActive: false, updatedAt: "", userName: "", userType: "" }
-  }
+  statusHistory: []
 }
 
 
@@ -88,8 +78,8 @@ const mutations: MutationTree<TInitialState> = {
   SET_FILES(state: TInitialState, newFiles: TMessageFile[]) {
     state.files = [...newFiles]
   },
-  SET_HISTORY(state: TInitialState, newHistory: TStatusHistory) {
-    state.statusHistory = { ...newHistory }
+  SET_HISTORY(state: TInitialState, newHistory: TStatusHistory[]) {
+    state.statusHistory = [...newHistory]
   }
 }
 
@@ -156,6 +146,8 @@ const actions: ActionTree<TInitialState, RootState> = {
   async getStatusHistory({ commit }, id: number) {
     try {
       const history = await fetchHistory(id)
+      console.log(`История`, history);
+
       commit(`SET_HISTORY`, history)
     } catch (error) {
       console.error(error);
