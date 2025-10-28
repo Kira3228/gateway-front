@@ -16,44 +16,8 @@
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card-vue :messageData="messageData"></message-data-card-vue>
-        <v-sheet width="100%">
-          <v-card-title> Файлы сообщения </v-card-title>
-          <v-virtual-scroll
-            elevation="0"
-            :bench="0"
-            :items="testData"
-            item-height="100"
-            height="780"
-            max-width="auto"
-            class="flex-grow-1"
-            style="min-height: 0"
-          >
-            <template v-slot:default="{ item }">
-              <list-item-vue :key="item.id" :item="item"></list-item-vue>
-            </template>
-          </v-virtual-scroll>
-        </v-sheet>
-
-        <v-sheet :rounded="true" elevation="4" width="100%" height="100%">
-          <v-card-title> Итория изменений </v-card-title>
-          <sheet-vue v-for="item in statusHistory" :key="item.id">
-            <div>
-              <p>{{ item.oldStatus }} => {{ item.newStatus }}</p>
-              <p>{{ item.reason }}</p>
-              <p>{{ item.changeDatetime }}</p>
-              <p>{{ item.user }}</p>
-              <p>{{ item.metadata }}</p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
-            </div>
-          </sheet-vue>
-          <p>Причина</p>
-          <p>Дата</p>
-          <p>Пользователь изменивший статус</p>
-          <p>metadata</p>
-        </v-sheet>
+        <message-files-vue :files="testData"></message-files-vue>
+        <status-history-vue :items="statusHistory"></status-history-vue>
       </div>
     </v-card>
   </v-dialog>
@@ -65,16 +29,22 @@ import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import SheetVue from "@/shared/UI/Sheet/Sheet.vue";
+import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import Vue from "vue";
 import { Prop, PropType } from "vue/types/v3-component-props";
 import MessageDataCardVue from "../MessageData/MessageDataCard.vue";
 import { mock } from "./mock";
+import MessageFilesVue from "../MessageFiles/MessageFiles.vue";
+import StatusHistoryVue from "../StatusHistory/StatusHistory.vue";
 export default Vue.extend({
   name: `DialogWindow`,
   components: {
     ListItemVue,
     MessageDataCardVue,
     SheetVue,
+    VirtualScrollVue,
+    MessageFilesVue,
+    StatusHistoryVue,
   },
   props: {
     value: {
@@ -125,6 +95,9 @@ export default Vue.extend({
         this.localValue = false;
         this.$emit(`close-click`, false);
       }
+    },
+    getColor(isActive: boolean): `green` | `red` {
+      return isActive ? `green` : `red`;
     },
   },
   watch: {

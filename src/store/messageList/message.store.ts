@@ -167,6 +167,13 @@ const getters: GetterTree<TInitialState, RootState> = {
     ) as TMessageExt
 
     return fdata
+  },
+
+  formatedHistory: (state: TInitialState): TStatusHistory[] => {
+    return state.statusHistory.map(item => ({
+      ...item,
+      changeDatetime: formatDate(item.changeDatetime) as string,
+    }))
   }
 }
 
