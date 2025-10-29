@@ -18,10 +18,11 @@
       :sort-desc.sync="sortDescFields"
       @click:row="handleRowClick"
     >
+      <template v-slot:top>
+        <slot name="select-preset"></slot>
+      </template>
     </v-data-table>
-
     <slot name="modal"></slot>
-
     <v-pagination v-model="localPage" :total-visible="7" :length="paginationLength">
     </v-pagination>
   </div>

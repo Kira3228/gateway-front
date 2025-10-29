@@ -1,17 +1,27 @@
 <template>
-  <data-table-vue :headers="headers" :items="items" @click-row="handleRowClick">
-    <template v-slot:modal>
-      <dialog-window-vue
-        v-if="dialog && messageExts.id"
-        :key="messageExts.id"
-        :value="dialog"
-        @close-click="handleCloseClick"
-        :message-data="messageExts"
-        :message-files="messageFiles"
-        :status-history="statusHistory"
-      ></dialog-window-vue>
-    </template>
-  </data-table-vue>
+  <div>
+    <data-table-vue :headers="headers" :items="items" @click-row="handleRowClick">
+      <template v-slot:modal>
+        <dialog-window-vue
+          v-if="dialog && messageExts.id"
+          :key="messageExts.id"
+          :value="dialog"
+          @close-click="handleCloseClick"
+          :message-data="messageExts"
+          :message-files="messageFiles"
+          :status-history="statusHistory"
+        ></dialog-window-vue>
+      </template>
+      <template v-slot:select-preset>
+        <div class="tw-w-screen tw-flex tw-justify-items-end">
+          <select-input-vue
+            :items="presetList"
+            placeholder="Режим отображения"
+          ></select-input-vue>
+        </div>
+      </template>
+    </data-table-vue>
+  </div>
 </template>
 <script lang="ts">
 import { TMessage } from "@/shared/types/messages/TMessage";
@@ -19,12 +29,13 @@ import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
 import Vue from "vue";
 import DialogWindowVue from "@/widgets/dialog-window/DialogWindow.vue";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
+import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
 export default Vue.extend({
   name: `MessageListPage`,
   components: {
     DataTableVue,
     DialogWindowVue,
+    SelectInputVue,
   },
   data() {
     return {
@@ -34,6 +45,7 @@ export default Vue.extend({
   async mounted() {
     await this.$store.dispatch(`messageStore/loadItems`);
     await this.$store.dispatch(`messageStore/getHeaders`);
+    await this.$store.dispatch(`messageStore/getPresetNames`);
   },
   methods: {
     async handleRowClick(data: TMessage) {
@@ -43,7 +55,6 @@ export default Vue.extend({
         await this.$store.dispatch(`messageStore/getStatusHistory`, data.id);
 
         this.dialog = true;
-        console.log(`dialog: `, this.dialog);
       } catch (error) {
         console.log(error);
       }
@@ -75,6 +86,9 @@ export default Vue.extend({
       console.log(`ЖОПА`, history);
 
       return history;
+    },
+    presetList() {
+      return this.$store.state.messageStore.presetList;
     },
   },
   watch: {

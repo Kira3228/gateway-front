@@ -1,25 +1,23 @@
 <template>
   <v-select
-    solo
-    dense
-    :placeholder="placeholder"
     :label="label"
-    item-text="label"
-    item-value="value"
-    single-line
+    :placeholder="placeholder"
     :items="items"
     :value="selectedValue"
-    color="primary"
-    @input="handleSelect"
-    style="max-width: 250px"
     :hide-details="true"
+    item-text="label"
+    item-value="value"
+    standart
+    dense
+    single-line
+    color="primary"
+    style="max-width: 200px"
+    @input="handleSelect"
   ></v-select>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { TOption } from "./TOptions";
-// import { useDebounce } from "@/shared/utils/debounce";
 
 export default Vue.extend({
   name: "CustomSelect",
@@ -44,27 +42,13 @@ export default Vue.extend({
 
   data() {
     return {
-      // debounce: null as ReturnType<typeof useDebounce> | null,
       selectedValue: this.value,
     };
   },
-  created() {
-    // this.debounce = useDebounce();
-  },
+  created() {},
   methods: {
-    handleSelect(newValue: string) {
-      //   this.$emit("input", newValue);
-      //   if (this.debounce) {
-      //     this.debounce.debounce(() => {
-      //       this.$emit(`debounce`, newValue);
-      //     });
-      //   }
-    },
+    handleSelect(newValue: string) {},
   },
-  watch: {
-    // value(newVal) {
-    //   this.selectedValue = newVal;
-    // },
-  },
+  watch: {},
 });
 </script>

@@ -7,7 +7,7 @@ export const fetchMessages = (params: {
   page?: number,
 
 }) => {
-  return httpGet<IMessageRespone>(`${BASE_URL}/messages/messages`, params)
+  return httpGet<IMessageRespone>(`${BASE_URL}/messages`, params)
 }
 
 export const fetchMessageHeaders = (params: { presetName: string }) => {

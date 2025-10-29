@@ -12,6 +12,7 @@ import { TMessageFile } from "@/shared/types/common/TMessageFile"
 import { fetchHistory } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
 import { MessageStatusEnum } from "@/shared/types/messages/MessageStatusEnum"
+import { fetchPresets } from "@/shared/api/presets"
 
 export type TInitialState = {
   items: TMessage[]
@@ -80,6 +81,9 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_HISTORY(state: TInitialState, newHistory: TStatusHistory[]) {
     state.statusHistory = [...newHistory]
+  },
+  SET_PRESET_LIST(state: TInitialState, presetList: string[]) {
+    state.presetList = [...presetList]
   }
 }
 
@@ -143,6 +147,7 @@ const actions: ActionTree<TInitialState, RootState> = {
 
     }
   },
+
   async getStatusHistory({ commit }, id: number) {
     try {
       const history = await fetchHistory(id)
@@ -151,6 +156,15 @@ const actions: ActionTree<TInitialState, RootState> = {
       commit(`SET_HISTORY`, history)
     } catch (error) {
       console.error(error);
+
+    }
+  },
+
+  async getPresetNames({ state, commit }) {
+    try {
+      const presets = await fetchPresets()
+      commit(`SET_PRESET_LIST`, presets)
+    } catch (error) {
 
     }
   }

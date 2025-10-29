@@ -5,7 +5,19 @@
       <template v-slot:item="{ item }">
         <list-item-vue :key="item.id" :item="item">
           <template v-slot:content="{ item }">
-            <span class="tw-text-gray-600 tw-text-xs">{{ item.changeDatetime }}</span>
+            <div class="tw-flex-col tw-items-center">
+              <span class="tw-text-gray-600 tw-text-sm tw-mr-1">{{
+                item.user.fullName
+              }}</span>
+              <span class="tw-text-gray-600 tw-text-xs tw-mr-1">{{
+                item.changeDatetime
+              }}</span>
+              <span>[{{ item.user.userType }}] </span>
+              <span class="tw-text-green-700 tw-mr-1" v-if="item.user.isActive"
+                >Online</span
+              >
+              <span class="tw-text-red-700 tw-mr-1" v-else>Offline</span>
+            </div>
             <div class="tw-flex">
               <v-chip color="red">{{ item.oldStatus }}</v-chip>
               <v-icon>mdi-forward</v-icon>
@@ -13,20 +25,6 @@
             </div>
             <p>Причина {{ item.reason }}</p>
             <p>{{ item.metadata }}</p>
-            <list-item-vue>
-              <template v-slot:content>
-                <div class="tw-flex tw-items-end tw-gap-4">
-                  <v-badge :color="getColor(item.user.isActive)" overlap>
-                    <v-avatar color="grey" size="48">
-                      <span class="white--text text-h7">{{ item.user.userType }}</span>
-                    </v-avatar>
-                  </v-badge>
-                  <p>{{ item.user.fullName }}</p>
-                </div>
-              </template>
-            </list-item-vue>
-
-            <p></p>
           </template>
         </list-item-vue>
       </template>
