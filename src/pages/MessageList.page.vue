@@ -17,6 +17,7 @@
           <select-input-vue
             :items="presetList"
             placeholder="Режим отображения"
+            @debounce="handleSelectChange"
           ></select-input-vue>
         </div>
       </template>
@@ -43,8 +44,8 @@ export default Vue.extend({
     };
   },
   async mounted() {
-    await this.$store.dispatch(`messageStore/loadItems`);
     await this.$store.dispatch(`messageStore/getHeaders`);
+    await this.$store.dispatch(`messageStore/loadItems`);
     await this.$store.dispatch(`messageStore/getPresetNames`);
   },
   methods: {
@@ -61,6 +62,9 @@ export default Vue.extend({
     },
     handleCloseClick(isOpen: boolean) {
       this.dialog = isOpen;
+    },
+    async handleSelectChange() {
+      await this.$store.dispatch(`messageStore/getHeaders`);
     },
   },
   computed: {

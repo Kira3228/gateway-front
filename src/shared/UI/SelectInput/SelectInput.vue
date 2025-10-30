@@ -18,7 +18,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-
+import { use } from "vue/types/umd";
+import { useDebounce } from "./../../utils/debounce";
 export default Vue.extend({
   name: "CustomSelect",
   props: {
@@ -43,11 +44,21 @@ export default Vue.extend({
   data() {
     return {
       selectedValue: this.value,
+      debounce: null as ReturnType<typeof useDebounce> | null,
     };
   },
-  created() {},
+  created() {
+    this.debounce = useDebounce();
+  },
   methods: {
-    handleSelect(newValue: string) {},
+    handleSelect(newValue: string) {
+      this.$emit("input", newValue);
+      if (this.debounce) {
+        this.debounce.debounce(() => {
+          this.$emit(`debounce`, newValue);
+        });
+      }
+    },
   },
   watch: {},
 });

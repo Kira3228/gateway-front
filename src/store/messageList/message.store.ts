@@ -113,7 +113,10 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getHeaders({ commit, state }) {
     try {
+
       const headers = await fetchMessageHeaders({ presetName: state.preset })
+      console.log(headers);
+
 
       if (headers) {
         commit(`SET_HEADERS`, headers)
