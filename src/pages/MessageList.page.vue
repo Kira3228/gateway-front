@@ -16,6 +16,7 @@
         <div class="tw-w-screen tw-flex tw-justify-items-end">
           <select-input-vue
             :items="presetList"
+            v-model="selectedPreset"
             placeholder="Режим отображения"
             @debounce="handleSelectChange"
           ></select-input-vue>
@@ -93,6 +94,14 @@ export default Vue.extend({
     },
     presetList() {
       return this.$store.state.messageStore.presetList;
+    },
+    selectedPreset: {
+      get(): string {
+        return this.$store.state.messageStore.preset;
+      },
+      set(newPreset: string) {
+        this.$store.commit(`messageStore/SET_PRESET`, newPreset);
+      },
     },
   },
   watch: {

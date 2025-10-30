@@ -84,6 +84,9 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_PRESET_LIST(state: TInitialState, presetList: string[]) {
     state.presetList = [...presetList]
+  },
+  SET_PRESET(state: TInitialState, newPreset: string) {
+    state.preset = newPreset
   }
 }
 
@@ -113,6 +116,7 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getHeaders({ commit, state }) {
     try {
+      console.log(state.preset);
 
       const headers = await fetchMessageHeaders({ presetName: state.preset })
       console.log(headers);
@@ -143,7 +147,6 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getMessageFile({ commit }, id: number) {
     try {
-
       const files = await fetchMessageFiles(id)
       commit(`SET_FILES`, files)
     } catch (error) {
