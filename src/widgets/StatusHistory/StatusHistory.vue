@@ -1,6 +1,7 @@
 <template>
-  <v-sheet width="100%">
+  <v-sheet class="tw-p-3" width="100%">
     <v-card-title> Итория изменений </v-card-title>
+    <search-bar-vue></search-bar-vue>
     <virtual-scroll-vue :items="items">
       <template v-slot:item="{ item }">
         <list-item-vue :key="item.id" :item="item">
@@ -37,8 +38,9 @@ import Vue from "vue";
 import { Prop, PropType } from "vue/types/v3-component-props";
 import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
+import SearchBarVue from "@/shared/UI/SearchBar/SearchBar.vue";
 export default Vue.extend({
-  components: { VirtualScrollVue, ListItemVue },
+  components: { VirtualScrollVue, ListItemVue, SearchBarVue },
   props: {
     items: {
       type: Array as PropType<TStatusHistory[]>,

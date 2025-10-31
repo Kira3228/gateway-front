@@ -16,7 +16,9 @@
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card-vue :messageData="messageData"></message-data-card-vue>
-        <message-files-vue :files="testData"></message-files-vue>
+        <v-divider vertical></v-divider>
+        <message-files-vue :files="messageFiles"></message-files-vue>
+        <v-divider vertical></v-divider>
         <status-history-vue :items="statusHistory"></status-history-vue>
       </div>
     </v-card>
@@ -85,7 +87,7 @@ export default Vue.extend({
   },
   computed: {
     testData() {
-      return mock;
+      return this.$store.state.messageStore.files;
     },
   },
   methods: {
@@ -108,9 +110,7 @@ export default Vue.extend({
       this.$emit("input", newVal);
     },
   },
-  mounted() {
-    console.log(this.messageFiles);
-  },
+  mounted() {},
 });
 </script>
 <style lang="scss" scoped>

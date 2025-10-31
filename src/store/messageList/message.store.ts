@@ -11,11 +11,11 @@ import { fetchMessageFiles } from "@/shared/api/messageFile"
 import { TMessageFile } from "@/shared/types/common/TMessageFile"
 import { fetchHistory } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
-import { MessageStatusEnum } from "@/shared/types/messages/MessageStatusEnum"
 import { fetchPresets } from "@/shared/api/presets"
 
 export type TInitialState = {
   items: TMessage[]
+  messageId: number
   page: number
   totalPages: number
   headers: THeaderColumn[]
@@ -23,7 +23,7 @@ export type TInitialState = {
   presetList: string[]
   exceptions: TExceptions[]
   default_filters: Record<string, any>
-  isLoading: boolean
+  isTableLoading: boolean
   error: boolean
   ext: TMessageExt
   files: TMessageFile[]
@@ -33,6 +33,7 @@ export type TInitialState = {
 const state: TInitialState = {
   items: [],
   page: 1,
+  messageId: 0,
   totalPages: 0,
   headers: [],
   preset: "",
@@ -40,7 +41,7 @@ const state: TInitialState = {
   exceptions: [],
   presetList: [],
   error: false,
-  isLoading: false,
+  isTableLoading: false,
   ext: {
     id: 0,
     createdAt: new Date(),
@@ -62,7 +63,7 @@ const state: TInitialState = {
 
 const mutations: MutationTree<TInitialState> = {
   SET_IS_LOADING(state: TInitialState, newState: boolean) {
-    state.isLoading = newState
+    state.isTableLoading = newState
   },
   SET_ERROR(state: TInitialState, newState: boolean) {
     state.error = newState
@@ -87,13 +88,19 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_PRESET(state: TInitialState, newPreset: string) {
     state.preset = newPreset
+  },
+  SET_MESSAGE_ID(state: TInitialState, newFileId: number) {
+    state.messageId = newFileId
+  },
+  SET_IS_TABLE_LOADING(state: TInitialState, loading: boolean) {
+    state.isTableLoading = loading
   }
 }
 
 const actions: ActionTree<TInitialState, RootState> = {
   async loadItems({ commit, state }) {
     try {
-      commit(`SET_IS_LOADING`, true)
+      commit(`SET_IS_TABLE_LOADING`, true)
       const data = await fetchMessages({
         page: state.page
       })
@@ -110,7 +117,7 @@ const actions: ActionTree<TInitialState, RootState> = {
       commit(`SET_ERROR`, true)
     }
     finally {
-      commit(`SET_IS_LOADING`, false)
+      commit(`SET_IS_TABLE_LOADING`, false)
     }
   },
 
@@ -145,10 +152,12 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getMessageFile({ commit }, id: number) {
+  async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
     try {
-      const files = await fetchMessageFiles(id)
+      const files = await fetchMessageFiles(payload)
+
       commit(`SET_FILES`, files)
+      commit(`SET_MESSAGE_ID`, payload.id)
     } catch (error) {
 
     }
@@ -173,6 +182,9 @@ const actions: ActionTree<TInitialState, RootState> = {
     } catch (error) {
 
     }
+  },
+  async getSortedFiles({ state, commit, dispatch }) {
+
   }
 
 }

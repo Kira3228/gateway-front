@@ -2,10 +2,10 @@
   <v-virtual-scroll
     :bench="0"
     max-width="auto"
-    height="780"
+    height="718"
     item-height="100"
     class="flex-grow-1"
-    :items="items"
+    :items="extendedItems"
     style="min-height: 0"
   >
     <template v-slot:default="{ item }">
@@ -23,7 +23,19 @@ export default Vue.extend({
   props: {
     items: {
       type: Array as PropType<TMessageFile[] | TStatusHistory[]>,
-      default: [],
+      default: () => [],
+    },
+    isItemLoading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    extendedItems() {
+      return this.items.map((item) => ({
+        ...item,
+        isLoading: this.isItemLoading,
+      }));
     },
   },
 });

@@ -1,47 +1,57 @@
 <template>
-  <v-sheet :width="width" class="left-card">
+  <v-sheet class="tw-p-3 left-card" :width="width">
     <v-card-title>Метаданные</v-card-title>
-    <div class="tw-max-w-xs tw-ml-4">
-      <sheet-vue>
-        <p class="tw-text-lg">ID: {{ messageData.id }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Контрольная сумма:</p>
-        <p class="tw-text-xs tw-break-all wrap-text">
+    <div class="tw-max-w-xs tw-ml-4 tw-flex tw-flex-col tw-gap-y-2">
+      <div class="tw-flex tw-flex-col">
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">ID</p>
+        <p class="tw-text-lg">{{ messageData.id }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Контрольная сумма:</p>
+        <p class="tw-text-lg tw-break-all wrap-text">
           {{ messageData.checksum }}
         </p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Создано:</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Создано:</p>
         <p class="tw-text-lg">{{ messageData.createdAt }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Доставлено: {{ messageData.delivered_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Метаданные: {{ messageData.metadata }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Прочитано: {{ messageData.read_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Получено: {{ messageData.received_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Получение: {{ messageData.receiving_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Отправка: {{ messageData.sending_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Отправлено: {{ messageData.sent_at }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Количесво файлов: {{ messageData.totalFilesCount }}</p>
-      </sheet-vue>
-      <sheet-vue>
-        <p class="tw-text-lg">Размер: {{ messageData.totalSizeBytes }} байт</p>
-      </sheet-vue>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Доставлено</p>
+        <p class="tw-text-lg">{{ messageData.delivered_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Метаданные</p>
+        <p class="tw-text-lg">{{ messageData.metadata }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Прочитано</p>
+        <p class="tw-text-lg">{{ messageData.read_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получено</p>
+        <p class="tw-text-lg">{{ messageData.received_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получение</p>
+        <p class="tw-text-lg">{{ messageData.receiving_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправка</p>
+        <p class="tw-text-lg">{{ messageData.sending_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправлено</p>
+        <p class="tw-text-lg">{{ messageData.sent_at }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Количесво файлов</p>
+        <p class="tw-text-lg">{{ messageData.totalFilesCount }}</p>
+      </div>
+      <div>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Размер</p>
+        <p class="tw-text-lg">{{ messageData.totalSizeBytes }} байт</p>
+      </div>
     </div>
   </v-sheet>
 </template>

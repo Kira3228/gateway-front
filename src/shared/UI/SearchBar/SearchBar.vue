@@ -1,0 +1,27 @@
+<template>
+  <div class="tw-flex tw-gap-6">
+    <select-input-vue :items="items" @debounce="handleSelect"></select-input-vue>
+    <text-input-vue class="tw-flex-1" isSearch></text-input-vue>
+  </div>
+</template>
+<script lang="ts">
+import { TSortOptions } from "@/shared/types/common/TSortOptions";
+import Vue from "vue";
+import { PropType } from "vue/types/v3-component-props";
+import SelectInputVue from "../SelectInput/SelectInput.vue";
+import TextInputVue from "../TextInput/TextInput.vue";
+export default Vue.extend({
+  components: { SelectInputVue, TextInputVue },
+  props: {
+    items: {
+      type: Array as PropType<TSortOptions[]>,
+      default: () => [],
+    },
+  },
+  methods: {
+    handleSelect(newValue: TSortOptions) {
+      this.$emit(`select-item`, newValue);
+    },
+  },
+});
+</script>

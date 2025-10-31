@@ -3,14 +3,14 @@ import { TSortOptions } from "@/shared/types/common/TSortOptions";
 export const items: TSortOptions[] = [
   {
     label: `Сначала большие`, value: {
-      sortField: "fileSize",
-      sortOrder: "ASC"
+      sortField: "fileSizeBytes",
+      sortOrder: "DESC"
     }
   },
   {
     label: `Сначала маленькие`, value: {
-      sortField: "fileSize",
-      sortOrder: "DESC"
+      sortField: "fileSizeBytes",
+      sortOrder: "ASC"
     }
   },
   {
@@ -22,7 +22,7 @@ export const items: TSortOptions[] = [
   {
     label: `Z-A`, value: {
       sortField: "fileName",
-      sortOrder: "ASC"
+      sortOrder: "DESC"
     }
   },
 

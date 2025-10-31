@@ -17,12 +17,15 @@
       :sort-by.sync="localSortByList"
       :sort-desc.sync="sortDescFields"
       @click:row="handleRowClick"
+      :loading="isLoading"
+      loading-text="Загрузка данных"
     >
       <template v-slot:top>
         <slot name="select-preset"></slot>
       </template>
     </v-data-table>
     <slot name="modal"></slot>
+
     <v-pagination v-model="localPage" :total-visible="7" :length="paginationLength">
     </v-pagination>
   </div>
@@ -38,6 +41,10 @@ export default Vue.extend({
   components: { SelectInput },
   name: "DataTable",
   props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
     headers: {
       type: Array as PropType<DataTableHeader[]>,
       default: (): DataTableHeader[] => [],

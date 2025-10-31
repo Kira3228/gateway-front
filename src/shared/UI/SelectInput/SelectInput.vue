@@ -13,12 +13,13 @@
     color="primary"
     style="max-width: 200px"
     @input="handleSelect"
+    return-object
   ></v-select>
 </template>
 
 <script lang="ts">
+import { TSortOptions } from "@/shared/types/common/TSortOptions";
 import Vue from "vue";
-import { use } from "vue/types/umd";
 import { useDebounce } from "./../../utils/debounce";
 export default Vue.extend({
   name: "CustomSelect",
@@ -51,7 +52,7 @@ export default Vue.extend({
     this.debounce = useDebounce();
   },
   methods: {
-    handleSelect(newValue: string) {
+    handleSelect(newValue: TSortOptions) {
       this.$emit("input", newValue);
       if (this.debounce) {
         this.debounce.debounce(() => {

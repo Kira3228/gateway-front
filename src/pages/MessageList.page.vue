@@ -1,6 +1,11 @@
 <template>
   <div>
-    <data-table-vue :headers="headers" :items="items" @click-row="handleRowClick">
+    <data-table-vue
+      :isLoading="isTableLoading"
+      :headers="headers"
+      :items="items"
+      @click-row="handleRowClick"
+    >
       <template v-slot:modal>
         <dialog-window-vue
           v-if="dialog && messageExts.id"
@@ -53,7 +58,7 @@ export default Vue.extend({
     async handleRowClick(data: TMessage) {
       try {
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
-        await this.$store.dispatch(`messageStore/getMessageFile`, data.id);
+        await this.$store.dispatch(`messageStore/getMessageFile`, { id: data.id });
         await this.$store.dispatch(`messageStore/getStatusHistory`, data.id);
 
         this.dialog = true;
@@ -102,6 +107,9 @@ export default Vue.extend({
       set(newPreset: string) {
         this.$store.commit(`messageStore/SET_PRESET`, newPreset);
       },
+    },
+    isTableLoading() {
+      return this.$store.state.messageStore.isTableLoading;
     },
   },
   watch: {
