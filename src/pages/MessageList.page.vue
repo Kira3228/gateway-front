@@ -8,6 +8,7 @@
     >
       <template v-slot:modal>
         <dialog-window-vue
+          :toolbarTitle="modalTitle"
           v-if="dialog && messageExts.id"
           :key="messageExts.id"
           :value="dialog"
@@ -47,6 +48,7 @@ export default Vue.extend({
   data() {
     return {
       dialog: false,
+      modalTitle: "",
     };
   },
   async mounted() {
@@ -60,6 +62,7 @@ export default Vue.extend({
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
         await this.$store.dispatch(`messageStore/getMessageFile`, { id: data.id });
         await this.$store.dispatch(`messageStore/getStatusHistory`, data.id);
+        this.modalTitle = `ID: ${data.messageId}`;
 
         this.dialog = true;
       } catch (error) {

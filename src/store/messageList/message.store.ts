@@ -28,6 +28,8 @@ export type TInitialState = {
   ext: TMessageExt
   files: TMessageFile[]
   statusHistory: TStatusHistory[]
+  isFilesLoading: boolean
+  isStatusHistoryLoading: boolean
 }
 
 const state: TInitialState = {
@@ -57,7 +59,9 @@ const state: TInitialState = {
     metadata: "",
   },
   files: [],
-  statusHistory: []
+  statusHistory: [],
+  isFilesLoading: false,
+  isStatusHistoryLoading: false
 }
 
 
@@ -92,8 +96,14 @@ const mutations: MutationTree<TInitialState> = {
   SET_MESSAGE_ID(state: TInitialState, newFileId: number) {
     state.messageId = newFileId
   },
-  SET_IS_TABLE_LOADING(state: TInitialState, loading: boolean) {
-    state.isTableLoading = loading
+  SET_IS_TABLE_LOADING(state: TInitialState, loadSatate: boolean) {
+    state.isTableLoading = loadSatate
+  },
+  SET_FILE_LOADING(state: TInitialState, loadSatate: boolean) {
+    state.isFilesLoading = loadSatate
+  },
+  SET_STATUS_HISTORY(state: TInitialState, loadState: boolean) {
+    state.isStatusHistoryLoading = loadState
   }
 }
 
@@ -154,24 +164,43 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
     try {
+      commit(`SET_FILE_LOADING`, true)
       const files = await fetchMessageFiles(payload)
 
-      commit(`SET_FILES`, files)
+      const fileWithLoading = files.map((file: TMessageFile) => {
+        return {
+          ...file, isLoading: false
+        }
+      })
+
+      commit(`SET_FILES`, fileWithLoading)
+
       commit(`SET_MESSAGE_ID`, payload.id)
     } catch (error) {
 
+    }
+    finally {
+      const timeout = setTimeout(() => {
+
+        commit(`SET_FILE_LOADING`, false)
+      }, 4000)
     }
   },
 
   async getStatusHistory({ commit }, id: number) {
     try {
+      commit(`SET_STATUS_HISTORY`, true)
+
       const history = await fetchHistory(id)
-      console.log(`История`, history);
 
       commit(`SET_HISTORY`, history)
     } catch (error) {
       console.error(error);
-
+    }
+    finally {
+      setTimeout(() => {
+        commit(`SET_STATUS_HISTORY`, false)
+      }, 4000)
     }
   },
 

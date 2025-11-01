@@ -2,10 +2,10 @@
   <v-virtual-scroll
     :bench="0"
     max-width="auto"
-    height="718"
+    height="706"
     item-height="100"
     class="flex-grow-1"
-    :items="extendedItems"
+    :items="items"
     style="min-height: 0"
   >
     <template v-slot:default="{ item }">
@@ -30,13 +30,6 @@ export default Vue.extend({
       default: false,
     },
   },
-  computed: {
-    extendedItems() {
-      return this.items.map((item) => ({
-        ...item,
-        isLoading: this.isItemLoading,
-      }));
-    },
-  },
+  computed: {},
 });
 </script>

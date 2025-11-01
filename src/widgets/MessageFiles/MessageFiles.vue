@@ -1,18 +1,27 @@
 <template>
   <v-sheet class="tw-p-3" width="100%">
     <v-card-title> Файлы сообщения </v-card-title>
-    <search-bar-vue :items="items" @select-item="test"></search-bar-vue>
-    <virtual-scroll-vue :items="files">
+    <search-bar-vue :items="items" @select-item="handleSort"></search-bar-vue>
+    <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
+    </div>
+    <virtual-scroll-vue v-else :items="files">
       <template v-slot:item="{ item }">
         <list-item-vue :key="item.id" :item="item">
           <template v-slot:content="{ item }">
-            <p class="tw-text-base tw-text-blue-700 tw-font-bold">{{ item.fileName }}</p>
+            <p class="tw-text-base tw-text-blue-700 tw-font-bold">
+              {{ item.fileName }}
+            </p>
             <p class="tw-text-base tw-text-gray-600">
               {{ item.filePath }} | {{ item.fileSizeBytes }} байт
             </p>
-            <span class="tw-text-sm tw-mt-4">
-              {{ item.description }}
-            </span>
+            <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
           </template>
         </list-item-vue>
       </template>
@@ -51,8 +60,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    async test(data: TSortOptions) {
-      console.log(data);
+    async handleSort(data: TSortOptions) {
       await this.$store.dispatch(`messageStore/getMessageFile`, {
         id: this.id,
         sortField: data.value.sortField,
@@ -63,6 +71,9 @@ export default Vue.extend({
   computed: {
     id() {
       return this.$store.state.messageStore.messageId;
+    },
+    isLoading(): boolean {
+      return this.$store.state.messageStore.isFilesLoading;
     },
   },
 });

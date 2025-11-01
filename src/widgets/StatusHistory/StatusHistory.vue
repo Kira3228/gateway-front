@@ -2,7 +2,15 @@
   <v-sheet class="tw-p-3" width="100%">
     <v-card-title> Итория изменений </v-card-title>
     <search-bar-vue></search-bar-vue>
-    <virtual-scroll-vue :items="items">
+    <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+      <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
+    </div>
+    <virtual-scroll-vue v-else :items="items">
       <template v-slot:item="{ item }">
         <list-item-vue :key="item.id" :item="item">
           <template v-slot:content="{ item }">
@@ -35,7 +43,7 @@
 <script lang="ts">
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
 import Vue from "vue";
-import { Prop, PropType } from "vue/types/v3-component-props";
+import { PropType } from "vue/types/v3-component-props";
 import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import SearchBarVue from "@/shared/UI/SearchBar/SearchBar.vue";
@@ -51,6 +59,14 @@ export default Vue.extend({
     getColor(isActive: boolean): `green` | `red` {
       return isActive ? `green` : `red`;
     },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.messageStore.isStatusHistoryLoading;
+    },
+  },
+  mounted() {
+    console.log(this.isLoading);
   },
 });
 </script>
