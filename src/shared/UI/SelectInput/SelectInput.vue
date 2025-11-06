@@ -11,10 +11,16 @@
     dense
     single-line
     color="primary"
-    style="max-width: 200px"
+    style="max-width: 360px"
     @input="handleSelect"
     return-object
-  ></v-select>
+    :chips="chips"
+    :multiple="multiple"
+  >
+    <template v-slot:selection="{ item, index }">
+      <slot name="selectedChip" :item="item" :index="index"></slot>
+    </template>
+  </v-select>
 </template>
 
 <script lang="ts">
@@ -39,6 +45,14 @@ export default Vue.extend({
     value: {
       type: [String, Number, Object, Array],
       default: null,
+    },
+    chips: {
+      type: Boolean,
+      default: false,
+    },
+    multiple: {
+      type: Boolean,
+      default: false,
     },
   },
 

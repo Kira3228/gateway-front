@@ -1,7 +1,28 @@
 <template>
   <v-sheet class="tw-p-3" width="100%">
     <v-card-title> Итория изменений </v-card-title>
-    <search-bar-vue></search-bar-vue>
+    <div class="tw-flex tw-gap-4 tw-items-center">
+      <select-input-vue :items="[]" @debounce="handleSelect"></select-input-vue>
+      <select-input-vue
+        chips
+        multiple
+        v-model="selectedStatuses"
+        :items="statusHistoryOptions"
+        @debounce="() => {}"
+      >
+        <template #selectedChip="{ item, index }">
+          <v-chip
+            v-if="index === 0"
+            close
+            @click:close="selectedStatuses.splice(index, 1)"
+            :color="getStatusColor(item.label)"
+          >
+            {{ item.label }}
+          </v-chip>
+          <span v-if="index === 1">(+{{ selectedStatuses.length }} выбрано)</span>
+        </template>
+      </select-input-vue>
+    </div>
 
     <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
       <v-skeleton-loader max-height="110px" type="card"></v-skeleton-loader>
@@ -47,19 +68,35 @@
 </template>
 <script lang="ts">
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import Vue from "vue";
+import Vue, { triggerRef } from "vue";
 import { PropType } from "vue/types/v3-component-props";
 import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import SearchBarVue from "@/shared/UI/SearchBar/SearchBar.vue";
 import AutocompliteVue from "@/shared/UI/Autocomplite/Autocomplite.vue";
+import { TSortOptions } from "@/shared/types/common/TSortOptions";
+import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
+import { SelectStatusHisotry } from "./SelectStatusHistory";
+import { TOption } from "@/shared/UI/SelectInput/TOptions";
 export default Vue.extend({
-  components: { VirtualScrollVue, ListItemVue, SearchBarVue, AutocompliteVue },
+  components: {
+    VirtualScrollVue,
+    ListItemVue,
+    SearchBarVue,
+    AutocompliteVue,
+    SelectInputVue,
+  },
   props: {
     items: {
       type: Array as PropType<TStatusHistory[]>,
       default: () => {},
     },
+  },
+  data() {
+    return {
+      selectedStatuses: [] as TOption[],
+      statusHistoryOptions: SelectStatusHisotry,
+    };
   },
   methods: {
     getColor(isActive: boolean): `green` | `red` {
@@ -87,6 +124,16 @@ export default Vue.extend({
           return `#dc3545`;
       }
     },
+    handleSelect(newValue: TSortOptions) {
+      this.$emit(`select-item`, newValue);
+    },
+    handleChipClick(data: TOption) {
+      this.selectedStatuses = [
+        ...this.selectedStatuses.filter((item) => item.value !== data.value),
+      ];
+
+      console.log(this.selectedStatuses);
+    },
   },
   computed: {
     isLoading() {
@@ -96,5 +143,6 @@ export default Vue.extend({
   mounted() {
     console.log(this.isLoading);
   },
+  watch: {},
 });
 </script>
