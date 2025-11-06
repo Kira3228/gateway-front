@@ -15,6 +15,7 @@ import { fetchPresets } from "@/shared/api/presets"
 
 export type TInitialState = {
   items: TMessage[]
+  fileId: number
   messageId: number
   page: number
   totalPages: number
@@ -34,6 +35,7 @@ export type TInitialState = {
 
 const state: TInitialState = {
   items: [],
+  fileId: 0,
   page: 1,
   messageId: 0,
   totalPages: 0,
@@ -104,6 +106,9 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_STATUS_HISTORY(state: TInitialState, loadState: boolean) {
     state.isStatusHistoryLoading = loadState
+  },
+  SET_FILE_ID(state: TInitialState, newId: number) {
+    state.fileId = newId
   }
 }
 
@@ -165,6 +170,7 @@ const actions: ActionTree<TInitialState, RootState> = {
   async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
     try {
       commit(`SET_FILE_LOADING`, true)
+      commit(`SET_ITEM_ID`, payload.id)
       const files = await fetchMessageFiles(payload)
 
       const fileWithLoading = files.map((file: TMessageFile) => {
@@ -180,27 +186,23 @@ const actions: ActionTree<TInitialState, RootState> = {
 
     }
     finally {
-      const timeout = setTimeout(() => {
-
-        commit(`SET_FILE_LOADING`, false)
-      }, 4000)
+      commit(`SET_FILE_LOADING`, false)
     }
   },
 
-  async getStatusHistory({ commit }, id: number) {
+  async getStatusHistory({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
     try {
       commit(`SET_STATUS_HISTORY`, true)
 
-      const history = await fetchHistory(id)
+      const history = await fetchHistory(payload)
 
       commit(`SET_HISTORY`, history)
     } catch (error) {
       console.error(error);
     }
     finally {
-      setTimeout(() => {
-        commit(`SET_STATUS_HISTORY`, false)
-      }, 4000)
+      commit(`SET_STATUS_HISTORY`, false)
+
     }
   },
 

@@ -3,7 +3,7 @@
     :bench="0"
     max-width="auto"
     height="706"
-    item-height="100"
+    :item-height="asd"
     class="flex-grow-1"
     :items="items"
     style="min-height: 0"
@@ -28,6 +28,10 @@ export default Vue.extend({
     isItemLoading: {
       type: Boolean,
       default: false,
+    },
+    asd: {
+      type: String,
+      default: "100px",
     },
   },
   computed: {},

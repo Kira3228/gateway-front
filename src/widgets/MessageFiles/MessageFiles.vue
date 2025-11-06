@@ -2,6 +2,7 @@
   <v-sheet class="tw-p-3" width="100%">
     <v-card-title> Файлы сообщения </v-card-title>
     <search-bar-vue :items="items" @select-item="handleSort"></search-bar-vue>
+
     <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
       <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
       <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
@@ -11,7 +12,7 @@
       <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
       <v-skeleton-loader max-height="90px" type="card"></v-skeleton-loader>
     </div>
-    <virtual-scroll-vue v-else :items="files">
+    <virtual-scroll-vue asd="100" v-else :items="files">
       <template v-slot:item="{ item }">
         <list-item-vue :key="item.id" :item="item">
           <template v-slot:content="{ item }">

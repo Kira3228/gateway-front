@@ -61,7 +61,7 @@ export default Vue.extend({
       try {
         await this.$store.dispatch(`messageStore/getExts`, data.messageId);
         await this.$store.dispatch(`messageStore/getMessageFile`, { id: data.id });
-        await this.$store.dispatch(`messageStore/getStatusHistory`, data.id);
+        await this.$store.dispatch(`messageStore/getStatusHistory`, { id: data.id });
         this.modalTitle = `ID: ${data.messageId}`;
 
         this.dialog = true;

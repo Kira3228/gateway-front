@@ -1,5 +1,5 @@
 <template>
-  <v-hover v-slot="{ hover }" class="tw-m-2">
+  <v-hover v-slot="{ hover }" class="tw-m-2 tw-block">
     <v-sheet rounded="xl" :elevation="hover ? 2 : 1">
       <v-list-item primary>
         <v-list-item-content>
