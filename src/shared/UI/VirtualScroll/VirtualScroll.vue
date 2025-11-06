@@ -2,8 +2,8 @@
   <v-virtual-scroll
     :bench="0"
     max-width="auto"
-    height="706"
-    :item-height="asd"
+    :height="height"
+    :item-height="itemHeight"
     class="flex-grow-1"
     :items="items"
     style="min-height: 0"
@@ -29,9 +29,13 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
-    asd: {
+    itemHeight: {
       type: String,
       default: "100px",
+    },
+    height: {
+      type: Number,
+      default: 706,
     },
   },
   computed: {},

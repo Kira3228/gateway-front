@@ -65,21 +65,14 @@ export default Vue.extend({
 
   watch: {
     model(val) {
-      console.log(`model`, val);
-
       if (val != null) this.tab = null;
       else this.tab = null;
     },
     search(val: string) {
-      console.log(`search`, val);
       if (this.items.length > 0) {
-        console.log(this.items.length);
-
         return;
       }
-
       this.isLoading = true;
-
       fetch("http://localhost:3000/messages/files/1")
         .then((res) => res.clone().json())
         .then((res) => {

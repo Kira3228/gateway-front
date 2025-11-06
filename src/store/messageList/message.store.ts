@@ -9,9 +9,10 @@ import { fetchMessageExts } from "@/shared/api/messageExt"
 import { formatDate } from "@/shared/utils/formatDate"
 import { fetchMessageFiles } from "@/shared/api/messageFile"
 import { TMessageFile } from "@/shared/types/common/TMessageFile"
-import { fetchHistory } from "@/shared/api/status-history"
+import { fetchHistory, TFilePayLoad } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
 import { fetchPresets } from "@/shared/api/presets"
+import { TOption } from "@/shared/UI/SelectInput/TOptions"
 
 export type TInitialState = {
   items: TMessage[]
@@ -31,6 +32,7 @@ export type TInitialState = {
   statusHistory: TStatusHistory[]
   isFilesLoading: boolean
   isStatusHistoryLoading: boolean
+  selectedStatuses: TOption[]
 }
 
 const state: TInitialState = {
@@ -63,7 +65,8 @@ const state: TInitialState = {
   files: [],
   statusHistory: [],
   isFilesLoading: false,
-  isStatusHistoryLoading: false
+  isStatusHistoryLoading: false,
+  selectedStatuses: []
 }
 
 
@@ -109,6 +112,14 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_FILE_ID(state: TInitialState, newId: number) {
     state.fileId = newId
+  },
+  SET_SELECTED_STATUSES(state: TInitialState, newStatuses: TOption[]) {
+    state.selectedStatuses = [...newStatuses]
+  },
+  REMOVE_ITEM_FROM_STATUSES(state: TInitialState, index: number) {
+    console.log(`убирается`);
+
+    state.selectedStatuses.splice(index, 1)
   }
 }
 
@@ -138,10 +149,8 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getHeaders({ commit, state }) {
     try {
-      console.log(state.preset);
 
       const headers = await fetchMessageHeaders({ presetName: state.preset })
-      console.log(headers);
 
 
       if (headers) {
@@ -190,7 +199,7 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getStatusHistory({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
+  async getStatusHistory({ commit }, payload: TFilePayLoad) {
     try {
       commit(`SET_STATUS_HISTORY`, true)
 
@@ -202,7 +211,6 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
     finally {
       commit(`SET_STATUS_HISTORY`, false)
-
     }
   },
 

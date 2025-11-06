@@ -94,11 +94,7 @@ export default Vue.extend({
       return this.$store.state.messageStore.files;
     },
     statusHistory() {
-      // const history = this.$store.state.messageStore.statusHistory ;
-      const history = this.$store.getters["messageStore/formatedHistory"];
-      console.log(`ЖОПА`, history);
-
-      return history;
+      return this.$store.getters["messageStore/formatedHistory"];
     },
     presetList() {
       return this.$store.state.messageStore.presetList;

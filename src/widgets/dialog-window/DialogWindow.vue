@@ -90,7 +90,6 @@ export default Vue.extend({
   methods: {
     handleCloseClick(e: KeyboardEvent & PointerEvent) {
       if (e.key === `Escape` || e.pointerType === `mouse`) {
-        console.log(e);
         this.localValue = false;
         this.$emit(`close-click`, false);
       }
