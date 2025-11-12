@@ -1,14 +1,10 @@
 <template>
   <ext-file-layout-vue title="История изменения">
     <div class="tw-items-center">
-      <text-input-vue label="Поиск" isSearch></text-input-vue>
-      <button-group-vue :height="30" :items="sortFields"> </button-group-vue>
-      <select-input-vue
-        class="tw-mb-6"
-        label="Сортировка"
-        :items="[]"
-        @debounce="handleSelect"
-      ></select-input-vue>
+      <status-history-sort-panel-vue
+        :sortButtonsItems="sortFields"
+      ></status-history-sort-panel-vue>
+
       <select-input-vue
         class="tw-mb-6"
         label="Старый статус"
@@ -73,26 +69,6 @@
           >
         </template>
       </select-input-vue>
-
-      <!-- ВОТ ЭТОТ ИНПУТ -->
-      <select-input-vue
-        placeholder="Выберите опцию"
-        label="Сортировка"
-        :items="sortFields"
-        customList
-      >
-        <template #ui-item="{ item, on, attrs }">
-          <v-list-item v-bind="attrs" v-on="on">
-            <v-list-item-action>
-              <component :is="item.component"></component>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.label }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </select-input-vue>
-      <!-- ВОТ ЭТОТ ИНПУТ -->
     </div>
     <div class="tw-flex-1">
       <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
@@ -137,7 +113,7 @@ import { UserTypeOptions } from "./UserType";
 import { SelectSort } from "./SelectSort";
 import ButtonGroupVue from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
-
+import StatusHistorySortPanelVue from "../StatusHistorySortPanel/StatusHistorySortPanel.vue";
 export default Vue.extend({
   components: {
     VirtualScrollVue,
@@ -150,6 +126,7 @@ export default Vue.extend({
     StatusHistoryCardVue,
     TextInputVue,
     ButtonGroupVue,
+    StatusHistorySortPanelVue,
   },
   props: {
     items: {
@@ -162,14 +139,13 @@ export default Vue.extend({
       selectedStatuses: [] as TOption[],
       statusHistoryOptions: SelectStatusHisotry,
       userTypeOptions: UserTypeOptions,
-      sortFields: SelectSort as TButtonGroupItem[],
+      sortFields: SelectSort as TButtonGroupItem[][],
     };
   },
   methods: {
     getColor(status: string): string {
       return getStatusColor(status);
     },
-
     handleSelect(newValue: TSortOptions) {
       this.$emit(`select-item`, newValue);
     },
@@ -185,6 +161,9 @@ export default Vue.extend({
     },
     async handleSelectStatus() {
       await this.$store.dispatch(`messageStore/getStatusHistory`);
+    },
+    handleSort(data: any) {
+      console.log(data);
     },
   },
   computed: {

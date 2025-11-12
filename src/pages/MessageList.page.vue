@@ -38,6 +38,8 @@ import Vue from "vue";
 import DialogWindowVue from "@/widgets/dialog-window/DialogWindow.vue";
 import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
 import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
+import { useMessageList } from "@/features/message-list/model";
+import { messageDetails } from "@/features/message-exts/model";
 export default Vue.extend({
   name: `MessageListPage`,
   components: {
@@ -49,21 +51,18 @@ export default Vue.extend({
     return {
       dialog: false,
       modalTitle: "",
+      messageList: useMessageList(),
+      messageDetails: messageDetails(),
     };
   },
   async mounted() {
-    await this.$store.dispatch(`messageStore/getHeaders`);
-    await this.$store.dispatch(`messageStore/loadItems`);
-    await this.$store.dispatch(`messageStore/getPresetNames`);
+    await this.messageList.init();
   },
   methods: {
     async handleRowClick(data: TMessage) {
       try {
-        await this.$store.dispatch(`messageStore/getExts`, data.messageId);
-        await this.$store.dispatch(`messageStore/getMessageFile`, { id: data.id });
-        await this.$store.dispatch(`messageStore/getStatusHistory`, { id: data.id });
+        this.messageDetails.loadDetails(data);
         this.modalTitle = `ID: ${data.messageId}`;
-
         this.dialog = true;
       } catch (error) {
         console.log(error);
@@ -77,42 +76,36 @@ export default Vue.extend({
     },
   },
   computed: {
-    items(): TMessage[] {
-      return this.$store.state.messageStore.items;
+    items() {
+      return this.messageList.items;
     },
     headers() {
-      return this.$store.state.messageStore.headers;
+      return this.messageList.headers;
     },
+
     messageExts(): TMessageExt {
-      const data = this.$store.getters["messageStore/messages"];
-      return data;
-    },
-    formattedData() {
-      return this.$store.getters["messageStore/messages"];
+      return this.messageDetails.messageExt;
     },
     messageFiles() {
-      return this.$store.state.messageStore.files;
+      return this.messageDetails.messageFiles;
     },
     statusHistory() {
-      return this.$store.getters["messageStore/formatedHistory"];
+      return this.messageDetails.statusHistory;
     },
     presetList() {
       return this.$store.state.messageStore.presetList;
     },
     selectedPreset: {
       get(): string {
-        return this.$store.state.messageStore.preset;
+        return this.messageList.selectPreset;
       },
       set(newPreset: string) {
         this.$store.commit(`messageStore/SET_PRESET`, newPreset);
       },
     },
     isTableLoading() {
-      return this.$store.state.messageStore.isTableLoading;
+      return this.messageList.isTableLoading;
     },
-  },
-  watch: {
-    messageExts(newVal) {},
   },
 });
 </script>

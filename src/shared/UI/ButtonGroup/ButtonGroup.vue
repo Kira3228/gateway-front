@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <v-btn-toggle>
+  <div class="tw-flex tw-gap-2">
+    <v-btn-toggle v-for="group in items" :key="group[0].key">
       <button-vue
-        @click="btn.func ? btn.func.call(btn) : null"
-        v-for="btn in items"
+        @click="handleClick(btn)"
+        v-for="btn in group"
         :key="btn.key"
         :height="height"
       >
@@ -27,8 +27,13 @@ export default Vue.extend({
       default: 48,
     },
     items: {
-      type: Array as PropType<TButtonGroupItem[]>,
+      type: Array as PropType<TButtonGroupItem[][]>,
       default: () => [],
+    },
+  },
+  methods: {
+    handleClick(data: any) {
+      this.$emit(`sort-click`, data);
     },
   },
 });

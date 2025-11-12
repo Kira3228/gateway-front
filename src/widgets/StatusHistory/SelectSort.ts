@@ -3,58 +3,43 @@ import SortAlphabeticalDescending from "@/shared/icons/SortAlphabeticalDescendin
 import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
 import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem"
-import store from "@/store"
 
 
-
-
-export const SelectSort: TButtonGroupItem[] = [
-  {
-    key: 1,
-    func: function () {
-      console.log(this.value);
+export const SelectSort: TButtonGroupItem[][] = [
+  [
+    {
+      key: 1,
+      component: SortAlphabeticalAscending,
+      value: {
+        sortField: `user`,
+        sortOrder: 'ASC'
+      }
     },
-    
-    component: SortAlphabeticalAscending,
-    value: {
-      sortField: `user`,
-      sortOrder: 'ASC'
-    }
-  },
-  {
-    key: 2,
-    func: function () {
-      console.log(this.value);
-
+    {
+      key: 2,
+      component: SortAlphabeticalDescending,
+      value: {
+        sortField: 'user',
+        sortOrder: 'DESC'
+      }
     },
-    component: SortAlphabeticalDescending,
-    value: {
-      sortField: 'user',
-      sortOrder: 'DESC'
-    }
-  },
-  {
-    key: 3,
-    func: function () {
-      console.log(this.value);
-
+  ],
+  [
+    {
+      key: 3,
+      component: SortCalendarAscending,
+      value: {
+        sortField: 'Date',
+        sortOrder: `ASC`
+      }
     },
-    component: SortCalendarAscending,
-    value: {
-      sortField: 'Date',
-      sortOrder: `ASC`
+    {
+      key: 4,
+      component: SortCalendarDescending,
+      value: {
+        sortField: 'Date',
+        sortOrder: `DESC`
+      }
     }
-  },
-  {
-    key: 4,
-    func: function () {
-      console.log(this.value);
-
-    },
-    component: SortCalendarDescending,
-    value: {
-      sortField: 'Date',
-      sortOrder: `DESC`
-    }
-  }
+  ]
 ];

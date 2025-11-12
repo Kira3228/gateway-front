@@ -5,5 +5,4 @@ export type TButtonGroupItem = {
   key: number
   component: any
   value: TValue,
-  func: () => Promise<void> | void
 }

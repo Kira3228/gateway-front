@@ -12,6 +12,7 @@
         <v-btn icon dark @click="handleCloseClick"><v-icon>mdi-close</v-icon></v-btn>
         <v-toolbar-title>{{ toolbarTitle }}</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn color="green" @click="() => {}">Повторная отправка</v-btn>
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">

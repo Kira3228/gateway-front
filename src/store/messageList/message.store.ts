@@ -9,7 +9,7 @@ import { fetchMessageExts } from "@/shared/api/messageExt"
 import { formatDate } from "@/shared/utils/formatDate"
 import { fetchMessageFiles } from "@/shared/api/messageFile"
 import { TMessageFile } from "@/shared/types/common/TMessageFile"
-import { fetchHistory, TFilePayLoad } from "@/shared/api/status-history"
+import { fetchHistory } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
 import { fetchPresets } from "@/shared/api/presets"
 
@@ -214,7 +214,7 @@ const actions: ActionTree<TInitialState, RootState> = {
         id: state.messageId,
         newStatuses: state.selectedNewStatuses,
         oldStatuses: state.selectedOldStatuses,
-        userTypes: state.selectedUserType
+        userTypes: state.selectedUserType, 
       })
 
       commit(`SET_HISTORY`, history)
