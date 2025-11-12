@@ -3,7 +3,7 @@ export type TSortOptions = {
   value: TValue
 }
 
-type TValue = {
+export type TValue = {
   sortField: string
   sortOrder: "ASC" | "DESC"
 }

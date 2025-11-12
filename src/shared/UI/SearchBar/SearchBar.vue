@@ -1,6 +1,10 @@
 <template>
   <div class="tw-flex tw-flex-col tw-gap-6">
-    <select-input-vue :items="items" @debounce="handleSelect"></select-input-vue>
+    <select-input-vue
+      label="Сортировка"
+      :items="items"
+      @debounce="handleSelect"
+    ></select-input-vue>
   </div>
 </template>
 <script lang="ts">

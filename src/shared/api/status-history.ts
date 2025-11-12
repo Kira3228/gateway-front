@@ -6,8 +6,9 @@ export type TFilePayLoad = {
   id: number,
   sortField?: string,
   sortOrder?: "ASC" | "DESC",
-  oldStatuses?: string[],
   newStatuses?: string[],
+  oldStatuses?: string[],
+  userTypes?: string[]
 }
 
 export const fetchHistory = (payload: TFilePayLoad) => {
@@ -17,6 +18,7 @@ export const fetchHistory = (payload: TFilePayLoad) => {
       sortOrder: payload.sortOrder,
       oldStatuses: payload.oldStatuses,
       newStatuses: payload.newStatuses,
+      userTypes: payload.userTypes
     }
   )
 }

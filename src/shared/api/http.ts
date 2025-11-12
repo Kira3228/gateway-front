@@ -5,6 +5,8 @@ export const httpGet = async <T>(url: string, params?: Record<string, any>): Pro
   if (!res.ok) {
     throw new Error(`GET ${finalURL} failed ${res.status}`)
   }
+
+
   return res.json() as Promise<T>
 }
 

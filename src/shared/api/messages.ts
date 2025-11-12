@@ -5,7 +5,6 @@ import { TMessageHeader } from "../types/messages/TMessagesHeader"
 
 export const fetchMessages = (params: {
   page?: number,
-
 }) => {
   return httpGet<IMessageRespone>(`${BASE_URL}/messages`, params)
 }

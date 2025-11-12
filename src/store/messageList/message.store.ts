@@ -12,7 +12,6 @@ import { TMessageFile } from "@/shared/types/common/TMessageFile"
 import { fetchHistory, TFilePayLoad } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
 import { fetchPresets } from "@/shared/api/presets"
-import { TOption } from "@/shared/UI/SelectInput/TOptions"
 
 export type TInitialState = {
   items: TMessage[]
@@ -32,7 +31,10 @@ export type TInitialState = {
   statusHistory: TStatusHistory[]
   isFilesLoading: boolean
   isStatusHistoryLoading: boolean
-  selectedStatuses: TOption[]
+  selectedOldStatuses: string[]
+  selectedNewStatuses: string[]
+  isAdmin: boolean
+  selectedUserType: string[]
 }
 
 const state: TInitialState = {
@@ -66,7 +68,10 @@ const state: TInitialState = {
   statusHistory: [],
   isFilesLoading: false,
   isStatusHistoryLoading: false,
-  selectedStatuses: []
+  selectedOldStatuses: [],
+  selectedNewStatuses: [],
+  isAdmin: false,
+  selectedUserType: []
 }
 
 
@@ -113,13 +118,17 @@ const mutations: MutationTree<TInitialState> = {
   SET_FILE_ID(state: TInitialState, newId: number) {
     state.fileId = newId
   },
-  SET_SELECTED_STATUSES(state: TInitialState, newStatuses: TOption[]) {
-    state.selectedStatuses = [...newStatuses]
+  SET_SELECTED_OLD_STATUSES(state: TInitialState, newStatuses: string[]) {
+    state.selectedOldStatuses = [...newStatuses]
   },
-  REMOVE_ITEM_FROM_STATUSES(state: TInitialState, index: number) {
-    console.log(`убирается`);
-
-    state.selectedStatuses.splice(index, 1)
+  SET_SELECTED_NEW_STATUSES(state: TInitialState, newStatuses: string[]) {
+    state.selectedNewStatuses = [...newStatuses]
+  },
+  SET_IS_ADMIN(state: TInitialState, newState: boolean) {
+    state.isAdmin = newState
+  },
+  SET_SELECTED_USER_TYPE(state: TInitialState, newState: string[]) {
+    state.selectedUserType = [...newState]
   }
 }
 
@@ -149,9 +158,7 @@ const actions: ActionTree<TInitialState, RootState> = {
 
   async getHeaders({ commit, state }) {
     try {
-
       const headers = await fetchMessageHeaders({ presetName: state.preset })
-
 
       if (headers) {
         commit(`SET_HEADERS`, headers)
@@ -199,11 +206,16 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getStatusHistory({ commit }, payload: TFilePayLoad) {
+  async getStatusHistory({ commit },) {
     try {
       commit(`SET_STATUS_HISTORY`, true)
 
-      const history = await fetchHistory(payload)
+      const history = await fetchHistory({
+        id: state.messageId,
+        newStatuses: state.selectedNewStatuses,
+        oldStatuses: state.selectedOldStatuses,
+        userTypes: state.selectedUserType
+      })
 
       commit(`SET_HISTORY`, history)
     } catch (error) {
@@ -224,8 +236,7 @@ const actions: ActionTree<TInitialState, RootState> = {
   },
   async getSortedFiles({ state, commit, dispatch }) {
 
-  }
-
+  },
 }
 
 const getters: GetterTree<TInitialState, RootState> = {
@@ -246,6 +257,8 @@ const getters: GetterTree<TInitialState, RootState> = {
       changeDatetime: formatDate(item.changeDatetime) as string,
     }))
   }
+
+
 }
 
 const messageStore: Module<TInitialState, RootState> = {
