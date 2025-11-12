@@ -12,13 +12,9 @@ export default new Vuetify({
     options: {
       customProperties: true
     },
-
   },
   typography: {
     fontFamily: '"Roboto", "Inter", "Segoe UI", Arial, sans-serif',
   },
   icons: { iconfont: 'mdi' },
-
-
-
 });
