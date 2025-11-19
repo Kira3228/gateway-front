@@ -15,7 +15,7 @@ export const messageDetails = () => {
       return store.getters["messageStore/messages"]
     },
     get messageFiles() {
-      return store.state.messageState.files;
+      return store.state.messageStore.files;
     },
     get statusHistory() {
       return store.getters["messageStore/formatedHistory"];

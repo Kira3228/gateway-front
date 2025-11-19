@@ -2,7 +2,7 @@
   <v-btn
     @click="$emit(`click`, $event)"
     :disabled="isDisabled"
-    elevation="2"
+    :elevation="elevation"
     :color="color"
     :height="height"
     :outlined="outlined"
@@ -37,6 +37,10 @@ export default Vue.extend({
     height: {
       type: Number,
       default: 48,
+    },
+    elevation: {
+      type: Number,
+      default: 2,
     },
   },
 });

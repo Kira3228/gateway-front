@@ -14,8 +14,8 @@
       :single-select="false"
       hide-default-footer
       dense
-      :sort-by.sync="localSortByList"
-      :sort-desc.sync="sortDescFields"
+      :sort-by.sync="sortByList"
+      :sort-desc.sync="sortDescList"
       @click:row="handleRowClick"
       :loading="isLoading"
       loading-text="Загрузка данных"
@@ -26,7 +26,11 @@
     </v-data-table>
     <slot name="modal"></slot>
 
-    <v-pagination v-model="localPage" :total-visible="7" :length="paginationLength">
+    <v-pagination
+      v-model="localPage"
+      :total-visible="7"
+      :length="paginationLength"
+    >
     </v-pagination>
   </div>
 </template>
@@ -53,6 +57,10 @@ export default Vue.extend({
       type: Array as PropType<TMessage[]>,
       default: (): TMessage[] => [],
     },
+    itemsPerPage: {
+      type: Number,
+      default: 14,
+    },
     paginationLength: {
       type: Number,
       default: 0,
@@ -72,35 +80,7 @@ export default Vue.extend({
   data() {
     return {
       localPage: this.page,
-      itemsPerPage: 14,
     };
-  },
-
-  computed: {
-    sortDescFields: {
-      get() {
-        return this.sortDescList;
-      },
-      set(value) {
-        this.$emit("update:sortDescList", value);
-      },
-    },
-    isArchived: {
-      get(): boolean {
-        return this.$store.state.activeFileTable.isArchived;
-      },
-      set(newValue: boolean) {
-        this.$store.commit(`activeFileTable/SET_SWITCH`, newValue);
-      },
-    },
-    localSortByList: {
-      get() {
-        return this.sortByList;
-      },
-      set(value) {
-        this.$emit("update:sortByList", value);
-      },
-    },
   },
 
   methods: {
@@ -112,23 +92,6 @@ export default Vue.extend({
     handleRowClick(data: any) {
       this.$emit(`click-row`, data);
     },
-
-    getColor(status: string): string {
-      if (status === `active`) return `green`;
-      else if (status === `archived`) return `orange`;
-      else return `red`;
-    },
-    async onUpdate(itemId: string, newStatus: string) {
-      await this.$store.dispatch(`activeFileTable/updateStatus`, {
-        id: Number(itemId),
-        status: newStatus,
-      });
-    },
-    formatDate(date: string): string {
-      return date ? date.split("T")[0] : "";
-    },
   },
-
-  watch: {},
 });
 </script>

@@ -1,7 +1,10 @@
 <template>
   <div class="tw-items-center">
     <text-input-vue label="Поиск" isSearch></text-input-vue>
-    <button-group-vue :height="height" :items="sortButtonsItems"></button-group-vue>
+    <button-group-vue
+      :height="height"
+      :items="sortButtonsItems"
+    ></button-group-vue>
     <slot name="ui-item"></slot>
   </div>
 </template>
@@ -18,7 +21,7 @@ export default Vue.extend({
   },
   props: {
     sortButtonsItems: {
-      type: Array as PropType<TButtonGroupItem[]>,
+      type: Array as PropType<TButtonGroupItem[][]>,
       default: () => [],
     },
     height: {

@@ -8,27 +8,22 @@ export const useMessageList = () => {
     await store.dispatch(`messageStore/getPresetNames`);
   }
 
-  const relaod = async () => {
-    await store.dispatch('messageStore/loadItems')
-  }
-
   return {
     init,
-    relaod,
     get items(): TMessage[] {
-      return store.state.messageState.items
+      return store.state.messageStore.items
     },
     get headers() {
-      return store.state.messageState.headers;
+      return store.state.messageStore.headers;
     },
     get isTableLoading() {
-      return store.state.messageState.isTableLoading
+      return store.state.messageStore.isTableLoading
     },
     get presetList() {
-      return store.state.messageState.presetList
+      return store.state.messageStore.presetList
     },
     get selectPreset() {
-      return store.state.messageState.preset
+      return store.state.messageStore.preset
     }
   }
 }

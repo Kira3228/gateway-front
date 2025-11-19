@@ -7,7 +7,7 @@ import type { TInitialState as messageState } from './messageList/message.store'
 Vue.use(Vuex)
 
 export interface RootState {
-  messageState: messageState
+  messageStore: messageState
 }
 
 

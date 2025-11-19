@@ -6,6 +6,8 @@
         v-for="btn in group"
         :key="btn.key"
         :height="height"
+        outlined
+        :elevation="0"
       >
         <component :is="btn.component"></component>
       </button-vue>

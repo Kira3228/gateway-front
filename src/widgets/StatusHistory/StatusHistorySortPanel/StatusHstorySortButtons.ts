@@ -4,8 +4,7 @@ import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
 import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem"
 
-
-export const SelectSort: TButtonGroupItem[][] = [
+export const StatusHstorySortButtons: TButtonGroupItem[][] = [
   [
     {
       key: 1,
