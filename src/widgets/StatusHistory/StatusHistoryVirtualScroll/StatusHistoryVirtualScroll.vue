@@ -24,18 +24,15 @@ import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import Vue from "vue";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import StatusHistoryCardVue from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import { PropType } from "vue/types/v3-component-props";
+import store from "@/store";
 export default Vue.extend({
   components: { VirtualScrollVue, ListItemVue, StatusHistoryCardVue },
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false,
+  computed: {
+    items() {
+      return store.state.messageStore.statusHistory;
     },
-    items: {
-      type: Array as PropType<TStatusHistory[]>,
-      default: () => {},
+    isLoading() {
+      return store.state.messageStore.isStatusHistoryLoading;
     },
   },
 });
