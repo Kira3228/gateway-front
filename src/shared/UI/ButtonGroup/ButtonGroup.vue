@@ -1,6 +1,10 @@
 <template>
   <div class="tw-flex tw-gap-2">
-    <v-btn-toggle v-for="group in items" :key="group[0].key">
+    <v-btn-toggle
+      v-model="selectedSort"
+      v-for="group in items"
+      :key="group[0].key"
+    >
       <button-vue
         v-for="btn in group"
         @click="handleClick(btn)"
@@ -25,6 +29,7 @@ import { Emit } from "vue-property-decorator";
 interface IButtonGroupData {
   isActive: boolean;
   activeBtnKey: null | number;
+  selectedSort: any;
 }
 
 interface IButtonGroupMethods {
@@ -47,6 +52,7 @@ export default Vue.extend<
     return {
       isActive: true,
       activeBtnKey: null,
+      selectedSort: [],
     };
   },
   components: {
@@ -85,6 +91,11 @@ export default Vue.extend<
         this.activeBtnKey === btnData.key;
         this.$emit(`click-sort`, btnData);
       }
+    },
+  },
+  watch: {
+    selectedSort() {
+      console.log(this.selectedSort);
     },
   },
 });

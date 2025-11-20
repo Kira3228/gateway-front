@@ -193,27 +193,27 @@ const actions: ActionTree<TInitialState, RootState> = {
     }
   },
 
-  async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
-    try {
-      commit(`SET_FILE_LOADING`, true)
-      const files = await fetchMessageFiles(payload)
+  // async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
+  //   try {
+  //     commit(`SET_FILE_LOADING`, true)
+  //     const files = await fetchMessageFiles(payload)
 
-      const fileWithLoading = files.map((file: TMessageFile) => {
-        return {
-          ...file, isLoading: false
-        }
-      })
+  //     const fileWithLoading = files.map((file: TMessageFile) => {
+  //       return {
+  //         ...file, isLoading: false
+  //       }
+  //     })
 
-      commit(`SET_FILES`, fileWithLoading)
+  //     commit(`SET_FILES`, fileWithLoading)
 
-      commit(`SET_MESSAGE_ID`, payload.id)
-    } catch (error) {
+  //     commit(`SET_MESSAGE_ID`, payload.id)
+  //   } catch (error) {
 
-    }
-    finally {
-      commit(`SET_FILE_LOADING`, false)
-    }
-  },
+  //   }
+  //   finally {
+  //     commit(`SET_FILE_LOADING`, false)
+  //   }
+  // },
 
   async getStatusHistory({ commit },) {
     try {
@@ -227,6 +227,7 @@ const actions: ActionTree<TInitialState, RootState> = {
         sortField: state.sort.field,
         sortOrder: state.sort.direction
       })
+      console.log(history);
 
       commit(`SET_HISTORY`, history)
     } catch (error) {

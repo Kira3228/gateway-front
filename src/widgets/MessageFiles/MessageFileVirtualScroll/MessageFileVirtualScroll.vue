@@ -6,6 +6,7 @@
     :items="items"
     :skeletonHeight="88"
     :skeletonsQuantity="8"
+    @scroll-end="onScrollEnd"
   >
     <template #listItem="{ item }">
       <list-item-vue :key="item.id" :item="item">
@@ -38,6 +39,11 @@ export default Vue.extend({
     },
     items() {
       return store.state.messageStore.files;
+    },
+  },
+  methods: {
+    onScrollEnd() {
+      console.log(`всё круто`);
     },
   },
   mounted() {

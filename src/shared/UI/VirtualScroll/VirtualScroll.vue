@@ -8,8 +8,13 @@
     :items="items"
     style="min-height: 0"
   >
-    <template v-slot:default="{ item }">
+    <template v-slot:default="{ item, index }">
       <slot name="item" :item="item"></slot>
+      <div
+        v-if="index === items.length - 1"
+        v-intersect="onIntersect"
+        style="height: 1px; width: 100%"
+      ></div>
     </template>
   </v-virtual-scroll>
 </template>
@@ -39,5 +44,10 @@ export default Vue.extend({
     },
   },
   computed: {},
+  methods: {
+    onIntersect() {
+      this.$emit(`scroll-end`);
+    },
+  },
 });
 </script>

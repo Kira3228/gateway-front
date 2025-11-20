@@ -13,6 +13,7 @@
       :height="height"
       :itemHeight="itemHeight"
       :items="items"
+      @scroll-end="onScrollEnd"
     >
       <template v-slot:item="{ item }">
         <slot name="listItem" :item="item"></slot>
@@ -54,6 +55,11 @@ export default Vue.extend({
     height: {
       type: Number,
       default: 750,
+    },
+  },
+  methods: {
+    onScrollEnd() {
+      this.$emit(`scroll-end`);
     },
   },
 });

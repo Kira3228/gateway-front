@@ -4,10 +4,13 @@ import breadcrumbsStore from './breadcrumbs/breadcrumbs.store'
 import messageStore from './messageList/message.store'
 
 import type { TInitialState as messageState } from './messageList/message.store'
+import type { TInitialState as messageFilesState } from './messageList/message-files.store'
+
 Vue.use(Vuex)
 
 export interface RootState {
-  messageStore: messageState
+  messageStore: messageState,
+  messageFilesStore: messageFilesState
 }
 
 

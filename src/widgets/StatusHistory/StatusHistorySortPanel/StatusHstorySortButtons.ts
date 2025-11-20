@@ -21,7 +21,9 @@ export const StatusHstorySortButtons: TButtonGroupItem[][] = [
         sortField: 'user',
         sortOrder: 'DESC'
       }
-    },
+    }
+  ],
+  [
     {
       key: 3,
       component: SortCalendarAscending,
@@ -38,6 +40,5 @@ export const StatusHstorySortButtons: TButtonGroupItem[][] = [
         sortOrder: `DESC`
       }
     }
-  ],
-
+  ]
 ];

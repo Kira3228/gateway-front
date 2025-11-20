@@ -1,9 +1,9 @@
 export type TSortOptions = {
   label: string
-  value: TValue
+  value: TSortValue
 }
 
-export type TValue = {
+export type TSortValue = {
   sortField: string
   sortOrder: "ASC" | "DESC"
 }
