@@ -3,7 +3,7 @@
     <v-btn-toggle v-for="group in items" :key="group[0].key">
       <button-vue
         v-for="btn in group"
-        @click="handleClick($event, btn)"
+        @click="handleClick(btn)"
         :key="btn.key"
         :height="height"
         outlined
@@ -20,13 +20,15 @@ import Vue from "vue";
 import { PropType } from "vue/types/v3-component-props";
 import ButtonVue from "../Button/Button.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
+import { Emit } from "vue-property-decorator";
 
 interface IButtonGroupData {
   isActive: boolean;
+  activeBtnKey: null | number;
 }
 
 interface IButtonGroupMethods {
-  handleClick(childEventData: { isActive: boolean }, btnData: any): void;
+  handleClick(btnData: any): void;
 }
 
 interface IButtonGroupProps {
@@ -44,6 +46,7 @@ export default Vue.extend<
   data() {
     return {
       isActive: true,
+      activeBtnKey: null,
     };
   },
   components: {
@@ -59,18 +62,29 @@ export default Vue.extend<
       default: () => [],
     },
   },
-
+  computed: {
+    isActive: {
+      get() {
+        return;
+      },
+      set() {
+        this;
+      },
+    },
+  },
   methods: {
-    handleClick(
-      childEventData: { isActive: boolean },
-      btnData: TButtonGroupItem
-    ) {
-      this.isActive = !childEventData.isActive;
-      const payload = {
-        ...childEventData,
-        ...btnData,
-      };
-      this.$emit(`click-sort`, payload);
+    handleClick(btnData: TButtonGroupItem) {
+      if (this.activeBtnKey === btnData.key) {
+        this.activeBtnKey = null;
+        this.$emit(`click-sort`, {
+          key: null,
+          sortField: null,
+          sortOrder: null,
+        });
+      } else {
+        this.activeBtnKey === btnData.key;
+        this.$emit(`click-sort`, btnData);
+      }
     },
   },
 });

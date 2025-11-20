@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    @click="handleClick"
+    @click="$emit('click', $event)"
     :disabled="isDisabled"
     :elevation="elevation"
     :color="color"
@@ -47,10 +47,6 @@ export default Vue.extend({
       default: false,
     },
   },
-  methods: {
-    handleClick() {
-      this.$emit(`click`, { isActive: this.isActive });
-    },
-  },
+  methods: {},
 });
 </script>

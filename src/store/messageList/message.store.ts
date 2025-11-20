@@ -36,6 +36,11 @@ export type TInitialState = {
   selectedNewStatuses: string[]
   isAdmin: boolean
   selectedUserType: string[]
+  sort: {
+    field: string
+    direction: "ASC" | "DESC"
+  }
+
 }
 
 const state: TInitialState = {
@@ -72,7 +77,8 @@ const state: TInitialState = {
   selectedOldStatuses: [],
   selectedNewStatuses: [],
   isAdmin: false,
-  selectedUserType: []
+  selectedUserType: [],
+  sort: { direction: "ASC", field: '' }
 }
 
 
@@ -130,6 +136,9 @@ const mutations: MutationTree<TInitialState> = {
   },
   SET_SELECTED_USER_TYPE(state: TInitialState, newState: string[]) {
     state.selectedUserType = [...newState]
+  },
+  SET_SORT(state: TInitialState, newState: { direction: "ASC", field: '' }) {
+    state.sort = { ...newState }
   }
 }
 
@@ -215,6 +224,8 @@ const actions: ActionTree<TInitialState, RootState> = {
         newStatuses: state.selectedNewStatuses,
         oldStatuses: state.selectedOldStatuses,
         userTypes: state.selectedUserType,
+        sortField: state.sort.field,
+        sortOrder: state.sort.direction
       })
 
       commit(`SET_HISTORY`, history)

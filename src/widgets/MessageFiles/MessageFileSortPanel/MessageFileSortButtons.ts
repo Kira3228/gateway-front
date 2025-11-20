@@ -24,8 +24,6 @@ export const MessageFileSortButtons: TButtonGroupItem[][] = [
         sortOrder: 'DESC'
       }
     },
-  ],
-  [
     {
       component: FileSizeAscSort, key: 3, value: {
         sortField: ` `,
@@ -36,9 +34,7 @@ export const MessageFileSortButtons: TButtonGroupItem[][] = [
         sortField: ``,
         sortOrder: "DESC"
       }
-    }
-  ],
-  [
+    },
     {
       component: SortCalendarAscending, key: 5, value: {
         sortField: ` `,
