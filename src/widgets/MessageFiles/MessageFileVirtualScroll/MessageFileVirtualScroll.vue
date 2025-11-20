@@ -2,12 +2,12 @@
   <virtual-scroll-widget-layout-vue
     :height="750"
     :isLoading="isLoading"
-    :itemHeight="90"
+    :itemHeight="105"
     :items="items"
     :skeletonHeight="88"
     :skeletonsQuantity="8"
   >
-    <template #list-item="{ item }">
+    <template #listItem="{ item }">
       <list-item-vue :key="item.id" :item="item">
         <template v-slot:content="{ item }">
           <p class="tw-text-base tw-text-blue-700 tw-font-bold">
@@ -26,17 +26,22 @@
 import VirtualScrollWidgetLayoutVue from "@/shared/UI/VirtualScrollWidgetLayout/VirtualScrollWidgetLayout.vue";
 import store from "@/store";
 import Vue from "vue";
+import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 export default Vue.extend({
   components: {
     VirtualScrollWidgetLayoutVue,
+    ListItemVue,
   },
   computed: {
     isLoading() {
       return false;
     },
     items() {
-      store.state.messageStore.files;
+      return store.state.messageStore.files;
     },
+  },
+  mounted() {
+    console.log(this.items);
   },
 });
 </script>

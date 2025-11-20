@@ -30,8 +30,8 @@ export default Vue.extend({
       default: false,
     },
     itemHeight: {
-      type: String,
-      default: "100px",
+      type: Number,
+      default: 100,
     },
     height: {
       type: Number,

@@ -12,6 +12,7 @@ import { TMessageFile } from "@/shared/types/common/TMessageFile"
 import { fetchHistory } from "@/shared/api/status-history"
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory"
 import { fetchPresets } from "@/shared/api/presets"
+import { TOption } from "@/shared/UI/SelectInput/TOptions"
 
 export type TInitialState = {
   items: TMessage[]
@@ -186,7 +187,6 @@ const actions: ActionTree<TInitialState, RootState> = {
   async getMessageFile({ commit }, payload: { id: number, sortField?: string, sortOrder?: "ASC" | "DESC" }) {
     try {
       commit(`SET_FILE_LOADING`, true)
-      commit(`SET_ITEM_ID`, payload.id)
       const files = await fetchMessageFiles(payload)
 
       const fileWithLoading = files.map((file: TMessageFile) => {
@@ -214,7 +214,7 @@ const actions: ActionTree<TInitialState, RootState> = {
         id: state.messageId,
         newStatuses: state.selectedNewStatuses,
         oldStatuses: state.selectedOldStatuses,
-        userTypes: state.selectedUserType, 
+        userTypes: state.selectedUserType,
       })
 
       commit(`SET_HISTORY`, history)

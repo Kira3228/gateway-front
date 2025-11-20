@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/CONSTANTS"
 import { httpGet } from "./http"
 import { TStatusHistory } from "../types/common/TStatusHistory"
+import { TOption } from "../UI/SelectInput/TOptions"
 
 export type TFilePayLoad = {
   id: number,
@@ -12,6 +13,7 @@ export type TFilePayLoad = {
 }
 
 export const fetchHistory = (payload: TFilePayLoad) => {
+
   return httpGet<TStatusHistory>(`${BASE_URL}/messages/history/${payload.id}`,
     {
       sortField: payload.sortField,

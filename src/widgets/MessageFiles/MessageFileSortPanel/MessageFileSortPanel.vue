@@ -1,5 +1,7 @@
 <template>
-  <sort-panel-layout-vue :sortButtonsItems="buttons"></sort-panel-layout-vue>
+  <sort-panel-layout-vue :sortButtonsItems="buttons">
+    <template #ui-item> </template>
+  </sort-panel-layout-vue>
 </template>
 <script lang="ts">
 import { MessageFileSortButtons } from "./MessageFileSortButtons";
@@ -15,3 +17,4 @@ export default Vue.extend({
   },
 });
 </script>
+F

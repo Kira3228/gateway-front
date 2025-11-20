@@ -16,6 +16,7 @@ import StatusHistoryCardVue from "@/shared/UI/StatusHistoryCard/StatusHistoryCar
 import StatusHistorySortPanelVue from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
 import StatusHistoryVirtualScrollVue from "./StatusHistoryVirtualScroll/StatusHistoryVirtualScroll.vue";
 export default Vue.extend({
+  name: `StatusHistoyryWidget`,
   components: {
     ExtFileLayoutVue,
     StatusHistoryCardVue,

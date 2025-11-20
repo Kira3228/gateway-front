@@ -15,18 +15,7 @@
       :items="items"
     >
       <template v-slot:item="{ item }">
-        <slot name="list-item" :item="item"></slot>
-        <!-- <list-item-vue :key="item.id" :item="item">
-          <template v-slot:content="{ item }">
-            <p class="tw-text-base tw-text-blue-700 tw-font-bold">
-              {{ item.fileName }}
-            </p>
-            <p class="tw-text-base tw-text-gray-600">
-              {{ item.filePath }} | {{ item.fileSizeBytes }} байт
-            </p>
-            <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
-          </template>
-        </list-item-vue> -->
+        <slot name="listItem" :item="item"></slot>
       </template>
     </virtual-scroll-vue>
   </div>
@@ -52,7 +41,7 @@ export default Vue.extend({
     },
     items: {
       type: Array as PropType<TMessageFile[] | TStatusHistory[]>,
-      default: [],
+      default: () => [],
     },
     skeletonHeight: {
       type: Number,

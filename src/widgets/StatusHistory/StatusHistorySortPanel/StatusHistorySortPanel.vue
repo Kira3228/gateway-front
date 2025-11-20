@@ -1,5 +1,8 @@
 <template>
-  <sort-panel-layout-vue :sortButtonsItems="sortButtons">
+  <sort-panel-layout-vue
+    @sort-button-click="handleClick"
+    :sortButtonsItems="sortButtons"
+  >
     <template #ui-item>
       <div>
         <select-input-vue
@@ -67,8 +70,8 @@
           </template>
         </select-input-vue>
       </div>
-    </template></sort-panel-layout-vue
-  >
+    </template>
+  </sort-panel-layout-vue>
 </template>
 
 <script lang="ts">
@@ -82,7 +85,39 @@ import { PropType } from "vue/types/v3-component-props";
 import { UserTypeOptions } from "../UserType";
 import { SelectStatusHisotry } from "./SelectStatusHistory";
 import { StatusHstorySortButtons } from "./StatusHstorySortButtons";
-export default Vue.extend({
+import { useStatusHistry } from "@/features/statusHistory/model";
+
+interface IStatusHistorySortPanelData {
+  sortButtons: TButtonGroupItem[][];
+  statusHistoryOptions: TOption[];
+  userTypeOptions: TOption[];
+}
+
+interface IStatusHistorySortPanelComputed {
+  selectedOldStatuses: string[];
+  selectedNewStatuses: string[];
+  selectUserType: string[];
+}
+
+interface IStatusHistrySortPanelMethods {
+  getColor: (status: string) => string;
+  handleSelectStatus: () => Promise<void>;
+  handleRemoveOldChip: (index: number) => void;
+  handleRemoveNewChip: (index: number) => void;
+  handleClick: (data: any) => void;
+}
+
+interface IProps {}
+
+const computedLogic = useStatusHistry();
+
+export default Vue.extend<
+  IStatusHistorySortPanelData,
+  IStatusHistrySortPanelMethods,
+  IStatusHistorySortPanelComputed,
+  IProps
+>({
+  name: `StatusHistoyrSortPanelyWidget`,
   props: {
     sortButtonsItems: {
       type: Array as PropType<TButtonGroupItem[][]>,
@@ -90,57 +125,43 @@ export default Vue.extend({
     },
   },
   components: { SortPanelLayoutVue, SelectInputVue },
-  data() {
+
+  data(): IStatusHistorySortPanelData {
     return {
-      sortButtons: StatusHstorySortButtons as TButtonGroupItem[][],
+      sortButtons: StatusHstorySortButtons,
       statusHistoryOptions: SelectStatusHisotry,
       userTypeOptions: UserTypeOptions,
     };
   },
-  computed: {
-    selectedOldStatuses: {
-      get(): TOption[] {
-        return this.$store.state.messageStore.selectedOldStatuses;
-      },
-      set(newStatus: TOption[]) {
-        this.$store.commit(`messageStore/SET_SELECTED_OLD_STATUSES`, newStatus);
-      },
-    },
-    selectedNewStatuses: {
-      get(): TOption[] {
-        return this.$store.state.messageStore.selectedNewStatuses;
-      },
-      set(newStatus: TOption[]) {
-        this.$store.commit(`messageStore/SET_SELECTED_NEW_STATUSES`, newStatus);
-      },
-    },
 
-    selectUserType: {
-      get() {
-        return this.$store.state.messageStore.selectedUserType;
-      },
-      set(newState: string[]) {
-        this.$store.commit(`messageStore/SET_SELECTED_USER_TYPE`, newState);
-      },
-    },
+  computed: {
+    selectedOldStatuses: computedLogic.selectedOldStatuses,
+    selectedNewStatuses: computedLogic.selectedNewStatuses,
+    selectUserType: computedLogic.selectUserType,
   },
 
   methods: {
     getColor(status: string): string {
       return getStatusColor(status);
     },
-    async handleSelectStatus() {
-      await this.$store.dispatch(`messageStore/getStatusHistory`);
+
+    async handleSelectStatus(): Promise<void> {
+      await computedLogic.handleSelectStatus();
     },
+
     handleRemoveOldChip(index: number) {
-      const newStatuses = [...this.selectedOldStatuses];
-      newStatuses.splice(index, 1);
-      this.$store.commit("messageStore/SET_SELECTED_OLD_STATUSES", newStatuses);
+      computedLogic.handleRemoveChip(this.selectedOldStatuses, index, "old");
     },
+
     handleRemoveNewChip(index: number) {
-      const newStatuses = [...this.selectedNewStatuses];
-      newStatuses.splice(index, 1);
-      this.$store.commit("messageStore/SET_SELECTED_NEW_STATUSES", newStatuses);
+      computedLogic.handleRemoveChip(this.selectedOldStatuses, index, "new");
+    },
+    handleClick(data: TButtonGroupItem & { isActive: boolean }) {
+      if (data.isActive) {
+        console.log(`ЖОПА`);
+      } else {
+        console.log(`КАКА`);
+      }
     },
   },
 });

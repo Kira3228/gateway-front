@@ -3,7 +3,8 @@ import SortAlphabeticalAscending from "@/shared/icons/SortAlphabeticalAscending.
 import SortAlphabeticalDescending from "@/shared/icons/SortAlphabeticalDescending.vue"
 import FileSizeAscSort from "@/shared/icons/FileSizeAscSort.icon.vue"
 import FileSizeDescSort from "@/shared/icons/FileSizeDescSort.icon.vue"
-
+import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
+import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
 
 export const MessageFileSortButtons: TButtonGroupItem[][] = [
   [
@@ -36,5 +37,18 @@ export const MessageFileSortButtons: TButtonGroupItem[][] = [
         sortOrder: "DESC"
       }
     }
-  ]
+  ],
+  [
+    {
+      component: SortCalendarAscending, key: 5, value: {
+        sortField: ` `,
+        sortOrder: "ASC"
+      }
+    }, {
+      component: SortCalendarDescending, key: 6, value: {
+        sortField: ``,
+        sortOrder: "DESC"
+      }
+    }
+  ],
 ]
