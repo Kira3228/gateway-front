@@ -1,39 +1,23 @@
-import { ActionTree, Module, MutationTree } from "vuex"
-import { RootState } from "@/store"
 import { THeaderColumn } from './types'
 import { fetchHeaders } from "../api/getHeaders"
+import { defineStore } from "pinia"
 
 export interface IHeaderState {
   headers: THeaderColumn[]
 }
 
-const state = {
-  headers: []
-}
-const mutations: MutationTree<IHeaderState> = {
-  setHeaders(state: IHeaderState, newHeaders: THeaderColumn[]) {
-    state.headers = [...newHeaders]
-  },
-}
+export const useHeaderStore = defineStore(`header-store`, {
+  state: (): IHeaderState => ({
+    headers: []
+  }),
+  actions: {
+    async getHeaders(preset?: string) {
+      try {
+        const headers = await fetchHeaders(preset)
+        this.headers = headers
+      } catch (error) {
 
-const actions: ActionTree<IHeaderState, RootState> = {
-  async getHeaders({ commit }, preset: string) {
-    try {
-      const newHeaders = await fetchHeaders(preset)
-      commit(`setHeaders`, newHeaders)
-    } catch (error) {
-
+      }
     }
   }
-}
-
-const headerStore: Module<IHeaderState, RootState> = {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-}
-
-export default headerStore
-
-
+})

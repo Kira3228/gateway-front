@@ -1,20 +1,37 @@
-import store from "@/store"
+
+import { useHeaderStore } from "@/entities/header/model/store"
+import { useMessageStore } from "@/entities/message/model/store"
+import { useViewMessageDetailsStore } from "@/features/viewMessageDetails/model/store"
+import { storeToRefs } from "pinia"
 
 export const useMessageTableModel = () => {
+  const messageStore = useMessageStore()
+  const headerStore = useHeaderStore()
+  const viewMessageDetails = useViewMessageDetailsStore()
+
+  const { headers } = storeToRefs(headerStore)
+  const { error, isLoading, messages } = storeToRefs(messageStore)
+  const { isOpen } = storeToRefs(viewMessageDetails)
+
   const init = async () => {
-    await store.dispatch(`entities/messageStore/getMessages`)
-    await store.dispatch(`entities/headerStore/getHeaders`)
+    Promise.all([messageStore.getMessages(), headerStore.getHeaders()])
   }
 
+  const openModal = () => {
+    viewMessageDetails.openModal()
+  }
+  const closeModal = () => {
+    viewMessageDetails.closeModal()
+  }
 
   return {
     init,
-    get headers() {
-      return store.state.entities.headerStore.headers
-    },
-    get messages() {
-      return store.state.entities.messageStore.messages
-    },
-    get isLoading() { return store.state.entities.messageStore.isLoading }
+    headers,
+    messages,
+    isLoading,
+    isOpen,
+    openModal,
+    closeModal
+
   }
-}
+} 

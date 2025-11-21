@@ -1,5 +1,5 @@
 <template>
-  <dialog-window
+  <!-- <dialog-window
     :toolbarTitle="modalTitle"
     v-if="dialog"
     :key="count"
@@ -8,12 +8,22 @@
     :message-data="messageExts"
     :message-files="messageFiles"
     :status-history="statusHistory"
-    >{{ dialog }}</dialog-window
-  >
+  ></dialog-window> -->
+  <dialog-window
+    @close-click="handleClose"
+    v-if="isOpen"
+    :value="isOpen"
+  ></dialog-window>
 </template>
 
 <script lang="ts" setup>
 import DialogWindow from "@/widgets/dialog-window/DialogWindow.vue";
-import { onMounted, ref } from "vue";
-const modalTitle =
+import { useMessageTableModel } from "../model/model";
+const { isOpen } = useMessageTableModel();
+const emits = defineEmits<{
+  (e: `close`): void;
+}>();
+const handleClose = () => {
+  emits(`close`);
+};
 </script>

@@ -1,7 +1,6 @@
-import { ActionTree, Module, MutationTree } from "vuex"
 import { TMessage } from "./types"
-import { RootState } from "@/store"
 import { fetchMessages } from "../api/getMessages"
+import { defineStore } from "pinia"
 
 export interface IMessageState {
   messages: TMessage[]
@@ -9,47 +8,25 @@ export interface IMessageState {
   error: string
 }
 
-const state: IMessageState = {
-  messages: [],
-  isLoading: false,
-  error: "",
-}
-
-const mutations: MutationTree<IMessageState> = {
-  setMessages(state: IMessageState, newMessages: TMessage[]) {
-    state.messages = [...newMessages]
-  },
-  setIsLoading(state: IMessageState, newLoadingStatus: boolean) {
-    state.isLoading = newLoadingStatus
-  },
-  setError(state: IMessageState, newError: string) {
-    state.error = newError
-  }
-}
-
-const actions: ActionTree<IMessageState, RootState> = {
-  async getMessages({ commit }) {
-    try {
-      commit(`setIsLoading`, true)
-      const messages = await fetchMessages()
-      commit(`setMessages`, messages)
-    } catch (error) {
-      commit(`setError`, error)
-      commit(`setMessages`, [])
-      console.error(`Ошибка`, error);
-
-    }
-    finally {
-      commit(`setIsLoading`, false)
+export const useMessageStore = defineStore(`message-store`, {
+  state: (): IMessageState => ({
+    error: "",
+    isLoading: false,
+    messages: []
+  }),
+  actions: {
+    async getMessages() {
+      try {
+        this.error = ""
+        this.isLoading = true
+        const messages = await fetchMessages()
+        this.messages = messages
+      } catch (error: any) {
+        this.error = error.message
+      }
+      finally {
+        this.isLoading = false
+      }
     }
   }
-}
-
-const messageStore: Module<IMessageState, RootState> = {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-}
-
-export default messageStore
+})

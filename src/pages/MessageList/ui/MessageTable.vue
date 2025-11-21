@@ -13,47 +13,24 @@
     </template>
   </data-table-vue>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
 import PresetVue from "@/features/preset/ui/Preset.vue";
-import Vue from "vue";
-import { useMessageTableModel } from "../model/model";
-import {
-  IMessageTableComputed,
-  IMessageTableData,
-  IMessageTableMethods,
-  IMessageTableProps,
-} from "../model/types";
-import { THeaderColumn } from "@/entities/header/model/types";
+import { onMounted } from "vue";
 import { TMessage } from "@/entities/message/model/types";
-import { VBtn } from "vuetify/lib";
-const model = useMessageTableModel();
-export default Vue.extend<
-  IMessageTableData,
-  IMessageTableMethods,
-  IMessageTableComputed,
-  IMessageTableProps
->({
-  components: { DataTableVue, PresetVue },
+import { useMessageTableModel } from "../model/model";
 
-  computed: {
-    headers(): THeaderColumn[] {
-      return model.headers;
-    },
-    messages(): TMessage[] {
-      return model.messages;
-    },
-    isLoading(): boolean {
-      return model.isLoading;
-    },
-  },
-  methods: {
-    handleRowClick(data: TMessage) {
-      this.$emit(`open-modal`, data.messageId);
-    },
-  },
-  mounted() {
-    model.init();
-  },
+const { init, headers, isLoading, messages } = useMessageTableModel();
+
+const emit = defineEmits<{
+  (e: `open-modal`, messageId: string): void;
+}>();
+
+const handleRowClick = (data: TMessage) => {
+  emit(`open-modal`, data.messageId);
+};
+
+onMounted(() => {
+  init();
 });
 </script>

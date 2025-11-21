@@ -1,4 +1,4 @@
-import { useHeaderStore } from "@/entities/header/model/model"
+import { useHeaderModel } from "@/entities/header/model/model"
 import store from "@/store"
 
 export const usePreset = () => {
@@ -20,7 +20,7 @@ export const usePreset = () => {
   }
 
   const handleSelectPreset = async (preset: string) => {
-    const headerStore = useHeaderStore()
+    const headerStore = useHeaderModel()
     return await headerStore.getHeaders(preset)
   }
 

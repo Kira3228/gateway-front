@@ -1,6 +1,6 @@
 import store from "@/store"
 
-export const useHeaderStore = () => {
+export const useHeaderModel = () => {
   const getHeaders = async (preset: string) => {
     await store.dispatch(`entities/headerStore/getHeaders`, preset)
   }
