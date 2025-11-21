@@ -26,7 +26,7 @@
 import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
 import Vue from "vue";
 import { PropType } from "vue/types/v3-component-props";
-import { getStatusColor } from "../../utils/getColorForChip";
+import { getStatusColor } from "../../lib/getColorForChip";
 export default Vue.extend({
   props: {
     item: Object as PropType<TStatusHistory>,

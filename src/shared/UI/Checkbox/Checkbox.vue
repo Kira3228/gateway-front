@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { useDebounce } from "@/shared/utils/debounce";
+import { useDebounce } from "@/shared/lib/debounce";
 import Vue from "vue";
 export default Vue.extend({
   props: {

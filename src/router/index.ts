@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import MessageList from "../pages/MessageList.page.vue"
+import MessageList from "../pages/MessageList/ui/Page.vue"
 import Layout from "../layout/Layout.vue"
 import EmptyRouterView from '../shared/UI/EmptyRouterView.vue'
 Vue.use(VueRouter)

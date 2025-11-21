@@ -35,7 +35,7 @@
 <script lang="ts">
 import { TSortOptions } from "@/shared/types/common/TSortOptions";
 import Vue from "vue";
-import { useDebounce } from "./../../utils/debounce";
+import { useDebounce } from "../../lib/debounce";
 export default Vue.extend({
   name: "CustomSelect",
   props: {

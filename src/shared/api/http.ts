@@ -1,3 +1,26 @@
+import { BASE_URL } from "@/CONSTANTS"
+
+export const useApi = () => {
+  const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
+    const url = buildURL(endpoint, params)
+    const res = await fetch(url, { method: `GET` })
+    if (!res.ok) {
+      throw new Error(`GET ${url} failed ${res.status}`)
+    }
+    return res.json()
+  }
+
+  return {
+    get
+  }
+}
+
+
+
+
+
+
+
 export const httpGet = async <T>(url: string, params?: Record<string, any>): Promise<T> => {
   const finalURL = buildURL(url, params)
   const res = await fetch(finalURL, { method: `GET` })
@@ -24,6 +47,7 @@ export const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
   return res.json() as Promise<T>
 }
 
+
 export const buildURL = (base: string, params?: Record<string, any>): string => {
   if (!params) {
     return base
@@ -37,7 +61,7 @@ export const buildURL = (base: string, params?: Record<string, any>): string => 
   }
 
   const qs = sp.toString()
-  return qs ? `${base}?${qs}` : base
+  return qs ? `${BASE_URL}/${base}?${qs}` : base
 }
 
 export const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {

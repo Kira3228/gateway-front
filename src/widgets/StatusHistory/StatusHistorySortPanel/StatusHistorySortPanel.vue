@@ -79,7 +79,7 @@ import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
 import { TOption } from "@/shared/UI/SelectInput/TOptions";
 import SortPanelLayoutVue from "@/shared/UI/SortPanelLayout/SortPanelLayout.vue";
-import { getStatusColor } from "@/shared/utils/getColorForChip";
+import { getStatusColor } from "@/shared/lib/getColorForChip";
 import Vue from "vue";
 import { PropType } from "vue/types/v3-component-props";
 import { UserTypeOptions } from "../UserType";

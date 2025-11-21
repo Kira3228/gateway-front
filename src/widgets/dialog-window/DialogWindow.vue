@@ -38,7 +38,7 @@ import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
 import SheetVue from "@/shared/UI/Sheet/Sheet.vue";
 import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
 import Vue from "vue";
-import { Prop, PropType } from "vue/types/v3-component-props";
+import {  PropType } from "vue/types/v3-component-props";
 import MessageDataCardVue from "../MessageData/MessageDataCard.vue";
 import { mock } from "./mock";
 import MessageFilesVue from "../MessageFiles/MessageFiles.vue";
@@ -111,7 +111,10 @@ export default Vue.extend({
       this.$emit("input", newVal);
     },
   },
-  mounted() {},
+  mounted() {
+    console.log();
+    
+  },
 });
 </script>
 <style lang="scss" scoped>

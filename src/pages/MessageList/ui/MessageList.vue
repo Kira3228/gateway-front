@@ -6,18 +6,7 @@
       :items="items"
       @click-row="handleRowClick"
     >
-      <template v-slot:modal>
-        <dialog-window-vue
-          :toolbarTitle="modalTitle"
-          v-if="dialog && messageExts.id"
-          :key="messageExts.id"
-          :value="dialog"
-          @close-click="handleCloseClick"
-          :message-data="messageExts"
-          :message-files="messageFiles"
-          :status-history="statusHistory"
-        ></dialog-window-vue>
-      </template>
+      <template v-slot:modal> </template>
       <template v-slot:select-preset>
         <div class="tw-w-screen tw-flex tw-justify-items-end">
           <select-input-vue
@@ -29,6 +18,16 @@
         </div>
       </template>
     </data-table-vue>
+    <dialog-window-vue
+      :toolbarTitle="modalTitle"
+      v-if="dialog && messageExts.id"
+      :key="messageExts.id"
+      :value="dialog"
+      @close-click="handleCloseClick"
+      :message-data="messageExts"
+      :message-files="messageFiles"
+      :status-history="statusHistory"
+    ></dialog-window-vue>
   </div>
 </template>
 <script lang="ts">
@@ -67,18 +66,14 @@ interface MessageListPageComputed {
   selectedPreset: string;
   isTableLoading: boolean;
 }
-export default Vue.extend<
-  MessageListPageData,
-  MessageListPageMethods,
-  MessageListPageComputed
->({
+export default Vue.extend({
   name: `MessageListPage`,
   components: {
     DataTableVue,
     DialogWindowVue,
     SelectInputVue,
   },
-  data(): MessageListPageData {
+  data() {
     return {
       dialog: false,
       modalTitle: "",
