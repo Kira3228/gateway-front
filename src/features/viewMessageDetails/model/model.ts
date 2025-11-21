@@ -32,6 +32,7 @@ export const useViewMessageDetailsModel = () => {
     viewMessageDetailsStore.closeModal()
   }
   return {
+    currentId,
     isOpen,
     openModal,
     closeModal
