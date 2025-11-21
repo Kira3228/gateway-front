@@ -19,11 +19,11 @@
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card :messageData="messageData"></message-data-card>
+        <!-- <message-data-card :messageData="messageData"></message-data-card>
         <v-divider vertical></v-divider>
         <message-files :files="messageFiles"></message-files>
         <v-divider vertical></v-divider>
-        <status-history-vue :items="statusHistory"></status-history-vue>
+        <status-history-vue :items="statusHistory"></status-history-vue> -->
       </div>
     </v-card>
   </v-dialog>
@@ -38,9 +38,11 @@ interface IDialogWindowProps {
   // messageFiles: TMessageFile[];
   // statusHistory: TStatusHistory[];
   // toolbarTitle: structuredClone;
+  toolbarTitle: string;
 }
 
 const props = withDefaults(defineProps<IDialogWindowProps>(), {
+  toolbarTitle: "",
   value: false,
   messageData: () => ({
     id: 0,

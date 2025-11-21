@@ -3,6 +3,7 @@
     :value="viewMessageDetailsModel.isOpen.value"
     @input="onInput"
     @close="onClose"
+    toolbarTitle="йфыв"
   ></dialog-window>
 </template>
 

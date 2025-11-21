@@ -8,14 +8,14 @@ interface IMessageFileState {
   error: string;
 }
 
-export const useFileStore = defineStore(`fileStore`, {
+export const useMessageFileStore = defineStore(`fileStore`, {
   state: (): IMessageFileState => ({
     error: ``,
     files: [],
     isLoading: false
   }),
   actions: {
-    async getFiles(messageId: string) {
+    async getMessageFiles(messageId: string) {
       this.isLoading = false
       this.error = ''
       try {

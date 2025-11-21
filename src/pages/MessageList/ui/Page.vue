@@ -11,7 +11,6 @@
 <script lang="ts" setup>
 import MessageTable from "./MessageTable.vue";
 import MessageDetails from "./MessageDetails.vue";
-import { useViewMessageDetailsStore } from "@/features/viewMessageDetails/model/store";
 import { useViewMessageDetailsModel } from "@/features/viewMessageDetails/model/model";
 const viewMessageDetailsModel = useViewMessageDetailsModel();
 </script>

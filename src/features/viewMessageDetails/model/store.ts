@@ -17,7 +17,12 @@ export const useViewMessageDetailsStore = defineStore(`view-message-details-stor
     },
     closeModal() {
       this.isOpen = false
+    },
+    setCurrentId(id: string) {
+      this.currentId = id
     }
+
+
   }
 })
 
