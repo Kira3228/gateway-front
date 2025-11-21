@@ -4,23 +4,27 @@ import { THeaderColumn } from './types'
 import { fetchHeaders } from "../api/getHeaders"
 
 export interface IHeaderState {
-  header: THeaderColumn[]
+  headers: THeaderColumn[]
 }
 
 const state = {
-  header: []
+  headers: []
 }
 const mutations: MutationTree<IHeaderState> = {
-  setHeaders(state: IHeaderState, newMessages: THeaderColumn[]) {
-    state.header = [...newMessages]
+  setHeaders(state: IHeaderState, newHeaders: THeaderColumn[]) {
+    state.headers = [...newHeaders]
   },
 }
 
 const actions: ActionTree<IHeaderState, RootState> = {
   async getHeaders({ commit }, preset: string) {
-    const newHeaders = await fetchHeaders(preset)
-    commit(`setHeaders`, newHeaders)
+    try {
+      const newHeaders = await fetchHeaders(preset)
+      commit(`setHeaders`, newHeaders)
+    } catch (error) {
+      console.log(error);
 
+    }
   }
 }
 

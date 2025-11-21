@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
 import breadcrumbsStore from './breadcrumbs/breadcrumbs.store'
-import messageStore from './messageList/message.store'
+// import messageStore from './messageList/message.store'
 
 import type { TInitialState as messageState } from './messageList/message.store'
 import viewMessageDetailsStore from '@/features/viewMessageDetails/model/store'
 import presetStore, { IPresetState } from '@/features/preset/model/store'
 import headerStore, { IHeaderState } from '@/entities/header/model/store'
+import messageStore, { IMessageState } from '@/entities/message/model/store'
+
 Vue.use(Vuex)
 
 export interface RootState {
   messageStore: messageState,
-  entity: {
+  entities: {
+    messageStore: IMessageState
     headerStore: IHeaderState,
   },
   features: {
@@ -25,6 +28,7 @@ const store: StoreOptions<RootState> = {
     entities: {
       namespaced: true,
       modules: {
+        messageStore: messageStore,
         headerStore: headerStore
       }
     },
@@ -35,7 +39,7 @@ const store: StoreOptions<RootState> = {
         presetStore: presetStore
       }
     },
-    messageStore: messageStore,
+    // messageStore: messageStore,
     breadcrumbsStore: breadcrumbsStore
   },
   strict: process.env.NODE_ENV !== `prodaction`

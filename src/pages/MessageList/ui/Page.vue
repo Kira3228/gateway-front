@@ -1,6 +1,6 @@
 <template>
   <div>
-    <data-table-vue
+    <!-- <data-table-vue
       :isLoading="isTableLoading"
       :headers="headers"
       :items="items"
@@ -9,7 +9,8 @@
       <template v-slot:select-preset>
         <preset-vue></preset-vue>
       </template>
-    </data-table-vue>
+    </data-table-vue> -->
+    <message-table-vue></message-table-vue>
     <dialog-window-vue
       :toolbarTitle="modalTitle"
       v-if="dialog && messageExts.id"
@@ -32,6 +33,7 @@ import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
 import { useMessageList } from "@/features/messageList/model";
 import { messageDetails } from "@/features/messageExts/model";
 import PresetVue from "@/features/preset/ui/Preset.vue";
+import MessageTableVue from "./MessageTable.vue";
 
 type MessageListStore = ReturnType<typeof useMessageList>;
 type MessageDetailsStore = ReturnType<typeof messageDetails>;
@@ -70,6 +72,7 @@ export default Vue.extend<
     DialogWindowVue,
     SelectInputVue,
     PresetVue,
+    MessageTableVue,
   },
   data(): MessageListPageData {
     return {

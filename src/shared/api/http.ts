@@ -3,7 +3,7 @@ import { BASE_URL } from "@/CONSTANTS"
 export const useApi = () => {
   const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
     const url = buildURL(endpoint, params)
-    console.log(url);
+    console.log(`Запрос на: `, url);
 
     const res = await fetch(url, { method: `GET` })
     if (!res.ok) {
@@ -16,12 +16,6 @@ export const useApi = () => {
     get
   }
 }
-
-
-
-
-
-
 
 export const httpGet = async <T>(url: string, params?: Record<string, any>): Promise<T> => {
   const finalURL = buildURL(url, params)
@@ -64,7 +58,7 @@ export const buildURL = (base: string, params?: Record<string, any>): string => 
 
   const qs = sp.toString()
 
-  return qs ? `${BASE_URL}/${base}?${qs}` : base
+  return qs ? `${BASE_URL}${base}?${qs}` : `${BASE_URL}${base}`
 }
 
 export const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {
