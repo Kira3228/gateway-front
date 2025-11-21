@@ -1,29 +1,25 @@
 <template>
-  <!-- <dialog-window
-    :toolbarTitle="modalTitle"
-    v-if="dialog"
-    :key="count"
-    :value="dialog"
-    @close-click="handleCloseClick"
-    :message-data="messageExts"
-    :message-files="messageFiles"
-    :status-history="statusHistory"
-  ></dialog-window> -->
   <dialog-window
-    @close-click="handleClose"
-    v-if="isOpen"
-    :value="isOpen"
+    :value="viewMessageDetailsModel.isOpen.value"
+    @input="onInput"
+    @close="onClose"
   ></dialog-window>
 </template>
 
 <script lang="ts" setup>
 import DialogWindow from "@/widgets/dialog-window/DialogWindow.vue";
-import { useMessageTableModel } from "../model/model";
-const { isOpen } = useMessageTableModel();
+import { useViewMessageDetailsModel } from "@/features/viewMessageDetails/model/model";
 const emits = defineEmits<{
   (e: `close`): void;
 }>();
-const handleClose = () => {
-  emits(`close`);
+
+const viewMessageDetailsModel = useViewMessageDetailsModel();
+
+const onInput = (val: boolean) => {
+  if (!val) viewMessageDetailsModel.closeModal();
+};
+
+const onClose = () => {
+  viewMessageDetailsModel.closeModal();
 };
 </script>

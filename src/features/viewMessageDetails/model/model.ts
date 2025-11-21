@@ -10,13 +10,13 @@ export const useViewMessageDetailsModel = () => {
     viewMessageDetailsStore.openModal()
   }
 
-  const closeModel = () => {
+  const closeModal = () => {
     viewMessageDetailsStore.closeModal()
   }
   return {
     isOpen,
     openModal,
-    closeModel
+    closeModal
   }
 
 }

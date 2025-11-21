@@ -2,14 +2,15 @@
   <v-dialog
     fullscreen
     hide-overlay
-    @click:outside="handleCloseClick"
-    @keydown="handleCloseClick"
-    v-model="localValue"
+    :value="value"
+    @input="onDialogInput"
+    @keydown="close"
+    @click:outside="close"
     transition="dialog-bottom-transition"
   >
     <v-card class="dialog-root">
       <v-toolbar class="flex-grow-0" dark color="primary">
-        <v-btn icon dark @click="handleCloseClick"
+        <v-btn icon dark @click="onDialogInput(false)"
           ><v-icon>mdi-close</v-icon></v-btn
         >
         <v-toolbar-title>{{ toolbarTitle }}</v-toolbar-title>
@@ -18,11 +19,9 @@
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card-vue
-          :messageData="messageData"
-        ></message-data-card-vue>
+        <message-data-card :messageData="messageData"></message-data-card>
         <v-divider vertical></v-divider>
-        <message-files-vue :files="messageFiles"></message-files-vue>
+        <message-files :files="messageFiles"></message-files>
         <v-divider vertical></v-divider>
         <status-history-vue :items="statusHistory"></status-history-vue>
       </div>
@@ -30,90 +29,53 @@
   </v-dialog>
 </template>
 
-<script lang="ts">
-import { TMessageFile } from "@/shared/types/common/TMessageFile";
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
-import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
-import SheetVue from "@/shared/UI/Sheet/Sheet.vue";
-import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
-import MessageDataCardVue from "../MessageData/MessageDataCard.vue";
-import { mock } from "./mock";
-import MessageFilesVue from "../MessageFiles/MessageFiles.vue";
-import StatusHistoryVue from "../StatusHistory/StatusHistory.vue";
-export default Vue.extend({
-  name: `DialogWindow`,
-  components: {
-    ListItemVue,
-    MessageDataCardVue,
-    SheetVue,
-    VirtualScrollVue,
-    MessageFilesVue,
-    StatusHistoryVue,
-  },
-  props: {
-    value: {
-      type: Boolean,
-      default: false,
-    },
-    messageData: {
-      type: Object as PropType<TMessageExt>,
-      default: () => ({
-        id: 0,
-        createdAt: new Date(0),
-        receiving_at: new Date(0),
-        received_at: new Date(0),
-        sending_at: new Date(0),
-        sent_at: new Date(0),
-        delivered_at: new Date(0),
-        read_at: null,
-        totalFilesCount: 0,
-        totalSizeBytes: 0,
-        checksum: "",
-        metadata: "",
-      }),
-    },
-    messageFiles: {
-      type: Array as PropType<TMessageFile[]>,
-      default: () => [],
-    },
-    statusHistory: {
-      type: Array as PropType<TStatusHistory[]>,
-      default: [],
-    },
-    toolbarTitle: { type: String, default: "" },
-  },
-  data() {
-    return {
-      localValue: this.value,
-      c: mock,
-    };
-  },
+<script lang="ts" setup>
+import MessageDataCard from "../MessageData/MessageDataCard.vue";
+import MessageFiles from "../MessageFiles/MessageFiles.vue";
+interface IDialogWindowProps {
+  value: boolean;
+  // messageData: TMessageExt;
+  // messageFiles: TMessageFile[];
+  // statusHistory: TStatusHistory[];
+  // toolbarTitle: structuredClone;
+}
 
-  methods: {
-    handleCloseClick(e: KeyboardEvent & PointerEvent) {
-      if (e.key === `Escape` || e.pointerType === `mouse`) {
-        this.localValue = false;
-        this.$emit(`close-click`, false);
-      }
-    },
-    getColor(isActive: boolean): `green` | `red` {
-      return isActive ? `green` : `red`;
-    },
-  },
-  watch: {
-    value(newVal) {
-      this.localValue = newVal;
-    },
-    localValue(newVal) {
-      this.$emit("input", newVal);
-    },
-  },
-  mounted() {},
+const props = withDefaults(defineProps<IDialogWindowProps>(), {
+  value: false,
+  messageData: () => ({
+    id: 0,
+    createdAt: new Date(0),
+    receiving_at: new Date(0),
+    received_at: new Date(0),
+    sending_at: new Date(0),
+    sent_at: new Date(0),
+    delivered_at: new Date(0),
+    read_at: null,
+    totalFilesCount: 0,
+    totalSizeBytes: 0,
+    checksum: "",
+    metadata: "",
+  }),
 });
+
+const emit = defineEmits<{
+  (e: `input`, value: boolean): void;
+  (e: `close`, value: boolean): void;
+}>();
+
+const onDialogInput = (newValue: boolean) => {
+  emit("input", newValue);
+};
+const close = () => {
+  emit(`input`, false);
+  emit(`close`, false);
+};
+
+const getColor = (isActive: boolean): `green` | `red` => {
+  return isActive ? `green` : `red`;
+};
 </script>
+
 <style lang="scss" scoped>
 .dialog-root {
   display: flex;
