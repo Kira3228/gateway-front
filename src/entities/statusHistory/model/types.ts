@@ -1,3 +1,17 @@
+import { TUser } from "@/shared/types/common/TUser"
+
+export type TStatusHistoryItem = {
+  id: number,
+  oldStatus: MessageStatusEnum | "",
+  newStatus: MessageStatusEnum | "",
+  reason: string,
+  changeDatetime: string,
+  metadata: string,
+  messageId: number,
+  changedByUserId: number,
+  user: TUser
+}
+
 export enum MessageStatusEnum {
   создано = 'создано',
   принимается = 'принимается',

@@ -1,5 +1,5 @@
 <template>
-  <virtual-scroll-widget-layout-vue
+  <virtual-scroll-widget-layout
     :height="750"
     :isLoading="isLoading"
     :itemHeight="105"
@@ -8,7 +8,7 @@
     :skeletonsQuantity="8"
   >
     <template #listItem="{ item }">
-      <list-item-vue :key="item.id" :item="item">
+      <list-item :key="item.id" :item="item">
         <template v-slot:content="{ item }">
           <p class="tw-text-base tw-text-blue-700 tw-font-bold">
             {{ item.fileName }}
@@ -18,29 +18,15 @@
           </p>
           <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
         </template>
-      </list-item-vue>
+      </list-item>
     </template>
-  </virtual-scroll-widget-layout-vue>
+  </virtual-scroll-widget-layout>
 </template>
-<script lang="ts">
-import VirtualScrollWidgetLayoutVue from "@/shared/UI/VirtualScrollWidgetLayout/VirtualScrollWidgetLayout.vue";
-import store from "@/store";
-import Vue from "vue";
-import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
-export default Vue.extend({
-  components: {
-    VirtualScrollWidgetLayoutVue,
-    ListItemVue,
-  },
-  computed: {
-    isLoading() {
-      return false;
-    },
-    items() {
-      return store.state.messageStore.files;
-    },
-  },
-  mounted() {
-  },
-});
+
+<script lang="ts" setup>
+import { useMessageFileStore } from "@/entities/messageFile/model/store";
+import VirtualScrollWidgetLayout from "@/shared/UI/VirtualScrollWidgetLayout/VirtualScrollWidgetLayout.vue";
+import ListItem from "@/shared/UI/ListItem/ListItem.vue";
+
+const messageFilesStore = useMessageFileStore();
 </script>

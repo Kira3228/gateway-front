@@ -7,7 +7,9 @@
         <p class="tw-text-lg">{{ messageData.id }}</p>
       </div>
       <div>
-        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Контрольная сумма:</p>
+        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">
+          Контрольная сумма:
+        </p>
         <p class="tw-text-lg tw-break-all wrap-text">
           {{ messageData.checksum }}
         </p>
@@ -55,25 +57,16 @@
     </div>
   </v-sheet>
 </template>
-<script lang="ts">
-import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
-import SheetVue from "@/shared/UI/Sheet/Sheet.vue";
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
-export default Vue.extend({
-  name: `MessageDataCard`,
-  components: {
-    SheetVue,
-  },
-  props: {
-    messageData: { type: Object as PropType<TMessageExt>, default: {} },
-    width: {
-      type: String,
-      default: ``,
-    },
-  },
-});
+<script lang="ts" setup>
+import { TMessageExt } from "@/entities/messageExt/model/types";
+
+interface IMessageDataCardProps {
+  messageData: TMessageExt;
+  width?: string;
+}
+withDefaults(defineProps<IMessageDataCardProps>(), {});
 </script>
+
 <style lang="scss" scoped>
 .v-application p {
   margin-bottom: 0px;

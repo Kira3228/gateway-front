@@ -15,17 +15,7 @@ export const useApi = () => {
   }
 }
 
-export const httpGet = async <T>(url: string, params?: Record<string, any>): Promise<T> => {
-  const finalURL = buildURL(url, params)
-  const res = await fetch(finalURL, { method: `GET` })
 
-  if (!res.ok) {
-    throw new Error(`GET ${finalURL} failed ${res.status}`)
-  }
-
-
-  return res.json() as Promise<T>
-}
 
 export const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
   const res = await fetch(url, {

@@ -1,4 +1,4 @@
-import { MessageStatusEnum } from "@/shared/types/messages/MessageStatusEnum"
+import { MessageStatusEnum } from "@/entities/statusHistory/model/types"
 import { TOption } from "@/shared/UI/SelectInput/TOptions"
 
 export const SelectStatusHisotry: TOption[] = [

@@ -14,33 +14,38 @@
           ><v-icon>mdi-close</v-icon></v-btn
         >
         <v-toolbar-title>{{ toolbarTitle }}</v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn color="green" @click="() => {}">Повторная отправка</v-btn>
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card :messageData="messageData"></message-data-card>
-        <v-divider vertical></v-divider>
-        <message-files :files="messageFiles"></message-files>
-        <v-divider vertical></v-divider>
-        <!-- <status-history-vue :items="statusHistory"></status-history-vue> -->
+        <message-data-card :messageData="messageData" />
+        <v-divider vertical />
+        <message-files :files="messageFiles" />
+        <v-divider vertical />
+        <status-history :items="statusHistory" />
       </div>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts" setup>
+import MessageDataCard from "../MessageData/MessageDataCard.vue";
+import MessageFiles from "../MessageFiles/MessageFiles.vue";
+import StatusHistory from "../StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TMessageFile } from "@/entities/messageFile/model/types";
+import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
+
 interface IDialogWindowProps {
   value: boolean;
   messageData: TMessageExt;
   messageFiles: TMessageFile[];
-  // statusHistory: TStatusHistory[];
+  statusHistory: TStatusHistoryItem[];
   toolbarTitle: string;
 }
 
-const props = withDefaults(defineProps<IDialogWindowProps>(), {
+withDefaults(defineProps<IDialogWindowProps>(), {
   toolbarTitle: "",
   value: false,
   messageData: () => ({
@@ -57,6 +62,8 @@ const props = withDefaults(defineProps<IDialogWindowProps>(), {
     checksum: "",
     metadata: "",
   }),
+  messageFiles: () => [],
+  statusHistory: () => [],
 });
 
 const emit = defineEmits<{
@@ -70,10 +77,6 @@ const onDialogInput = (newValue: boolean) => {
 const close = () => {
   emit(`input`, false);
   emit(`close`, false);
-};
-
-const getColor = (isActive: boolean): `green` | `red` => {
-  return isActive ? `green` : `red`;
 };
 </script>
 
@@ -90,7 +93,7 @@ const getColor = (isActive: boolean): `green` | `red` => {
   min-height: 0;
 }
 .left-card {
-  width: auto; // фикс или auto
+  width: auto;
   flex-shrink: 0;
   height: 100%;
 }

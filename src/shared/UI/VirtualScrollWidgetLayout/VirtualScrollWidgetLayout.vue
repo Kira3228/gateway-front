@@ -8,7 +8,7 @@
         type="card"
       ></v-skeleton-loader>
     </div>
-    <virtual-scroll-vue
+    <virtual-scroll
       v-else
       :height="height"
       :itemHeight="itemHeight"
@@ -17,44 +17,19 @@
       <template v-slot:item="{ item }">
         <slot name="listItem" :item="item"></slot>
       </template>
-    </virtual-scroll-vue>
+    </virtual-scroll>
   </div>
 </template>
-<script lang="ts">
-import { TMessageFile } from "@/shared/types/common/TMessageFile";
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
-import VirtualScrollVue from "../VirtualScroll/VirtualScroll.vue";
-export default Vue.extend({
-  components: {
-    VirtualScrollVue,
-  },
-  props: {
-    skeletonsQuantity: {
-      type: Number,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
-      required: true,
-    },
-    items: {
-      type: Array as PropType<TMessageFile[] | TStatusHistory[]>,
-      default: () => [],
-    },
-    skeletonHeight: {
-      type: Number,
-      default: 90,
-    },
-    itemHeight: {
-      type: Number,
-      default: 100,
-    },
-    height: {
-      type: Number,
-      default: 750,
-    },
-  },
-});
+<script lang="ts" setup generic="T">
+import VirtualScroll from "../VirtualScroll/VirtualScroll.vue";
+
+interface IProps {
+  skeletonsQuantity: number;
+  isLoading: boolean;
+  items: T;
+  skeletonHeight: number;
+  itemHeight: number;
+  height: number;
+}
+defineProps<IProps>();
 </script>

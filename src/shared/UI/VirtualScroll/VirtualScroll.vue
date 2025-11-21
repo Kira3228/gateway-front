@@ -13,31 +13,12 @@
     </template>
   </v-virtual-scroll>
 </template>
-<script lang="ts">
-import { TMessageFile } from "@/shared/types/common/TMessageFile";
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
-export default Vue.extend({
-  name: `VirtualScroll`,
-  props: {
-    items: {
-      type: Array as PropType<TMessageFile[] | TStatusHistory[]>,
-      default: () => [],
-    },
-    isItemLoading: {
-      type: Boolean,
-      default: false,
-    },
-    itemHeight: {
-      type: Number,
-      default: 100,
-    },
-    height: {
-      type: Number,
-      default: 706,
-    },
-  },
-  computed: {},
-});
+<script lang="ts" setup generic="T">
+interface IVirtualScrollProps {
+  items: T;
+  itemHeight: number;
+  height: number;
+}
+
+defineProps<IVirtualScrollProps>();
 </script>

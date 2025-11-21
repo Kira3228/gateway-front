@@ -3,8 +3,9 @@
     :value="viewMessageDetailsModel.isOpen.value"
     @input="onInput"
     @close="onClose"
-    :message-data=""
-    :message-files=""
+    :message-data="messageData"
+    :message-files="messageFiles"
+    :status-history="statusHistory"
     :toolbar-title="title"
   ></dialog-window>
 </template>
@@ -19,6 +20,9 @@ const emits = defineEmits<{
 
 const viewMessageDetailsModel = useViewMessageDetailsModel();
 const title = `ID: ${viewMessageDetailsModel.currentId}`;
+const messageData = viewMessageDetailsModel.extMessage;
+const messageFiles = viewMessageDetailsModel.files;
+const statusHistory = viewMessageDetailsModel.statusHistory;
 
 const onInput = (val: boolean) => {
   if (!val) viewMessageDetailsModel.closeModal();

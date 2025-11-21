@@ -2,7 +2,6 @@
   <div class="tw-items-center">
     <text-input-vue label="Поиск" isSearch></text-input-vue>
     <button-group-vue
-      @click-sort="handleClickButton"
       :height="height"
       :items="sortButtonsItems"
     ></button-group-vue>
@@ -42,7 +41,9 @@ export default Vue.extend({
     },
   },
   methods: {
-    handleClickButton(childEventData: TButtonGroupItem & { isActive: boolean }) {
+    handleClickButton(
+      childEventData: TButtonGroupItem & { isActive: boolean }
+    ) {
       this.$emit(`sort-button-click`, childEventData);
     },
     handleSort(key: boolean, enabled: boolean) {
@@ -59,10 +60,10 @@ export default Vue.extend({
       const removed = old.filter((x) => !newVal.includes(x));
 
       if (added.length) {
-        this.handleSort(added[0], true); // включен
+        this.handleSort(added[0], true);
       }
       if (removed.length) {
-        this.handleSort(removed[0], false); // отключен
+        this.handleSort(removed[0], false);
       }
     },
   },

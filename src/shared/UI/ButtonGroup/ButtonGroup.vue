@@ -15,77 +15,30 @@
     </v-btn-toggle>
   </div>
 </template>
-<script lang="ts">
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
+<script lang="ts" setup>
+import { ref } from "vue";
 import ButtonVue from "../Button/Button.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
-import { Emit } from "vue-property-decorator";
 
-interface IButtonGroupData {
-  isActive: boolean;
-  activeBtnKey: null | number;
-}
+const isActive = ref<boolean>(true);
+const activeBtnKey = ref<number | null>(null);
 
-interface IButtonGroupMethods {
-  handleClick(btnData: any): void;
-}
-
-interface IButtonGroupProps {
+defineProps<{
   height: number;
   items: TButtonGroupItem[][];
-}
+}>();
 
-export default Vue.extend<
-  IButtonGroupData,
-  IButtonGroupMethods,
-  unknown,
-  IButtonGroupProps
->({
-  name: "ButtonGroup",
-  data() {
-    return {
-      isActive: true,
-      activeBtnKey: null,
-    };
-  },
-  components: {
-    ButtonVue,
-  },
-  props: {
-    height: {
-      type: Number,
-      default: 48,
-    },
-    items: {
-      type: Array as PropType<TButtonGroupItem[][]>,
-      default: () => [],
-    },
-  },
-  computed: {
-    isActive: {
-      get() {
-        return;
-      },
-      set() {
-        this;
-      },
-    },
-  },
-  methods: {
-    handleClick(btnData: TButtonGroupItem) {
-      if (this.activeBtnKey === btnData.key) {
-        this.activeBtnKey = null;
-        this.$emit(`click-sort`, {
-          key: null,
-          sortField: null,
-          sortOrder: null,
-        });
-      } else {
-        this.activeBtnKey === btnData.key;
-        this.$emit(`click-sort`, btnData);
-      }
-    },
-  },
-});
+const emit = defineEmits<{
+  (e: `click-sort`, value: TButtonGroupItem | null): void;
+}>();
+
+const handleClick = (btnData: TButtonGroupItem) => {
+  if (activeBtnKey.value === btnData.key) {
+    activeBtnKey.value = null;
+    emit(`click-sort`, null);
+  } else {
+    activeBtnKey.value = btnData.key;
+    emit(`click-sort`, btnData);
+  }
+};
 </script>

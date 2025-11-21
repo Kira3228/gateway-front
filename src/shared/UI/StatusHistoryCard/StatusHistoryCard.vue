@@ -22,21 +22,14 @@
     <p>{{ item.metadata }}</p>
   </div>
 </template>
-<script lang="ts">
-import { TStatusHistory } from "@/shared/types/common/TStatusHistory";
-import Vue from "vue";
-import { PropType } from "vue/types/v3-component-props";
+<script lang="ts" setup>
 import { getStatusColor } from "../../lib/getColorForChip";
-export default Vue.extend({
-  props: {
-    item: Object as PropType<TStatusHistory>,
-    default: () => {},
-  },
-  computed: {},
-  methods: {
-    getColor(status: string): string {
-      return getStatusColor(status);
-    },
-  },
-});
+import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
+
+defineProps<{
+  item: TStatusHistoryItem;
+}>();
+const getColor = (status: string): string => {
+  return getStatusColor(status);
+};
 </script>

@@ -7,15 +7,9 @@
   </v-sheet>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  props: {
-    title: {
-      type: String,
-      default: `Заголовок`,
-    },
-  },
-});
+<script lang="ts" setup>
+interface IProps {
+  title: string;
+}
+defineProps<IProps>();
 </script>
