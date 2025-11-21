@@ -5,7 +5,7 @@
     :items="messages"
     @click-row="handleRowClick"
   >
-    <template v-slot:modal> </template>
+    <template v-slot:modal></template>
     <template v-slot:select-preset>
       <div class="tw-w-screen tw-flex tw-justify-items-end">
         <preset-vue></preset-vue>
@@ -26,6 +26,7 @@ import {
 } from "../model/types";
 import { THeaderColumn } from "@/entities/header/model/types";
 import { TMessage } from "@/entities/message/model/types";
+import { VBtn } from "vuetify/lib";
 const model = useMessageTableModel();
 export default Vue.extend<
   IMessageTableData,
@@ -47,11 +48,12 @@ export default Vue.extend<
     },
   },
   methods: {
-    handleRowClick() {},
+    handleRowClick(data: TMessage) {
+      this.$emit(`open-modal`, data.messageId);
+    },
   },
   mounted() {
     model.init();
-    console.log(`Смонтирована таблица`);
   },
 });
 </script>

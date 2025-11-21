@@ -47,9 +47,7 @@ export default Vue.extend({
     },
     handleSort(key: boolean, enabled: boolean) {
       if (enabled) {
-        console.log(`Sorting enabled for ${key}`);
       } else {
-        console.log(`Sorting disabled for ${key}`);
       }
     },
   },

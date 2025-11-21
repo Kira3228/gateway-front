@@ -30,7 +30,6 @@ const mutations: MutationTree<IMessageState> = {
 const actions: ActionTree<IMessageState, RootState> = {
   async getMessages({ commit }) {
     try {
-      console.log(`Грузятся сообщения`);
       commit(`setIsLoading`, true)
       const messages = await fetchMessages()
       commit(`setMessages`, messages)
@@ -41,7 +40,6 @@ const actions: ActionTree<IMessageState, RootState> = {
 
     }
     finally {
-      console.log(`Finally`)
       commit(`setIsLoading`, false)
     }
   }

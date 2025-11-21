@@ -158,9 +158,7 @@ export default Vue.extend<
     },
     handleClick(data: TButtonGroupItem & { isActive: boolean }) {
       if (data.isActive) {
-        console.log(`ЖОПА`, data);
       } else {
-        console.log(`КАКА`, data);
       }
     },
   },

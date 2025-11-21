@@ -91,7 +91,6 @@ export default Vue.extend({
         this.modalTitle = `ID: ${data.messageId}`;
         this.dialog = true;
       } catch (error) {
-        console.log(error);
       }
     },
     handleCloseClick(isOpen: boolean) {

@@ -6,7 +6,7 @@ export interface IMessageTableData {
 
 }
 export interface IMessageTableMethods {
-  handleRowClick(): void
+  handleRowClick(data: any): void
 
 }
 export interface IMessageTableComputed {

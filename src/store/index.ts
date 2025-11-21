@@ -8,6 +8,7 @@ import viewMessageDetailsStore from '@/features/viewMessageDetails/model/store'
 import presetStore, { IPresetState } from '@/features/preset/model/store'
 import headerStore, { IHeaderState } from '@/entities/header/model/store'
 import messageStore, { IMessageState } from '@/entities/message/model/store'
+// import messageFileStore, { IMessageFileState } from '@/entities/messageFile/model/store'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export interface RootState {
   entities: {
     messageStore: IMessageState
     headerStore: IHeaderState,
+    // messageFilesStore: IMessageFileState
   },
   features: {
     presetStore: IPresetState
@@ -29,7 +31,8 @@ const store: StoreOptions<RootState> = {
       namespaced: true,
       modules: {
         messageStore: messageStore,
-        headerStore: headerStore
+        headerStore: headerStore,
+        // messageFileStore: messageFileStore
       }
     },
     features: {

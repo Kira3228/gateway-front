@@ -1,7 +1,6 @@
 import store from "@/store"
 
 export const useMessageTableModel = () => {
-  console.log(`Модель таблицы`);
   const init = async () => {
     await store.dispatch(`entities/messageStore/getMessages`)
     await store.dispatch(`entities/headerStore/getHeaders`)

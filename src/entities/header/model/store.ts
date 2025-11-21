@@ -22,7 +22,6 @@ const actions: ActionTree<IHeaderState, RootState> = {
       const newHeaders = await fetchHeaders(preset)
       commit(`setHeaders`, newHeaders)
     } catch (error) {
-      console.log(error);
 
     }
   }

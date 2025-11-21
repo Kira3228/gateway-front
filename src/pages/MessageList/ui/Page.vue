@@ -1,26 +1,7 @@
 <template>
   <div>
-    <!-- <data-table-vue
-      :isLoading="isTableLoading"
-      :headers="headers"
-      :items="items"
-      @click-row="handleRowClick"
-    >
-      <template v-slot:select-preset>
-        <preset-vue></preset-vue>
-      </template>
-    </data-table-vue> -->
-    <message-table-vue></message-table-vue>
-    <dialog-window-vue
-      :toolbarTitle="modalTitle"
-      v-if="dialog && messageExts.id"
-      :key="messageExts.id"
-      :value="dialog"
-      @close-click="handleCloseClick"
-      :message-data="messageExts"
-      :message-files="messageFiles"
-      :status-history="statusHistory"
-    ></dialog-window-vue>
+    <message-table-vue @open-modal="handleOpenModal"></message-table-vue>
+    <message-details-vue></message-details-vue>
   </div>
 </template>
 <script lang="ts">
@@ -34,6 +15,7 @@ import { useMessageList } from "@/features/messageList/model";
 import { messageDetails } from "@/features/messageExts/model";
 import PresetVue from "@/features/preset/ui/Preset.vue";
 import MessageTableVue from "./MessageTable.vue";
+import MessageDetailsVue from "./MessageDetails.vue";
 
 type MessageListStore = ReturnType<typeof useMessageList>;
 type MessageDetailsStore = ReturnType<typeof messageDetails>;
@@ -49,18 +31,10 @@ interface MessageListPageMethods {
   handleRowClick(data: TMessage): Promise<void>;
   handleCloseClick(isOpen: boolean): void;
   handleSelectChange(): Promise<void>;
+  handleOpenModal(messageId: number): void;
 }
 
-interface MessageListPageComputed {
-  items: TMessage[];
-  headers: any[];
-  messageExts: TMessageExt;
-  messageFiles: any[];
-  statusHistory: any[];
-  presetList: any[];
-  selectedPreset: string;
-  isTableLoading: boolean;
-}
+interface MessageListPageComputed {}
 export default Vue.extend<
   MessageListPageData,
   MessageListPageMethods,
@@ -73,6 +47,7 @@ export default Vue.extend<
     SelectInputVue,
     PresetVue,
     MessageTableVue,
+    MessageDetailsVue,
   },
   data(): MessageListPageData {
     return {
@@ -91,9 +66,7 @@ export default Vue.extend<
         this.messageDetails.loadDetails(data);
         this.modalTitle = `ID: ${data.messageId}`;
         this.dialog = true;
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     },
     handleCloseClick(isOpen: boolean) {
       this.dialog = isOpen;
@@ -101,38 +74,10 @@ export default Vue.extend<
     async handleSelectChange() {
       await this.$store.dispatch(`messageStore/getHeaders`);
     },
-  },
-  computed: {
-    items() {
-      return this.messageList.items;
-    },
-    headers() {
-      return this.messageList.headers;
-    },
-
-    messageExts(): TMessageExt {
-      return this.messageDetails.messageExt;
-    },
-    messageFiles() {
-      return this.messageDetails.messageFiles;
-    },
-    statusHistory() {
-      return this.messageDetails.statusHistory;
-    },
-    presetList() {
-      return this.$store.state.messageStore.presetList;
-    },
-    selectedPreset: {
-      get(): string {
-        return this.messageList.selectPreset;
-      },
-      set(newPreset: string) {
-        this.$store.commit(`messageStore/SET_PRESET`, newPreset);
-      },
-    },
-    isTableLoading() {
-      return this.messageList.isTableLoading;
+    handleOpenModal(messageId: number) {
+      console.log(messageId);
     },
   },
+  computed: {},
 });
 </script>
