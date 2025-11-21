@@ -5,7 +5,7 @@
     :items="items"
     :value="value"
     :hide-details="true"
-    item-text="label"
+    :item-text="itemText"
     :item-value="itemValue"
     standart
     :return-object="returnObject"
@@ -69,6 +69,10 @@ export default Vue.extend({
     },
     returnObject: { type: Boolean, default: false },
     itemValue: {
+      type: String,
+      default: "",
+    },
+    itemText: {
       type: String,
       default: "",
     },

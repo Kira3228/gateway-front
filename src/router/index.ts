@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import MessageList from "../pages/MessageList/ui/Page.vue"
 import Layout from "../layout/Layout.vue"
 import EmptyRouterView from '../shared/UI/EmptyRouterView.vue'
+
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [

@@ -1,5 +1,4 @@
 import store from "@/store"
-import { ComputedOptions } from "vue"
 
 export const useStatusHistry = () => {
   const handleSelectStatus = async (): Promise<void> => {

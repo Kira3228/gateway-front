@@ -3,6 +3,8 @@ import { BASE_URL } from "@/CONSTANTS"
 export const useApi = () => {
   const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
     const url = buildURL(endpoint, params)
+    console.log(url);
+
     const res = await fetch(url, { method: `GET` })
     if (!res.ok) {
       throw new Error(`GET ${url} failed ${res.status}`)
@@ -50,7 +52,7 @@ export const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
 
 export const buildURL = (base: string, params?: Record<string, any>): string => {
   if (!params) {
-    return base
+    return `${BASE_URL}${base}`
   }
 
   const sp = new URLSearchParams()
@@ -61,6 +63,7 @@ export const buildURL = (base: string, params?: Record<string, any>): string => 
   }
 
   const qs = sp.toString()
+
   return qs ? `${BASE_URL}/${base}?${qs}` : base
 }
 

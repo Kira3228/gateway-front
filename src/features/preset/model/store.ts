@@ -1,9 +1,9 @@
 import { RootState } from "@/store"
-import { Action, ActionTree, MutationTree } from "vuex"
-import { fetchHeaders } from "../api/getHeaders"
+import { Action, ActionTree, GetterTree, Module, MutationTree } from "vuex"
+import { fetchHeaders } from "../../../entities/header/api/getHeaders"
 import { fetchPresets } from "../api/getPresets"
 
-interface IPresetState {
+export interface IPresetState {
   preset: string
   presetList: string[]
 }
@@ -11,6 +11,12 @@ interface IPresetState {
 const state: IPresetState = {
   preset: '',
   presetList: []
+}
+
+const getters: GetterTree<IPresetState, RootState> = {
+  presets: (state: IPresetState) => {
+    return state.presetList.map(str => ({ label: str, value: str }))
+  }
 }
 
 const mutations: MutationTree<IPresetState> = {
@@ -24,7 +30,7 @@ const mutations: MutationTree<IPresetState> = {
 
 const actions: ActionTree<IPresetState, RootState> = {
   async getPresetList({ commit }) {
-    const presetList = fetchPresets()
+    const presetList = await fetchPresets()
     commit(`setPresetList`, presetList)
   },
 
@@ -32,6 +38,14 @@ const actions: ActionTree<IPresetState, RootState> = {
   async getHeaders({ state, commit }) {
     fetchHeaders(state.preset)
   },
-
-
 }
+
+const presetStore: Module<IPresetState, RootState> = {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
+}
+
+export default presetStore

@@ -5,19 +5,34 @@ import messageStore from './messageList/message.store'
 
 import type { TInitialState as messageState } from './messageList/message.store'
 import viewMessageDetailsStore from '@/features/viewMessageDetails/model/store'
+import presetStore, { IPresetState } from '@/features/preset/model/store'
+import headerStore, { IHeaderState } from '@/entities/header/model/store'
 Vue.use(Vuex)
 
 export interface RootState {
-  messageStore: messageState
+  messageStore: messageState,
+  entity: {
+    headerStore: IHeaderState,
+  },
+  features: {
+    presetStore: IPresetState
+  }
 }
 
 
 const store: StoreOptions<RootState> = {
   modules: {
+    entities: {
+      namespaced: true,
+      modules: {
+        headerStore: headerStore
+      }
+    },
     features: {
       namespaced: true,
       modules: {
-        viewMessageDetailsStore
+        viewMessageDetailsStore,
+        presetStore: presetStore
       }
     },
     messageStore: messageStore,

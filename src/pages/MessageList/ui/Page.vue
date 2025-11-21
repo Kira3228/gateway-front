@@ -6,16 +6,8 @@
       :items="items"
       @click-row="handleRowClick"
     >
-      <template v-slot:modal> </template>
       <template v-slot:select-preset>
-        <div class="tw-w-screen tw-flex tw-justify-items-end">
-          <select-input-vue
-            :items="presetList"
-            v-model="selectedPreset"
-            placeholder="Режим отображения"
-            @debounce="handleSelectChange"
-          ></select-input-vue>
-        </div>
+        <preset-vue></preset-vue>
       </template>
     </data-table-vue>
     <dialog-window-vue
@@ -39,6 +31,7 @@ import { TMessageExt } from "@/shared/types/message-ext/TMessageExt";
 import SelectInputVue from "@/shared/UI/SelectInput/SelectInput.vue";
 import { useMessageList } from "@/features/messageList/model";
 import { messageDetails } from "@/features/messageExts/model";
+import PresetVue from "@/features/preset/ui/Preset.vue";
 
 type MessageListStore = ReturnType<typeof useMessageList>;
 type MessageDetailsStore = ReturnType<typeof messageDetails>;
@@ -76,6 +69,7 @@ export default Vue.extend<
     DataTableVue,
     DialogWindowVue,
     SelectInputVue,
+    PresetVue,
   },
   data(): MessageListPageData {
     return {
