@@ -3,9 +3,10 @@
     :height="750"
     :isLoading="isLoading"
     :itemHeight="105"
-    :items="items"
+    :items="files"
     :skeletonHeight="88"
     :skeletonsQuantity="8"
+    :error="error"
   >
     <template #listItem="{ item }">
       <list-item :key="item.id" :item="item">
@@ -24,9 +25,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import VirtualScrollWidgetLayout from "@/shared/UI/VirtualScrollWidgetLayout/VirtualScrollWidgetLayout.vue";
 import ListItem from "@/shared/UI/ListItem/ListItem.vue";
+import { useMessageFileVirtualScrollModel } from "../model/model";
+import { onMounted } from "vue";
 
-const messageFilesStore = useMessageFileStore();
+const { files, isLoading, error } = useMessageFileVirtualScrollModel();
 </script>

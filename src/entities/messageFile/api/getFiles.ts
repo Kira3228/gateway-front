@@ -5,6 +5,6 @@ import { TMessageFile } from "../model/types"
 //TODO: сделать параметры
 export const fetchFiles = async (messageId: string, params?: any) => {
   const { get } = useApi()
-  const files = await get<TMessageFile[]>(`files/${messageId}`, params)
+  const files = await get<TMessageFile[]>(`/messages/files/${messageId}`, params)
   return files
 }

@@ -25,8 +25,9 @@ export const useViewMessageDetailsModel = () => {
   const openModal = (messageId: string) => {
     const previousId = viewMessageDetailsStore.currentId
     if (previousId !== messageId) {
-      messageExtStore.getMessageExt(messageId)
       viewMessageDetailsStore.setCurrentId(messageId)
+      messageExtStore.getMessageExt(messageId)
+      console.log(`Открываю модалку`);
       messageFileStore.getMessageFiles(messageId)
       historyStatusHistoryStore.getStatusHistory(messageId)
     }

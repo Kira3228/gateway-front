@@ -8,9 +8,8 @@
         :height="height"
         outlined
         :elevation="0"
-        :isActive="isActive"
       >
-        <component :is="btn.component"></component>
+        <component :is="btn.component" />
       </button-vue>
     </v-btn-toggle>
   </div>
@@ -20,7 +19,6 @@ import { ref } from "vue";
 import ButtonVue from "../Button/Button.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 
-const isActive = ref<boolean>(true);
 const activeBtnKey = ref<number | null>(null);
 
 defineProps<{
@@ -29,16 +27,16 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: `click-sort`, value: TButtonGroupItem | null): void;
+  (e: `click-order`, value: TButtonGroupItem | null): void;
 }>();
 
 const handleClick = (btnData: TButtonGroupItem) => {
   if (activeBtnKey.value === btnData.key) {
     activeBtnKey.value = null;
-    emit(`click-sort`, null);
+    emit(`click-order`, null);
   } else {
     activeBtnKey.value = btnData.key;
-    emit(`click-sort`, btnData);
+    emit(`click-order`, btnData);
   }
 };
 </script>

@@ -8,6 +8,9 @@
         type="card"
       ></v-skeleton-loader>
     </div>
+    <div v-else-if="error">
+      {{ error }}
+    </div>
     <virtual-scroll
       v-else
       :height="height"
@@ -30,6 +33,7 @@ interface IProps {
   skeletonHeight: number;
   itemHeight: number;
   height: number;
+  error: string | undefined;
 }
 defineProps<IProps>();
 </script>

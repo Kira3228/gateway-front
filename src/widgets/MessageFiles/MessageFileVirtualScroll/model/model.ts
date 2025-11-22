@@ -3,8 +3,10 @@ import { storeToRefs } from "pinia"
 
 export const useMessageFileVirtualScrollModel = () => {
   const messageFileStore = useMessageFileStore()
-  const { files } = storeToRefs(messageFileStore)
+  const { files, isLoading, error } = storeToRefs(messageFileStore)
   return {
-
+    files,
+    isLoading,
+    error
   }
 } 

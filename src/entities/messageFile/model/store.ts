@@ -20,9 +20,11 @@ export const useMessageFileStore = defineStore(`fileStore`, {
       this.error = ''
       try {
         const files = await fetchFiles(messageId)
+
         this.files = files
       } catch (error: any) {
         this.error = error.message
+        console.error(error);
       }
       finally {
         this.isLoading = false

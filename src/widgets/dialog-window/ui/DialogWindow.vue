@@ -23,7 +23,7 @@
         <v-divider vertical />
         <message-files />
         <v-divider vertical />
-        <status-history />
+        <!-- <status-history /> -->
       </div>
     </v-card>
   </v-dialog>

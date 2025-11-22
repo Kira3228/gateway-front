@@ -7,6 +7,6 @@
 
 <script lang="ts" setup>
 import ExtFileLayout from "@/shared/UI/ExtFileLayout/ExtFileLayout.vue";
-import MessageFileSortPanel from "./MessageFileSortPanel/MessageFileSortPanel.vue";
-import MessageFileVirtualScroll from "./MessageFileVirtualScroll/MessageFileVirtualScroll.vue";
+import MessageFileSortPanel from "./MessageFileSortPanel/ui/MessageFileSortPanel.vue";
+import MessageFileVirtualScroll from "./MessageFileVirtualScroll/ui/MessageFileVirtualScroll.vue";
 </script>
