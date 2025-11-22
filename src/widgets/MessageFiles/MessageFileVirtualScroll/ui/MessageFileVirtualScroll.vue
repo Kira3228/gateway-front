@@ -30,19 +30,20 @@
 </template>
 
 <script lang="ts" setup>
+import { TMessageFile } from "@/shared/types/common/TMessageFile";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 import ListItem from "@/shared/UI/ListItem/ListItem.vue";
-import { useMessageFileVirtualScrollModel } from "../model/model";
-import { onMounted } from "vue";
-interface IProps {}
+interface IProps {
+  isLoading: boolean;
+  files: TMessageFile[];
+  error: string;
+}
 const props = defineProps<IProps>();
 const emit = defineEmits<{
-  (e: `load-more`): void;
+  (e: `load-more`, data: any): void;
 }>();
 
-const { init, error, files, isLoading } = useMessageFileVirtualScrollModel();
-
-const onIntersect = () => {
-  emit(`load-more`);
+const onIntersect = (data: any) => {
+  emit(`load-more`, data);
 };
 </script>

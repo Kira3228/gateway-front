@@ -11,5 +11,4 @@ export type TMessageFile = {
   description: string
   isMetadataFile: boolean,
   created_at: string
-  isLoading: boolean | null
 }

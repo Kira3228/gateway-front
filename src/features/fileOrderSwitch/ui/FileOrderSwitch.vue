@@ -8,12 +8,17 @@
 <script lang="ts" setup>
 import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
 import { useFileOrderSwitchModel } from "../model/model";
+import { onUnmounted } from "vue";
 const { MessageFileSortButtons } = useFileOrderSwitchModel();
-const { setOrder } = useFileOrderSwitchModel();
+const { setOrder, refresh } = useFileOrderSwitchModel();
 const handleOrderClick = (data: {
   sortField: string;
   sortOrder: "" | "ASC" | "DESC";
 }) => {
   setOrder(data.sortField, data.sortOrder);
 };
+
+onUnmounted(() => {
+  refresh();
+});
 </script>

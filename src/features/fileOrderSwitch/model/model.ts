@@ -53,11 +53,12 @@ export const useFileOrderSwitchModel = () => {
     }]
   ])
 
-  const { setOrder } = useFileOrderSwitchStore()
+  const { setOrder, refresh } = useFileOrderSwitchStore()
   const { createdAtOrder, fileNameOrder, fileSizeBytesOrder } = storeToRefs(useFileOrderSwitchStore())
   return {
     MessageFileSortButtons,
     setOrder,
+    refresh,
     createdAtOrder,
     fileNameOrder,
     fileSizeBytesOrder

@@ -25,5 +25,9 @@ export const useFileOrderSwitchStore = defineStore(`file-order-switch-store`, {
         }
       }
     },
+    refresh() {
+      this.fileNameOrder = ''
+      this.fileSizeBytesOrder = ''
+    }
   }
 })

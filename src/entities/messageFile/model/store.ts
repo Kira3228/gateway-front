@@ -6,23 +6,23 @@ interface IMessageFileState {
   files: TMessageFile[];
   isLoading: boolean;
   error: string;
+  page: number
 }
 
 export const useMessageFileStore = defineStore(`fileStore`, {
   state: (): IMessageFileState => ({
     error: ``,
     files: [],
-    isLoading: false
+    isLoading: false,
+    page: 1
   }),
   actions: {
     async getMessageFiles(messageId: string, params?: TQueryParams) {
-      console.log(params);
-
       this.isLoading = false
       this.error = ''
       try {
         const files = await fetchFiles(messageId, params)
-        this.files = files
+        this.files = [...this.files, ...files]
       } catch (error: any) {
         this.error = error.message
         console.error(error);
@@ -30,6 +30,13 @@ export const useMessageFileStore = defineStore(`fileStore`, {
       finally {
         this.isLoading = false
       }
+    },
+    incrementPage() {
+      this.page++
+    },
+    refresh() {
+      this.page = 1
+      this.files = []
     }
   },
 })
