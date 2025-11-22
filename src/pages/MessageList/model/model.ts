@@ -11,7 +11,7 @@ export const useMessageTableModel = () => {
 
   const { headers } = storeToRefs(headerStore)
   const { error, isLoading, messages } = storeToRefs(messageStore)
-  const { isOpen } = storeToRefs(viewMessageDetails)
+  const { isOpen, currentId } = storeToRefs(viewMessageDetails)
 
   const init = async (page: number) => {
     Promise.all([messageStore.getMessages(page), headerStore.getHeaders()])
@@ -24,6 +24,9 @@ export const useMessageTableModel = () => {
     viewMessageDetails.closeModal()
   }
 
+
+
+
   return {
     init,
     headers,
@@ -31,7 +34,9 @@ export const useMessageTableModel = () => {
     isLoading,
     isOpen,
     openModal,
-    closeModal
+    closeModal,
+    currentId,
+
 
   }
 } 

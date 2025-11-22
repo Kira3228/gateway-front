@@ -32,22 +32,21 @@
 <script lang="ts" setup>
 import MessageDataCard from "@/widgets/MessageData/MessageDataCard.vue";
 import MessageFiles from "@/widgets/MessageFiles/MessageFiles.vue";
-import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
-import { TMessageFile } from "@/entities/messageFile/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 
 interface IDialogWindowProps {
   value: boolean;
+  id: string;
   messageData: TMessageExt;
-  messageFiles: TMessageFile[];
   statusHistory: TStatusHistoryItem[];
   toolbarTitle: string;
 }
 
-withDefaults(defineProps<IDialogWindowProps>(), {
+const props = withDefaults(defineProps<IDialogWindowProps>(), {
   toolbarTitle: "",
   value: false,
+  id: "",
   messageData: () => ({
     id: 0,
     createdAt: new Date(0),

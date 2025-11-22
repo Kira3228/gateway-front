@@ -9,6 +9,8 @@
 import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
 import { useFileOrderSwitchModel } from "../model/model";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
+import { useFileOrderSwitch } from "../model/store";
 const { MessageFileSortButtons } = useFileOrderSwitchModel();
-const handleOrderClick = (data: TButtonGroupItem | null) => {};
+const store = useFileOrderSwitch();
+const handleOrderClick = (data: { sortField: string; sortOrder: string }) => {};
 </script>

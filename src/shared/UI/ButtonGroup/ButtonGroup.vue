@@ -8,7 +8,6 @@
         :height="height"
         outlined
         :elevation="0"
-
       >
         <component :is="btn.component" />
       </button-vue>
@@ -21,23 +20,30 @@ import ButtonVue from "../Button/Button.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 
 const activeBtnKey = ref<number | null>(null);
-
+  
+type TEmitData = { sortField: string; sortOrder: string };
 defineProps<{
   height: number;
   items: TButtonGroupItem[][];
 }>();
 
 const emit = defineEmits<{
-  (e: `click-order`, value: TButtonGroupItem | null): void;
+  (e: `click-order`, value: TEmitData): void;
 }>();
 
 const handleClick = (btnData: TButtonGroupItem) => {
   if (activeBtnKey.value === btnData.key) {
     activeBtnKey.value = null;
-    emit(`click-order`, null);
+    emit(`click-order`, {
+      sortField: btnData.value.sortField,
+      sortOrder: "",
+    });
   } else {
     activeBtnKey.value = btnData.key;
-    emit(`click-order`, btnData);
+    emit(`click-order`, {
+      sortField: btnData.value.sortField,
+      sortOrder: btnData.value.sortOrder,
+    });
   }
 };
 </script>
