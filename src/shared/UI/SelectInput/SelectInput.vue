@@ -3,7 +3,6 @@
     :label="label"
     :placeholder="placeholder"
     :items="items"
-    :value="value"
     :hide-details="true"
     :item-text="itemText"
     :item-value="itemValue"
@@ -13,9 +12,10 @@
     single-line
     color="primary"
     style="width: 360px"
-    @input="handleSelect"
-    :chips="chips"
     :multiple="multiple"
+    deletable-chips
+    @input="handleSelect"
+    :value="value"
   >
     <template v-slot:selection="{ item, index }">
       <slot name="selectedChip" :item="item" :index="index"></slot>
@@ -32,71 +32,39 @@
   </v-select>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup generic="T, H">
 import { TSortOptions } from "@/shared/types/common/TSortOptions";
-import Vue from "vue";
 import { useDebounce } from "../../lib/debounce";
-export default Vue.extend({
-  name: "CustomSelect",
-  props: {
-    label: {
-      type: String,
-      default: "",
-    },
-    items: {
-      type: Array,
-      default: () => [],
-    },
-    placeholder: {
-      type: String,
-      default: "Выберите опцию",
-    },
-    value: {
-      type: [String, Number, Object, Array],
-      default: null,
-    },
-    chips: {
-      type: Boolean,
-      default: false,
-    },
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
-    customList: {
-      type: Boolean,
-      default: false,
-    },
-    returnObject: { type: Boolean, default: false },
-    itemValue: {
-      type: String,
-      default: "",
-    },
-    itemText: {
-      type: String,
-      default: "",
-    },
-  },
+interface IProps {
+  label?: string;
+  items: T[];
+  placeholder: string;
+  value?: H;
+  chips: boolean;
+  multiple: boolean;
+  customList: boolean;
+  returnObject: boolean;
+  itemValue: string;
+  itemText: string;
+}
 
-  data() {
-    return {
-      selectedValue: this.value,
-      debounce: null as ReturnType<typeof useDebounce> | null,
-    };
-  },
-  created() {
-    this.debounce = useDebounce();
-  },
-  methods: {
-    handleSelect(newValue: TSortOptions) {
-      this.$emit("input", newValue);
-      if (this.debounce) {
-        this.debounce.debounce(() => {
-          this.$emit(`debounce`, newValue);
-        });
-      }
-    },
-  },
-  watch: {},
+withDefaults(defineProps<IProps>(), {
+  chips: false,
+  customList: false,
 });
+const emits = defineEmits<{
+  (e: `debounce`, value: any): void;
+  (e: `input`, value: any): void;
+}>();
+
+const debounce = useDebounce();
+
+const handleSelect = (newValue: TSortOptions) => {
+  emits("input", newValue);
+  if (debounce && debounce.debounce) {
+    debounce.debounce(() => {
+      emits(`debounce`, newValue);
+    });
+  }
+};
 </script>

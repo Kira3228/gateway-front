@@ -19,19 +19,20 @@
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card :messageData="messageData" />
+        <message-data-card :id="id" />
         <v-divider vertical />
         <message-files :id="id" />
         <v-divider vertical />
-        <!-- <status-history /> -->
+        <status-history />
       </div>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts" setup>
-import MessageDataCard from "@/widgets/MessageData/MessageDataCard.vue";
+import MessageDataCard from "@/widgets/MessageData/ui/MessageDataCard.vue";
 import MessageFiles from "@/widgets/MessageFiles/MessageFiles.vue";
+import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 

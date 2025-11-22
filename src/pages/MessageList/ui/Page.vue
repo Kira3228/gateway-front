@@ -9,5 +9,4 @@ import MessageTable from "./MessageTable.vue";
 import MessageDetails from "./MessageDetails.vue";
 import { useViewMessageDetailsModel } from "@/features/viewMessageDetails/model/model";
 const model = useViewMessageDetailsModel();
-const handleOpenDetails = () => {};
 </script>

@@ -1,70 +1,75 @@
 <template>
-  <v-sheet class="tw-p-3 left-card" :width="width">
-    <v-card-title>Метаданные</v-card-title>
+  <ext-data-card title="Метаданные">
     <div class="tw-max-w-xs tw-ml-4 tw-flex tw-flex-col tw-gap-y-2">
       <div class="tw-flex tw-flex-col">
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">ID</p>
-        <p class="tw-text-lg">{{ messageData.id }}</p>
+        <p class="tw-text-lg">{{ messageExts.id }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">
           Контрольная сумма:
         </p>
         <p class="tw-text-lg tw-break-all wrap-text">
-          {{ messageData.checksum }}
+          {{ messageExts.checksum }}
         </p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Создано:</p>
-        <p class="tw-text-lg">{{ messageData.createdAt }}</p>
+        <p class="tw-text-lg">{{ messageExts.createdAt }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Доставлено</p>
-        <p class="tw-text-lg">{{ messageData.delivered_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.delivered_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Метаданные</p>
-        <p class="tw-text-lg">{{ messageData.metadata }}</p>
+        <p class="tw-text-lg">{{ messageExts.metadata }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Прочитано</p>
-        <p class="tw-text-lg">{{ messageData.read_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.read_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получено</p>
-        <p class="tw-text-lg">{{ messageData.received_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.received_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получение</p>
-        <p class="tw-text-lg">{{ messageData.receiving_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.receiving_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправка</p>
-        <p class="tw-text-lg">{{ messageData.sending_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.sending_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправлено</p>
-        <p class="tw-text-lg">{{ messageData.sent_at }}</p>
+        <p class="tw-text-lg">{{ messageExts.sent_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Количесво файлов</p>
-        <p class="tw-text-lg">{{ messageData.totalFilesCount }}</p>
+        <p class="tw-text-lg">{{ messageExts.totalFilesCount }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Размер</p>
-        <p class="tw-text-lg">{{ messageData.totalSizeBytes }} байт</p>
+        <p class="tw-text-lg">{{ messageExts.totalSizeBytes }} байт</p>
       </div>
     </div>
-  </v-sheet>
+  </ext-data-card>
 </template>
 <script lang="ts" setup>
-import { TMessageExt } from "@/entities/messageExt/model/types";
+import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
+import { useDataCardModel } from "../model/model";
+import { onMounted } from "vue";
 
 interface IMessageDataCardProps {
-  messageData: TMessageExt;
-  width?: string;
+  id: string;
 }
-withDefaults(defineProps<IMessageDataCardProps>(), {});
+const props = withDefaults(defineProps<IMessageDataCardProps>(), {});
+const { init, messageExts } = useDataCardModel();
+
+onMounted(() => {
+  init(props.id);
+});
 </script>
 
 <style lang="scss" scoped>

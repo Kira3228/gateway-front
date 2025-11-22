@@ -1,44 +1,33 @@
 <template>
-  <virtual-scroll-widget-layout-vue
+  <ComplexVirtualScroll
     :height="750"
     :itemHeight="150"
-    :items="items"
+    :items="statuses"
     :isLoading="isLoading"
     :skeletonsQuantity="6"
+    :skeletonHeight="100"
+    :error="error"
   >
     <template #listItem="{ item }">
       <list-item-vue :key="item.id" :item="item">
         <template v-slot:content="{ item }">
-          <status-history-card-vue :item="item"></status-history-card-vue>
+          <status-history-card :item="item"></status-history-card>
         </template>
       </list-item-vue>
     </template>
-  </virtual-scroll-widget-layout-vue>
+  </ComplexVirtualScroll>
 </template>
-<script lang="ts">
-import VirtualScrollVue from "@/shared/UI/VirtualScroll/VirtualScroll.vue";
-import Vue from "vue";
+<script lang="ts" setup>
+interface IProps {
+  isLoading: boolean;
+  statuses: TStatusHistoryItem[];
+  error: string;
+}
+
+const props = defineProps<IProps>();
+
+import StatusHistoryCard from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
 import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
-import StatusHistoryCardVue from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
-import VirtualScrollWidgetLayoutVue from "@/shared/UI/VirtualScrollWidgetLayout/VirtualScrollWidgetLayout.vue";
-import store from "@/store";
-
-export default Vue.extend({
-  name:`StatusHistoryVirtualScrollWidget`,
-
-  components: {
-    VirtualScrollVue,
-    ListItemVue,
-    StatusHistoryCardVue,
-    VirtualScrollWidgetLayoutVue,
-  },
-  computed: {
-    items() {
-      return store.state.messageStore.statusHistory;
-    },
-    isLoading() {
-      return store.state.messageStore.isStatusHistoryLoading;
-    },
-  },
-});
+import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
+import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 </script>

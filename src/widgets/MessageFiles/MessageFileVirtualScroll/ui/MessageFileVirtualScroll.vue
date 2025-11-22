@@ -1,5 +1,5 @@
 <template>
-  <ComplexVirtualScroll
+  <complex-virtual-scroll
     :height="750"
     :isLoading="isLoading"
     :itemHeight="105"
@@ -26,13 +26,14 @@
         style="height: 1px; width: 100%"
       ></div>
     </template>
-  </ComplexVirtualScroll>
+  </complex-virtual-scroll>
 </template>
 
 <script lang="ts" setup>
 import { TMessageFile } from "@/shared/types/common/TMessageFile";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 import ListItem from "@/shared/UI/ListItem/ListItem.vue";
+
 interface IProps {
   isLoading: boolean;
   files: TMessageFile[];

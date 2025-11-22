@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import MenuVue from "@/shared/UI/Menu/Menu2.vue";
-import { TBreadcrumbs } from "@/store/breadcrumbs/breadcrumbs.store";
 import Vue from "vue";
 import TextInputVue from "@/shared/UI/TextInput/TextInput.vue";
 
@@ -45,9 +44,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    items(): TBreadcrumbs[] {
-      return this.$store.state.breadcrumbsStore.breadcrumbs;
-    },
     test(): string {
       return this.$route.fullPath;
     },
@@ -73,12 +69,6 @@ export default Vue.extend({
           to: to,
           text: title,
         });
-      }
-    },
-    handleBreadcrumbClick(item: TBreadcrumbs) {
-      const index = this.items.findIndex((b: TBreadcrumbs) => b.to === item.to);
-      if (index !== -1) {
-        this.$store.commit(`breadcrumbsStore/REMOVE_FROM_INDEX`, index);
       }
     },
     routerHandler() {},

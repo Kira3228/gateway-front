@@ -12,7 +12,7 @@
     >
       <template v-slot:select-preset>
         <div class="tw-flex tw-flex-row-reverse tw-w-1/12">
-          <preset-vue></preset-vue>
+          <!-- <preset-vue></preset-vue> -->
           asdsad
         </div>
       </template>

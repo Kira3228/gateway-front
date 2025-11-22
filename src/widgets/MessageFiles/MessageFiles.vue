@@ -1,5 +1,5 @@
 <template>
-  <ext-file-layout title="Файлы">
+  <ext-data-card title="Файлы">
     <file-order-switch />
     <message-file-virtual-scroll
       :error="error"
@@ -7,11 +7,11 @@
       :is-loading="isLoading"
       @load-more="handleLoadMore"
     />
-  </ext-file-layout>
+  </ext-data-card>
 </template>
 
 <script lang="ts" setup>
-import ExtFileLayout from "@/shared/UI/ExtFileLayout/ExtFileLayout.vue";
+import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
 import MessageFileVirtualScroll from "./MessageFileVirtualScroll/ui/MessageFileVirtualScroll.vue";
 import FileOrderSwitch from "@/features/fileOrderSwitch/ui/FileOrderSwitch.vue";
 import { onUnmounted, toRef, watch } from "vue";
