@@ -5,9 +5,10 @@ import SortAlphabeticalDescending from "@/shared/icons/SortAlphabeticalDescendin
 import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
 import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem"
+import { ref } from "vue"
 
 export const useFileOrderSwitchModel = () => {
-  const MessageFileSortButtons: TButtonGroupItem[][] = [
+  const MessageFileSortButtons = ref<TButtonGroupItem[][]>([
     [
       {
         key: 1,
@@ -48,7 +49,7 @@ export const useFileOrderSwitchModel = () => {
         sortOrder: "DESC"
       }
     }]
-  ]
+  ])
 
 
   return {

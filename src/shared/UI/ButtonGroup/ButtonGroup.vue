@@ -8,6 +8,7 @@
         :height="height"
         outlined
         :elevation="0"
+
       >
         <component :is="btn.component" />
       </button-vue>
