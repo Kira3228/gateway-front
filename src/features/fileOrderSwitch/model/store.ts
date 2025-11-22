@@ -6,7 +6,7 @@ interface IOrderSwitchState {
   createdAtOrder: "ASC" | "DESC" | ""
 }
 
-export const useFileOrderSwitch = defineStore(`file-order-switch-store`, {
+export const useFileOrderSwitchStore = defineStore(`file-order-switch-store`, {
   state: (): IOrderSwitchState => ({
     fileNameOrder: "",
     fileSizeBytesOrder: "",

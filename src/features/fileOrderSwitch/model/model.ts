@@ -6,7 +6,8 @@ import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
 import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem"
 import { ref } from "vue"
-import { useFileOrderSwitch } from "./store"
+import { useFileOrderSwitchStore } from "./store"
+import { storeToRefs } from "pinia"
 
 export const useFileOrderSwitchModel = () => {
   const MessageFileSortButtons = ref<TButtonGroupItem[][]>([
@@ -52,10 +53,13 @@ export const useFileOrderSwitchModel = () => {
     }]
   ])
 
-  const { setOrder } = useFileOrderSwitch()
-
+  const { setOrder } = useFileOrderSwitchStore()
+  const { createdAtOrder, fileNameOrder, fileSizeBytesOrder } = storeToRefs(useFileOrderSwitchStore())
   return {
     MessageFileSortButtons,
-    setOrder
+    setOrder,
+    createdAtOrder,
+    fileNameOrder,
+    fileSizeBytesOrder
   }
 }

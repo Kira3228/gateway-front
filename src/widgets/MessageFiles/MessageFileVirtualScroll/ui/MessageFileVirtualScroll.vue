@@ -29,14 +29,8 @@ import VirtualScrollWidgetLayout from "@/shared/UI/VirtualScrollWidgetLayout/Vir
 import ListItem from "@/shared/UI/ListItem/ListItem.vue";
 import { useMessageFileVirtualScrollModel } from "../model/model";
 import { onMounted } from "vue";
-interface IProps {
-  id: string;
-}
+interface IProps {}
 const props = defineProps<IProps>();
 
 const { init, error, files, isLoading } = useMessageFileVirtualScrollModel();
-
-onMounted(() => {
-  init(props.id);
-});
 </script>

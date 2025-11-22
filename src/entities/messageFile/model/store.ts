@@ -16,6 +16,8 @@ export const useMessageFileStore = defineStore(`fileStore`, {
   }),
   actions: {
     async getMessageFiles(messageId: string, params?: TQueryParams) {
+      console.log(params);
+
       this.isLoading = false
       this.error = ''
       try {
