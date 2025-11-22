@@ -14,7 +14,7 @@
 import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
 import MessageFileVirtualScroll from "./MessageFileVirtualScroll/ui/MessageFileVirtualScroll.vue";
 import FileOrderSwitch from "@/features/fileOrderSwitch/ui/FileOrderSwitch.vue";
-import { onUnmounted, toRef, watch } from "vue";
+import { toRef, watch } from "vue";
 import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import { useFileOrderSwitchModel } from "@/features/fileOrderSwitch/model/model";
 import { storeToRefs } from "pinia";
@@ -27,8 +27,8 @@ const props = defineProps<IProps>();
 const messageId = toRef(props, "id");
 
 const { fileNameOrder, fileSizeBytesOrder } = useFileOrderSwitchModel();
-
 const fileStore = useMessageFileStore();
+
 const { files, error, isLoading, page } = storeToRefs(fileStore);
 
 const handleLoadMore = () => {

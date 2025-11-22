@@ -23,13 +23,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getStatusColor } from "../../lib/getColorForChip";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 
 defineProps<{
   item: TStatusHistoryItem;
 }>();
 const getColor = (status: string): string => {
-  return getStatusColor(status);
+  return `red`;
 };
 </script>

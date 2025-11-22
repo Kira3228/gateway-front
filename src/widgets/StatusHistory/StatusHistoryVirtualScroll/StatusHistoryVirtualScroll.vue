@@ -9,11 +9,11 @@
     :error="error"
   >
     <template #listItem="{ item }">
-      <list-item-vue :key="item.id" :item="item">
+      <list-item :key="item.id" :item="item">
         <template v-slot:content="{ item }">
           <status-history-card :item="item"></status-history-card>
         </template>
-      </list-item-vue>
+      </list-item>
     </template>
   </ComplexVirtualScroll>
 </template>
@@ -27,7 +27,11 @@ interface IProps {
 const props = defineProps<IProps>();
 
 import StatusHistoryCard from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
-import ListItemVue from "@/shared/UI/ListItem/ListItem.vue";
+import ListItem from "@/shared/UI/ListItem/ListItem.vue";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
+import { onMounted } from "vue";
+onMounted(() => {
+  console.log(`статусы`, props.statuses);
+});
 </script>

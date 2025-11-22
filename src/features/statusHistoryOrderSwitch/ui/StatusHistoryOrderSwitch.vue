@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
-import { useStatusHistoryOrderSwitchModel } from "../model/StatusHistoryOrderSwitchModel";
+import { useStatusHistoryOrderSwitchModel } from "../model/model";
 
 const { StatusHstorySortButtons } = useStatusHistoryOrderSwitchModel();
 

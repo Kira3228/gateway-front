@@ -19,11 +19,11 @@
       </v-toolbar>
 
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card :id="id" />
+        <message-data-card class="tw-flex-1" :id="id" />
         <v-divider vertical />
         <message-files :id="id" />
         <v-divider vertical />
-        <status-history />
+        <status-history :id="id" />
       </div>
     </v-card>
   </v-dialog>
