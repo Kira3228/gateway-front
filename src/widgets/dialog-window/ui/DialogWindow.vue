@@ -21,18 +21,18 @@
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card :messageData="messageData" />
         <v-divider vertical />
-        <message-files :files="messageFiles" />
+        <message-files />
         <v-divider vertical />
-        <status-history :items="statusHistory" />
+        <status-history />
       </div>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts" setup>
-import MessageDataCard from "../MessageData/MessageDataCard.vue";
-import MessageFiles from "../MessageFiles/MessageFiles.vue";
-import StatusHistory from "../StatusHistory/StatusHistory.vue";
+import MessageDataCard from "@/widgets/MessageData/MessageDataCard.vue";
+import MessageFiles from "@/widgets/MessageFiles/MessageFiles.vue";
+import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TMessageFile } from "@/entities/messageFile/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";

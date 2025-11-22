@@ -1,7 +1,7 @@
 <template>
   <ext-file-layout title="Файлы">
-    <message-file-sort-panel></message-file-sort-panel>
-    <message-file-virtual-scroll></message-file-virtual-scroll>
+    <message-file-sort-panel />
+    <message-file-virtual-scroll />
   </ext-file-layout>
 </template>
 

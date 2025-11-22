@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tw-h-full">
     <message-table
       @open-modal="viewMessageDetailsModel.openModal"
     ></message-table>

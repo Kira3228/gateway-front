@@ -35,10 +35,14 @@ export const useMessageExtStore = defineStore(`message-ext-store`, {
         this.error = ''
         this.isLoading = true
         const messageExts = await fetchMessageExts(messageId)
+        console.log(messageExts);
+
         this.messageExts = { ...messageExts }
       }
       catch (error: any) {
         this.error = error.message
+        console.log(error);
+
       }
       finally {
         this.isLoading = false

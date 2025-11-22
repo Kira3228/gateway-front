@@ -1,8 +1,12 @@
 <template>
-  <div class="tw-flex">
+  <div class="tw-flex tw-h-screen">
     <menu-vue></menu-vue>
     <div class="tw-flex tw-flex-col tw-min-w-full">
-      <text-input-vue placeholder="Поиск" isSearch class="tw-w-1/3"></text-input-vue>
+      <text-input-vue
+        placeholder="Поиск"
+        isSearch
+        class="tw-w-1/3"
+      ></text-input-vue>
       <v-divider></v-divider>
       <v-breadcrumbs :items="breadcrumbs" divider="/">
         <template v-slot:divider>
@@ -19,7 +23,9 @@
         </template>
       </v-breadcrumbs>
       <v-divider></v-divider>
-      <router-view></router-view>
+      <div class="tw-flex-1">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>

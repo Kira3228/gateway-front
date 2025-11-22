@@ -1,27 +1,17 @@
 <template>
-  <ext-file-layout-vue title="История изменения">
-    <status-history-sort-panel-vue></status-history-sort-panel-vue>
-    <status-history-virtual-scroll-vue>
+  <ext-file-layout title="История изменения">
+    <status-history-sort-panel />
+    <status-history-virtual-scroll>
       <template #scrol-item="{ item }">
-        <status-history-card-vue :item="item"></status-history-card-vue>
+        <status-history-card :item="item" />
       </template>
-    </status-history-virtual-scroll-vue>
-  </ext-file-layout-vue>
+    </status-history-virtual-scroll>
+  </ext-file-layout>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import ExtFileLayoutVue from "@/shared/UI/ExtFileLayout/ExtFileLayout.vue";
-import StatusHistoryCardVue from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
-import StatusHistorySortPanelVue from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
-import StatusHistoryVirtualScrollVue from "./StatusHistoryVirtualScroll/StatusHistoryVirtualScroll.vue";
-export default Vue.extend({
-  name: `StatusHistoyryWidget`,
-  components: {
-    ExtFileLayoutVue,
-    StatusHistoryCardVue,
-    StatusHistorySortPanelVue,
-    StatusHistoryVirtualScrollVue,
-  },
-});
+<script lang="ts" setup>
+import ExtFileLayout from "@/shared/UI/ExtFileLayout/ExtFileLayout.vue";
+import StatusHistoryCard from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
+import StatusHistorySortPanel from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
+import StatusHistoryVirtualScroll from "./StatusHistoryVirtualScroll/StatusHistoryVirtualScroll.vue";
 </script>

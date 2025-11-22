@@ -15,11 +15,11 @@ export const useMessageStore = defineStore(`message-store`, {
     messages: []
   }),
   actions: {
-    async getMessages() {
+    async getMessages(page: number) {
       try {
         this.error = ""
         this.isLoading = true
-        const messages = await fetchMessages()
+        const messages = await fetchMessages(page)
         this.messages = messages
       } catch (error: any) {
         this.error = error.message

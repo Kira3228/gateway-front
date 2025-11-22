@@ -13,8 +13,8 @@ export const useMessageTableModel = () => {
   const { error, isLoading, messages } = storeToRefs(messageStore)
   const { isOpen } = storeToRefs(viewMessageDetails)
 
-  const init = async () => {
-    Promise.all([messageStore.getMessages(), headerStore.getHeaders()])
+  const init = async (page: number) => {
+    Promise.all([messageStore.getMessages(page), headerStore.getHeaders()])
   }
 
   const openModal = () => {

@@ -13,16 +13,20 @@ export const useViewMessageDetailsModel = () => {
   //TODO: Добавить стор со статусами
 
   const { isOpen, currentId, title } = storeToRefs(viewMessageDetailsStore)
+
   const { error: extError, isLoading: isExtLoading, messageExts: extMessage } = storeToRefs(messageExtStore)
+
   const { error: fileError, isLoading: isFileLoading, files: files } = storeToRefs(messageFileStore)
-  const { error: historyError, isLoading: ishistoryLoading, statusHistory: statusHistory } = storeToRefs(historyStatusHistoryStore)
+
+  const { error: historyError, isLoading: ishistoryLoading, statusHistory: statusHistory }
+    = storeToRefs(historyStatusHistoryStore)
+
 
   const openModal = (messageId: string) => {
     const previousId = viewMessageDetailsStore.currentId
     if (previousId !== messageId) {
-
-      viewMessageDetailsStore.setCurrentId(messageId)
       messageExtStore.getMessageExt(messageId)
+      viewMessageDetailsStore.setCurrentId(messageId)
       messageFileStore.getMessageFiles(messageId)
       historyStatusHistoryStore.getStatusHistory(messageId)
     }
@@ -42,14 +46,14 @@ export const useViewMessageDetailsModel = () => {
     isOpen,
     openModal,
     closeModal,
-    extError, 
+    extError,
     isExtLoading,
     extMessage,
-    fileError, 
-    isFileLoading, 
+    fileError,
+    isFileLoading,
     files,
-    historyError, 
-    ishistoryLoading, 
+    historyError,
+    ishistoryLoading,
     statusHistory
   }
 

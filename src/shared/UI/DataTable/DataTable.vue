@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-full">
+  <div class="tw-flex-1">
     <v-data-table
       :multi-sort="true"
       item-class="tw-w-full"
@@ -25,73 +25,35 @@
       </template>
     </v-data-table>
     <slot name="modal"></slot>
-
-    <v-pagination
-      v-model="localPage"
-      :total-visible="7"
-      :length="paginationLength"
-    >
-    </v-pagination>
   </div>
 </template>
 
-<script lang="ts">
-import { TMessage } from "@/shared/types/messages/TMessage";
-import Vue, { PropType } from "vue";
-import { DataTableHeader } from "vuetify";
-import SelectInput from "../SelectInput/SelectInput.vue";
+<script lang="ts" setup generic="H, I">
+import { onMounted, ref } from "vue";
+interface IProps {
+  isLoading: boolean;
+  headers: H;
+  items: I;
+  itemsPerPage: number;
+  paginationLength: number;
+  totalVisible: number;
+  sortByList?: any;
+  sortDescList?: any;
+  page: number;
+}
 
-export default Vue.extend({
-  components: { SelectInput },
-  name: "DataTable",
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    headers: {
-      type: Array as PropType<DataTableHeader[]>,
-      default: (): DataTableHeader[] => [],
-    },
-    items: {
-      type: Array as PropType<TMessage[]>,
-      default: (): TMessage[] => [],
-    },
-    itemsPerPage: {
-      type: Number,
-      default: 14,
-    },
-    paginationLength: {
-      type: Number,
-      default: 0,
-    },
-    page: { type: Number, default: 1 },
+const props = defineProps<IProps>();
 
-    sortByList: {
-      type: Array,
-      default: (): string[] => [],
-    },
-    sortDescList: {
-      type: Array,
-      default: () => [],
-    },
-  },
+const emits = defineEmits<{
+  (e: `update:page`, newPage: number): void;
+  (e: `click-row`, data: any): void;
+}>();
+const page = ref(props.page);
 
-  data() {
-    return {
-      localPage: this.page,
-    };
-  },
-
-  methods: {
-    handleChangePage(newPage: number) {
-      this.localPage = newPage;
-      this.$emit("update:page", newPage);
-      this.$emit("page-changed", newPage);
-    },
-    handleRowClick(data: any) {
-      this.$emit(`click-row`, data);
-    },
-  },
-});
+const handleChangePage = (newPage: number) => {
+  emits("update:page", newPage);
+};
+const handleRowClick = (data: any) => {
+  emits(`click-row`, data);
+};
 </script>

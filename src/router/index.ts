@@ -42,33 +42,10 @@ const routes: Array<RouteConfig> = [
       {
         path: "msg_list",
         name: "msg_list",
-        component: EmptyRouterView,
+        component: MessageList,
         meta: { breadcrumb: `Сообщения` },
         children: [
-          {
-            path: 'msg_detail',
-            name: `msg_detail`,
-            meta: { breadcrumb: `Детали` },
-            component: MessageList
-          },
-          {
-            path: 'msg_filters',
-            name: `msg_filters`,
-            meta: { breadcrumb: `Фильтры` },
-            component: MessageList
-          },
-          {
-            path: 'msg_view_preset',
-            name: `msg_view_preset`,
-            meta: { breadcrumb: `Режим отображения` },
-            component: MessageList
-          },
-          {
-            path: 'msg_export',
-            name: `msg_export`,
-            meta: { breadcrumb: `Экспорт сообщений` },
-            component: MessageList
-          }
+
         ]
       }
     ]
