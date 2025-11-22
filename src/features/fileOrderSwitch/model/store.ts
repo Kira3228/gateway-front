@@ -1,4 +1,3 @@
-import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import { defineStore } from "pinia";
 
 interface IOrderSwitchState {
@@ -14,15 +13,17 @@ export const useFileOrderSwitch = defineStore(`file-order-switch-store`, {
     createdAtOrder: ""
   }),
   actions: {
-    setFileNameOrder(order: "ASC" | "DESC" | "") {
-      this.fileNameOrder = order
+    setOrder(sortField: string, order: "ASC" | "DESC" | "") {
+      switch (sortField) {
+        case `filename`: {
+          this.fileNameOrder = order;
+          break
+        }
+        case `filesize`: {
+          this.fileSizeBytesOrder = order
+          break
+        }
+      }
     },
-    setFileSizeBytesOrder(order: "ASC" | "DESC" | "") {
-      this.fileSizeBytesOrder = order
-    },
-    setCreatedAtOrder(order: "ASC" | "DESC" | "") {
-      this.createdAtOrder = order
-    },
-
   }
 })

@@ -20,8 +20,8 @@ import ButtonVue from "../Button/Button.vue";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 
 const activeBtnKey = ref<number | null>(null);
-  
-type TEmitData = { sortField: string; sortOrder: string };
+
+type TEmitData = { sortField: string; sortOrder: "" | "ASC" | "DESC" };
 defineProps<{
   height: number;
   items: TButtonGroupItem[][];

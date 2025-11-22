@@ -4,7 +4,6 @@
     @input="onInput"
     @close="onClose"
     :message-data="messageData"
-    :message-files="messageFiles"
     :status-history="statusHistory"
     :toolbar-title="title"
     :id="id"
@@ -14,7 +13,7 @@
 <script lang="ts" setup>
 import DialogWindow from "@/widgets/dialog-window/ui/DialogWindow.vue";
 import { useViewMessageDetailsModel } from "@/features/viewMessageDetails/model/model";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 const emits = defineEmits<{
   (e: `close`): void;
@@ -25,7 +24,6 @@ const id = computed(() => viewMessageDetailsModel.currentId.value);
 const title = computed(() => `ID: ${viewMessageDetailsModel.currentId.value}`);
 
 const messageData = viewMessageDetailsModel.extMessage;
-const messageFiles = viewMessageDetailsModel.files;
 const statusHistory = viewMessageDetailsModel.statusHistory;
 
 const onInput = (val: boolean) => {
@@ -35,8 +33,4 @@ const onInput = (val: boolean) => {
 const onClose = () => {
   viewMessageDetailsModel.closeModal();
 };
-
-onMounted(() => {
-  console.log(`РЕНДЕР МОДАЛКИ`);
-});
 </script>

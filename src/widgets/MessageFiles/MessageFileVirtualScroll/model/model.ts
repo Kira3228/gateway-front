@@ -2,12 +2,18 @@ import { useMessageFileStore } from "@/entities/messageFile/model/store"
 import { storeToRefs } from "pinia"
 
 export const useMessageFileVirtualScrollModel = () => {
-  const messageFileStore = useMessageFileStore()
-  const { files, isLoading, error } = storeToRefs(messageFileStore)
-  messageFileStore.getMessageFiles
+  const messageStore = useMessageFileStore()
+  const init = (id: string) => {
+    messageStore.getMessageFiles(id)
+  }
+
+  const { files, isLoading, error } = storeToRefs(messageStore)
+
   return {
+    init,
     files,
     isLoading,
     error
   }
+
 } 

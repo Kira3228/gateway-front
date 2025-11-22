@@ -8,9 +8,12 @@
 <script lang="ts" setup>
 import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
 import { useFileOrderSwitchModel } from "../model/model";
-import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
-import { useFileOrderSwitch } from "../model/store";
 const { MessageFileSortButtons } = useFileOrderSwitchModel();
-const store = useFileOrderSwitch();
-const handleOrderClick = (data: { sortField: string; sortOrder: string }) => {};
+const { setOrder } = useFileOrderSwitchModel();
+const handleOrderClick = (data: {
+  sortField: string;
+  sortOrder: "" | "ASC" | "DESC";
+}) => {
+  setOrder(data.sortField, data.sortOrder);
+};
 </script>

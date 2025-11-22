@@ -5,5 +5,5 @@ export type TSortOptions = {
 
 export type TValue = {
   sortField: string
-  sortOrder: "ASC" | "DESC"
+  sortOrder: "ASC" | "DESC" | ""
 }

@@ -21,7 +21,7 @@
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card :messageData="messageData" />
         <v-divider vertical />
-        <message-files />
+        <message-files :id="id" />
         <v-divider vertical />
         <!-- <status-history /> -->
       </div>
@@ -44,9 +44,9 @@ interface IDialogWindowProps {
 }
 
 const props = withDefaults(defineProps<IDialogWindowProps>(), {
+  id: "",
   toolbarTitle: "",
   value: false,
-  id: "",
   messageData: () => ({
     id: 0,
     createdAt: new Date(0),

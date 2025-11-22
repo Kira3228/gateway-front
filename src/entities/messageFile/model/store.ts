@@ -6,7 +6,6 @@ interface IMessageFileState {
   files: TMessageFile[];
   isLoading: boolean;
   error: string;
-  
 }
 
 export const useMessageFileStore = defineStore(`fileStore`, {
@@ -31,7 +30,4 @@ export const useMessageFileStore = defineStore(`fileStore`, {
       }
     }
   },
-  getters: {
-
-  }
 })
