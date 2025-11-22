@@ -11,26 +11,28 @@
     <div v-else-if="error">
       {{ error }}
     </div>
-    <virtual-scroll
+    <v-virtual-scroll
       v-else
+      :bench="0"
+      max-width="auto"
       :height="height"
-      :itemHeight="itemHeight"
+      :item-height="itemHeight"
       :items="items"
+      class="flex-grow-1"
+      style="min-height: 0"
     >
-      <template v-slot:item="{ item }">
-        <slot name="listItem" :item="item"></slot>
+      <template #default="{ item, index }">
+        <slot name="listItem" :item="item" :index="index"></slot>
       </template>
-    </virtual-scroll>
+    </v-virtual-scroll>
   </div>
 </template>
 <script lang="ts" setup generic="T">
-import VirtualScroll from "../VirtualScroll/VirtualScroll.vue";
-
 interface IProps {
   skeletonsQuantity: number;
   isLoading: boolean;
-  items: T;
   skeletonHeight: number;
+  items: T;
   itemHeight: number;
   height: number;
   error: string | undefined;
