@@ -24,11 +24,24 @@ interface IProps {
 const props = defineProps<IProps>();
 const messageId = toRef(props, `id`);
 
-const statusHistoryOrderSwitchModel = useStatusHistoryOrderSwitchModel();
+const { createdAtOrder, usernameOrder } = useStatusHistoryOrderSwitchModel();
 const statusHistoryStore = useStatusHistoryStore();
-const { error, isLoading, statusHistory } = storeToRefs(statusHistoryStore);
 
-watch([messageId], ([newId]) => {
-  statusHistoryStore.getStatusHistory(newId);
+const { error, isLoading, statusHistory, page } =
+  storeToRefs(statusHistoryStore);
+
+watch([messageId, createdAtOrder, usernameOrder], ([newId]) => {
+  console.log(`qweqweqew`);
+  if (!newId) {
+    return;
+  }
+  statusHistoryStore.refresh();
+  statusHistoryStore.getStatusHistory(newId, {
+    page: 1,
+    createdAtOrder: createdAtOrder.value,
+    usernameOrder: usernameOrder.value,
+  });
 });
+
+watch(page, () => {});
 </script>

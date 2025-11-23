@@ -1,16 +1,18 @@
 <template>
-  <ButtonGroup
+  <SwitchButtons
     @click-order="handleOrderClick"
     :height="42"
     :items="MessageFileSortButtons"
   />
 </template>
 <script lang="ts" setup>
-import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";
 import { useFileOrderSwitchModel } from "../model/model";
 import { onUnmounted } from "vue";
+import SwitchButtons from "@/shared/UI/SwitchButtons/SwitchButtons.vue";
 const { MessageFileSortButtons } = useFileOrderSwitchModel();
+
 const { setOrder, refresh } = useFileOrderSwitchModel();
+
 const handleOrderClick = (data: {
   sortField: string;
   sortOrder: "" | "ASC" | "DESC";

@@ -34,6 +34,7 @@ const { files, error, isLoading, page } = storeToRefs(fileStore);
 const handleLoadMore = () => {
   fileStore.incrementPage();
 };
+
 watch(
   [messageId, fileNameOrder, fileSizeBytesOrder],
   ([newId]) => {
@@ -49,6 +50,7 @@ watch(
   },
   { immediate: true, deep: true }
 );
+
 watch(page, (newPage) => {
   if (newPage > 1 && messageId.value) {
     fileStore.getMessageFiles(props.id, {
