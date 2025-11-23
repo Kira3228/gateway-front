@@ -7,8 +7,9 @@
     @keydown="close"
     @click:outside="close"
     transition="dialog-bottom-transition"
+    content-class=""
   >
-    <v-card class="dialog-root">
+    <v-card class="dialog-root tw-flex tw-flex-col">
       <v-toolbar class="flex-grow-0" dark color="primary">
         <v-btn icon dark @click="onDialogInput(false)"
           ><v-icon>mdi-close</v-icon></v-btn
@@ -17,7 +18,6 @@
         <v-spacer />
         <v-btn color="green" @click="() => {}">Повторная отправка</v-btn>
       </v-toolbar>
-
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
         <message-data-card class="tw-flex-1" :id="id" />
         <v-divider vertical />
@@ -36,6 +36,7 @@ import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 
+
 interface IDialogWindowProps {
   value: boolean;
   id: string;
@@ -48,22 +49,6 @@ const props = withDefaults(defineProps<IDialogWindowProps>(), {
   id: "",
   toolbarTitle: "",
   value: false,
-  messageData: () => ({
-    id: 0,
-    createdAt: new Date(0),
-    receiving_at: new Date(0),
-    received_at: new Date(0),
-    sending_at: new Date(0),
-    sent_at: new Date(0),
-    delivered_at: new Date(0),
-    read_at: null,
-    totalFilesCount: 0,
-    totalSizeBytes: 0,
-    checksum: "",
-    metadata: "",
-  }),
-  messageFiles: () => [],
-  statusHistory: () => [],
 });
 
 const emit = defineEmits<{
