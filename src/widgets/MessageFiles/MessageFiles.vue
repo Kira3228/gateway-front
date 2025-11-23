@@ -1,23 +1,35 @@
 <template>
   <ext-data-card title="Файлы">
     <file-order-switch />
-    <message-file-virtual-scroll
+    <complex-virtual-scroll
       :error="error"
-      :files="files"
       :is-loading="isLoading"
+      :items="files"
+      :skeleton-height="100"
+      :skeletons-quantity="10"
       @load-more="handleLoadMore"
-    />
+    >
+      <template #content="{ item }">
+        <p class="tw-text-base tw-text-blue-700 tw-font-bold">
+          {{ item.fileName }}
+        </p>
+        <p class="tw-text-base tw-text-gray-600">
+          {{ item.filePath }} | {{ item.fileSizeBytes }} байт
+        </p>
+        <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
+      </template>
+    </complex-virtual-scroll>
   </ext-data-card>
 </template>
 
 <script lang="ts" setup>
 import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
-import MessageFileVirtualScroll from "./MessageFileVirtualScroll/ui/MessageFileVirtualScroll.vue";
 import FileOrderSwitch from "@/features/fileOrderSwitch/ui/FileOrderSwitch.vue";
 import { toRef, watch } from "vue";
 import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import { useFileOrderSwitchModel } from "@/features/fileOrderSwitch/model/model";
 import { storeToRefs } from "pinia";
+import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 
 interface IProps {
   id: string;

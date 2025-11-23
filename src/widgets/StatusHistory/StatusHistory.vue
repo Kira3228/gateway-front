@@ -1,11 +1,6 @@
 <template>
   <ext-data-card title="История изменения">
     <status-history-sort-panel />
-    <!-- <status-history-virtual-scroll
-      :error="error"
-      :is-loading="isLoading"
-      :statuses="statusHistory"
-    /> -->
     <complex-virtual-scroll
       :error="error"
       :is-loading="isLoading"
