@@ -20,7 +20,7 @@
 import StatusHistoryOrderSwitch from "@/features/statusHistoryOrderSwitch/ui/StatusHistoryOrderSwitch.vue";
 import SelectChips from "@/shared/UI/SelectChips/SelectChips.vue";
 import { SelectStatusHisotry } from "./SelectStatusHistory";
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStatusFiltersStore } from "@/features/statusFilters/model/store";
 

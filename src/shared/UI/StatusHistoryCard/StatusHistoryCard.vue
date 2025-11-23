@@ -13,7 +13,7 @@
       >
       <span class="tw-text-red-700 tw-mr-1" v-else>Offline</span>
     </div>
-    <div class="tw-flex">
+    <div class="tw-flex tw-my-2">
       <v-chip :color="getColor(item.oldStatus)">{{ item.oldStatus }}</v-chip>
       <v-icon>mdi-forward</v-icon>
       <v-chip :color="getColor(item.newStatus)">{{ item.newStatus }}</v-chip>
@@ -28,6 +28,7 @@ import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 defineProps<{
   item: TStatusHistoryItem;
 }>();
+
 const getColor = (status: string): string => {
   return `red`;
 };

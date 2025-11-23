@@ -1,7 +1,7 @@
 <template>
   <ComplexVirtualScroll
     :height="750"
-    :itemHeight="150"
+    :itemHeight="160"
     :items="statuses"
     :isLoading="isLoading"
     :skeletonsQuantity="6"
