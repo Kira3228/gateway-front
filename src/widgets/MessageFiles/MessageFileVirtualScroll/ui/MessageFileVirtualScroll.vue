@@ -8,24 +8,15 @@
     :skeletonsQuantity="8"
     :error="error"
   >
-    <template #listItem="{ item, index }">
-      <list-item :key="item.id" :item="item">
-        <template v-slot:content="{ item }">
-          <p class="tw-text-base tw-text-blue-700 tw-font-bold">
-            {{ item.fileName }}
-          </p>
-          <p class="tw-text-base tw-text-gray-600">
-            {{ item.filePath }} | {{ item.fileSizeBytes }} байт
-          </p>
-          <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
-        </template>
-      </list-item>
-      <div
-        v-if="index === files.length - 1"
-        v-intersect="onIntersect"
-        style="height: 1px; width: 100%"
-      ></div>
-    </template>
+    <template #content="{ item }">
+      <p class="tw-text-base tw-text-blue-700 tw-font-bold">
+        {{ item.fileName }}
+      </p>
+      <p class="tw-text-base tw-text-gray-600">
+        {{ item.filePath }} | {{ item.fileSizeBytes }} байт
+      </p>
+      <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span></template
+    >
   </complex-virtual-scroll>
 </template>
 
