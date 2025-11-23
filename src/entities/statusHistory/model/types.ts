@@ -34,4 +34,6 @@ export type TQueryParams = {
   usernameOrder?: "ASC" | "DESC" | ""
   createdAtOrder?: "ASC" | "DESC" | ""
   searchString?: string
+  oldStatuses?: string[]
+  newStatuses?: string[]
 }

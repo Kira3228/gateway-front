@@ -1,7 +1,7 @@
 <template>
   <select-input
     class="tw-mb-6"
-    label="Старый статус"
+    :label="lable"
     placeholder="Старый статус"
     multiple
     item-text="label"
@@ -10,9 +10,9 @@
     :customList="false"
     :items="items"
     return-object
-    @debounce="handleDebounce"
     :value="value"
     @input="handleInput"
+    @debounce="handleDebounce"
   >
     <template #selectedChip="{ item, index }">
       <v-chip
@@ -37,29 +37,27 @@ import { TOption } from "../SelectInput/TOptions";
 interface IProps {
   items: TOption[];
   value?: TOption[];
+  lable: string;
 }
 
 const props = defineProps<IProps>();
 
 const emit = defineEmits<{
   (e: `debounced-call`): void;
-  (e: `input`, value: any): void;
+  (e: `input`, value: TOption[]): void;
 }>();
 
 const handleDebounce = () => {
   emit(`debounced-call`);
 };
 
-const handleInput = (data: any) => {
+const handleInput = (data: TOption[]) => {
   emit(`input`, data);
 };
 
 const handleRemoveChip = (itemToRemove: TOption) => {
   const currentItems = props.value || [];
-
-  // Фильтруем
   const newItems = currentItems.filter((i) => i.value !== itemToRemove.value);
-
   emit("input", newItems);
   handleDebounce();
 };

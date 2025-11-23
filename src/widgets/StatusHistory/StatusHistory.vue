@@ -17,6 +17,8 @@ import { useStatusHistoryOrderSwitchModel } from "@/features/statusHistoryOrderS
 import { useStatusHistoryStore } from "@/entities/statusHistory/model/store";
 import { storeToRefs } from "pinia";
 import StatusHistorySortPanel from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
+import { useStatusFiltersStore } from "@/features/statusFilters/model/store";
+import { TOption } from "@/shared/UI/SelectInput/TOptions";
 
 interface IProps {
   id: string;
@@ -25,23 +27,34 @@ const props = defineProps<IProps>();
 const messageId = toRef(props, `id`);
 
 const { createdAtOrder, usernameOrder } = useStatusHistoryOrderSwitchModel();
+const { newStatuses, oldStatuses } = storeToRefs(useStatusFiltersStore());
+
 const statusHistoryStore = useStatusHistoryStore();
 
 const { error, isLoading, statusHistory, page } =
   storeToRefs(statusHistoryStore);
 
-watch([messageId, createdAtOrder, usernameOrder], ([newId]) => {
-  console.log(`qweqweqew`);
-  if (!newId) {
-    return;
+watch(
+  [messageId, createdAtOrder, usernameOrder, newStatuses, oldStatuses],
+  ([newId]) => {
+    console.log(`qweqweqew`);
+    if (!newId) {
+      return;
+    }
+    statusHistoryStore.refresh();
+    statusHistoryStore.getStatusHistory(newId, {
+      page: 1,
+      createdAtOrder: createdAtOrder.value,
+      usernameOrder: usernameOrder.value,
+      newStatuses: newStatuses.value.map((s: TOption) => {
+        return s.value;
+      }),
+      oldStatuses: oldStatuses.value.map((s: TOption) => {
+        return s.value;
+      }),
+    });
   }
-  statusHistoryStore.refresh();
-  statusHistoryStore.getStatusHistory(newId, {
-    page: 1,
-    createdAtOrder: createdAtOrder.value,
-    usernameOrder: usernameOrder.value,
-  });
-});
+);
 
 watch(page, () => {});
 </script>
