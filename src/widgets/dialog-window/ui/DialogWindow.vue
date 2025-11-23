@@ -36,7 +36,6 @@ import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
 
-
 interface IDialogWindowProps {
   value: boolean;
   id: string;
@@ -76,31 +75,5 @@ const close = () => {
   flex: 1 1 auto;
   display: flex;
   min-height: 0;
-}
-.left-card {
-  width: auto;
-  flex-shrink: 0;
-  height: 100%;
-}
-.scroll-card,
-.virtual-scroll {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-.card {
-  margin: 10px 0px 0px 16px;
-  display: flex;
-  gap: 10px;
-}
-.header {
-  font-weight: bold;
-}
-.card-text {
-  font-size: 15px;
-}
-.wrap-text {
-  word-break: break-all;
 }
 </style>

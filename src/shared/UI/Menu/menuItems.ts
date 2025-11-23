@@ -22,7 +22,7 @@ export const menuItems: TMenuItem[] = [
         to: `/dash/alerts`,
       },
     ]
-  }, 
+  },
   {
     title: `Сообщения`,
     icon: `message`,

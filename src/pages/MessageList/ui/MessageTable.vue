@@ -18,7 +18,6 @@
       </template>
     </data-table-vue>
     <pagination
-      @update-page="handlePaginationClick"
       :length="20"
       :total-visible="10"
       :value="currentPage"
@@ -32,12 +31,10 @@ import { onMounted, ref, watch } from "vue";
 import { TMessage } from "@/entities/message/model/types";
 import { useMessageTableModel } from "../model/model";
 import Pagination from "@/shared-ui/src/components/pagination/ui/pagination.vue";
-import { usePagination } from "@/features/pagination/model/model";
 import { useRoute } from "vue-router/composables";
 
 const { init, headers, isLoading, messages } = useMessageTableModel();
 const route = useRoute();
-const { handlePaginationClick } = usePagination();
 
 const currentPage = ref<number>(1);
 console.log(currentPage.value);

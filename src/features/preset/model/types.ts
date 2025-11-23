@@ -1,6 +1,3 @@
-import { usePreset } from './model'
-type presetModel = ReturnType<typeof usePreset>
-
 export interface IPresetData {
 }
 

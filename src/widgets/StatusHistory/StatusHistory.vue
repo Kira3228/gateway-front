@@ -25,7 +25,6 @@ import { useStatusHistoryOrderSwitchModel } from "@/features/statusHistoryOrderS
 import { useStatusHistoryStore } from "@/entities/statusHistory/model/store";
 import { storeToRefs } from "pinia";
 import StatusHistoryOrderSwitch from "@/features/statusHistoryOrderSwitch/ui/StatusHistoryOrderSwitch.vue";
-import StatusHistorySortPanel from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 import { useStatusFilterModel } from "@/features/statusFilters/model/model";
 import StatusFilters from "@/features/statusFilters/ui/StatusFilters.vue";

@@ -24,10 +24,12 @@
 
 <script lang="ts" setup>
 import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
-import FileOrderSwitch from "@/features/fileOrderSwitch/ui/FileOrderSwitch.vue";
+import {
+  FileOrderSwitch,
+  useFileOrderSwitchModel,
+} from "@/features/fileOrderSwitch/";
 import { toRef, watch } from "vue";
 import { useMessageFileStore } from "@/entities/messageFile/model/store";
-import { useFileOrderSwitchModel } from "@/features/fileOrderSwitch/model/model";
 import { storeToRefs } from "pinia";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 
