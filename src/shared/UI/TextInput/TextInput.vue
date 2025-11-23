@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-textarea
-      v-if="textarea"
+      v-if="isTextarea"
       :value="value"
       filled
       auto-grow
@@ -29,44 +29,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script lang="ts" setup>
+interface IProps {
+  isSearch: boolean;
+  label: string;
+  placeholder: string;
+  value: string | number;
+  isTextarea: boolean;
+}
+const props = defineProps<IProps>();
 
-export default Vue.extend({
-  name: `TextInput`,
-  props: {
-    isSearch: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      default: "",
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    value: {
-      type: [String, Number],
-      default: "",
-    },
-    textarea: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      localValue: this.value,
-    };
-  },
-  created() {},
-  methods: {
-    handleInput(newValue: string) {
-      this.$emit(`input`, newValue);
-    },
-  },
-  beforeDestroy() {},
-});
+const emit = defineEmits<{ (e: `input`): void }>();
+const handleInput = () => {
+  emit(`input`);
+};
 </script>

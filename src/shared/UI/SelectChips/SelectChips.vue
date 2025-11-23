@@ -9,7 +9,7 @@
     itemValue="value"
     :customList="false"
     :items="items"
-    return-object
+    :return-object="false"
     @debounce="handleDebounce"
     :value="value"
     @input="handleInput"

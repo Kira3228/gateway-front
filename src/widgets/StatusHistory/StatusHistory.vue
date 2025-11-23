@@ -1,6 +1,9 @@
 <template>
   <ext-data-card title="История изменения">
-    <status-history-sort-panel />
+    <div>
+      <status-history-order-switch />
+      <status-filters />
+    </div>
     <complex-virtual-scroll
       :error="error"
       :is-loading="isLoading"
@@ -17,25 +20,54 @@
 <script lang="ts" setup>
 import StatusHistoryCard from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
 import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
-import StatusHistoryVirtualScroll from "./StatusHistoryVirtualScroll/StatusHistoryVirtualScroll.vue";
 import { toRef, watch } from "vue";
 import { useStatusHistoryOrderSwitchModel } from "@/features/statusHistoryOrderSwitch/model/model";
 import { useStatusHistoryStore } from "@/entities/statusHistory/model/store";
 import { storeToRefs } from "pinia";
+import StatusHistoryOrderSwitch from "@/features/statusHistoryOrderSwitch/ui/StatusHistoryOrderSwitch.vue";
 import StatusHistorySortPanel from "./StatusHistorySortPanel/StatusHistorySortPanel.vue";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
-
+import { useStatusFilterModel } from "@/features/statusFilters/model/model";
+import StatusFilters from "@/features/statusFilters/ui/StatusFilters.vue";
+import { useDebounce } from "@/shared/lib/debounce";
 interface IProps {
   id: string;
 }
 const props = defineProps<IProps>();
 const messageId = toRef(props, `id`);
 
-const statusHistoryOrderSwitchModel = useStatusHistoryOrderSwitchModel();
+const { changeDatetime, fullName, refresh } =
+  useStatusHistoryOrderSwitchModel();
 const statusHistoryStore = useStatusHistoryStore();
 const { error, isLoading, statusHistory } = storeToRefs(statusHistoryStore);
+const { newStatuses, oldStatuses } = useStatusFilterModel();
+const { debounce } = useDebounce();
 
-watch([messageId], ([newId]) => {
-  statusHistoryStore.getStatusHistory(newId);
+watch([newStatuses, oldStatuses], ([newNewStatuses, oldOldStatuses]) => {
+  debounce(() => {});
 });
+watch(
+  [messageId, changeDatetime, fullName, newStatuses, oldStatuses],
+  (
+    [newId, newChangeDatetime, newFullname, newNewStatuses, newOldStatuses],
+    [oldId, oldDate, oldName, oldNewStatuses, oldOldStatuses]
+  ) => {
+    if (newId !== oldId) {
+      refresh();
+    }
+
+    debounce(() => {
+      statusHistoryStore.getStatusHistory(newId, {
+        changeDatetime: newChangeDatetime,
+        fullName: newFullname,
+        limit: 10,
+        newStatuses: newStatuses.value,
+        oldStatuses: oldStatuses.value,
+        page: 1,
+        userTypes: "",
+      });
+    });
+  },
+  { immediate: true, deep: true }
+);
 </script>

@@ -3,6 +3,8 @@ import { BASE_URL } from "@/CONSTANTS"
 export const useApi = () => {
   const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
     const url = buildURL(endpoint, params)
+    console.log(url);
+
     const res = await fetch(url, { method: `GET` })
     if (!res.ok) {
       throw new Error(`GET ${url} failed ${res.status}`)
@@ -14,8 +16,6 @@ export const useApi = () => {
     get
   }
 }
-
-
 
 export const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
   const res = await fetch(url, {

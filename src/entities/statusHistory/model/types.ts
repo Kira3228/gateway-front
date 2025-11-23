@@ -28,3 +28,14 @@ export enum MessageStatusEnum {
   ошибка_доставки = 'ошибка_доставки',
   ошибка_прочтения = 'ошибка_прочтения',
 }
+
+export type TQueryParams = {
+  page?: number
+  limit?: number
+  changeDatetime?: "ASC" | "DESC" | ""
+  fullName?: "ASC" | "DESC" | ""
+  oldStatuses?: string[]
+  newStatuses?: string[]
+  userTypes?: string
+  searchString?: string
+}
