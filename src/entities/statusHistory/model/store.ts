@@ -6,6 +6,7 @@ export interface ISatusHistory {
   isLoading: boolean
   error: string
   statusHistory: TStatusHistoryItem[]
+  page: number
 }
 
 
@@ -13,7 +14,8 @@ export const useStatusHistoryStore = defineStore(`history-status-store`, {
   state: (): ISatusHistory => ({
     error: '',
     isLoading: false,
-    statusHistory: []
+    statusHistory: [],
+    page: 1
   }),
   actions: {
     async getStatusHistory(id: string, params?: TQueryParams) {
@@ -28,7 +30,12 @@ export const useStatusHistoryStore = defineStore(`history-status-store`, {
       finally {
         this.isLoading = false
       }
-
+    },
+    incrementPage() {
+      this.page++
+    },
+    reset() {
+      this.page = 1
     }
   }
 })

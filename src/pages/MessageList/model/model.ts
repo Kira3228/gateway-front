@@ -1,7 +1,7 @@
 
 import { useHeaderStore } from "@/entities/header/model/store"
 import { useMessageStore } from "@/entities/message/model/store"
-import { useViewMessageDetailsStore } from "@/features/viewMessageDetails/model/store"
+import { useViewMessageDetailsStore } from "@/features/viewMessageDetails"
 import { storeToRefs } from "pinia"
 
 export const useMessageTableModel = () => {

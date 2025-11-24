@@ -1,3 +1,3 @@
-import MessageList from './MessageList/ui/Page.vue'
+import MessageList from "./MessageList/ui/Page.vue";
 
 export { MessageList }

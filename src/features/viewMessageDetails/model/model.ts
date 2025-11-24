@@ -2,13 +2,11 @@ import { storeToRefs } from "pinia"
 import { useViewMessageDetailsStore } from "./store"
 import { useMessageExtStore } from "@/entities/messageExt/model/store"
 import { useStatusHistoryStore } from "@/entities/statusHistory/model/store"
-import { useFileOrderSwitchStore } from "@/features/fileOrderSwitch/"
 
 export const useViewMessageDetailsModel = () => {
   const viewMessageDetailsStore = useViewMessageDetailsStore()
   const messageExtStore = useMessageExtStore()
   const historyStatusHistoryStore = useStatusHistoryStore()
-  //TODO: Добавить стор со статусами
 
   const { isOpen, currentId, title } = storeToRefs(viewMessageDetailsStore)
 
@@ -27,7 +25,6 @@ export const useViewMessageDetailsModel = () => {
       setCurrentId(messageId)
       viewMessageDetailsStore.setCurrentId(messageId)
       messageExtStore.getMessageExt(messageId)
-      console.log(`Открываю модалку`);
       historyStatusHistoryStore.getStatusHistory(messageId)
 
     }

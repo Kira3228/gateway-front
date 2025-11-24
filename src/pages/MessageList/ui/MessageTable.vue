@@ -37,7 +37,6 @@ const { init, headers, isLoading, messages } = useMessageTableModel();
 const route = useRoute();
 
 const currentPage = ref<number>(1);
-console.log(currentPage.value);
 
 const emit = defineEmits<{
   (e: `open-modal`, messageId: string): void;

@@ -2,10 +2,11 @@ import { MessageStatusEnum } from "@/entities/message/model/types"
 import { TOption } from "@/shared/UI/SelectInput/TOptions"
 import { useStatusFilterStore } from "./store"
 import { storeToRefs } from "pinia"
+import { UserTypeEnum } from "@/shared/types/common/UserType.enum"
 
 export const useStatusFilterModel = () => {
   const store = useStatusFilterStore()
-  const { newStatuses, oldStatuses } = storeToRefs(store)
+  const { newStatuses, oldStatuses, userTypes } = storeToRefs(store)
 
   const selectStatusHisotryItems: TOption[] = [
     {
@@ -67,6 +68,25 @@ export const useStatusFilterModel = () => {
 
   ]
 
+  const selectUserType: TOption[] = [
+    {
+      label: `Администратор`,
+      value: UserTypeEnum.admin
+    },
+    {
+      label: `Оператор`,
+      value: UserTypeEnum.operator
+    },
+    {
+      label: `Получатель`,
+      value: UserTypeEnum.receiver
+    },
+    {
+      label: `Отправитель`,
+      value: UserTypeEnum.sender
+    },
+  ]
 
-  return { selectStatusHisotryItems, newStatuses, oldStatuses }
+
+  return { selectStatusHisotryItems, selectUserType, newStatuses, oldStatuses, userTypes, store }
 }

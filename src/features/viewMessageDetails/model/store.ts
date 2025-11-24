@@ -20,8 +20,6 @@ export const useViewMessageDetailsStore = defineStore(`view-message-details-stor
     },
     setCurrentId(id: string) {
       this.currentId = id
-      console.log(this.currentId);
-
     }
   },
   getters: {

@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import DialogWindow from "@/widgets/dialog-window/ui/DialogWindow.vue";
-import { useViewMessageDetailsModel } from "@/features/viewMessageDetails/model/model";
+import { useViewMessageDetailsModel } from "@/features/viewMessageDetails";
 import { computed } from "vue";
 
 const emits = defineEmits<{
