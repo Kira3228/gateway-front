@@ -1,41 +1,23 @@
 <template>
-  <div>
-    <v-checkbox v-model="localValue" @change="handleClick" :label="label"></v-checkbox>
-  </div>
+  <v-checkbox @change="handleClick" :label="label"></v-checkbox>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { useDebounce } from "@/shared/lib/debounce";
-import Vue from "vue";
-export default Vue.extend({
-  props: {
-    label: {
-      type: String,
-      default: "",
-    },
-    value: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  created() {
-    this.debounce = useDebounce();
-  },
-  data() {
-    return {
-      debounce: null as ReturnType<typeof useDebounce> | null,
-      localValue: this.value,
-    };
-  },
-  methods: {
-    handleClick(newValue: boolean) {
-      this.$emit("input", newValue);
-      if (this.debounce) {
-        this.debounce.debounce(() => {
-          this.$emit(`debounce`, newValue);
-        });
-      }
-    },
-  },
-});
+interface IProps {
+  label: string;
+  value: boolean;
+}
+const { debounce } = useDebounce();
+defineProps<IProps>();
+const emit = defineEmits<{
+  (e: `input`, value: boolean): void;
+  (e: `debounce`, value: boolean): void;
+}>();
+const handleClick = (newValue: boolean) => {
+  emit("input", newValue);
+  debounce(() => {
+    emit(`debounce`, newValue);
+  });
+};
 </script>

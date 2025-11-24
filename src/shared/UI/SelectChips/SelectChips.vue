@@ -57,7 +57,6 @@ const handleInput = (data: any) => {
 const handleRemoveChip = (itemToRemove: TOption) => {
   const currentItems = props.value || [];
 
-  // Фильтруем
   const newItems = currentItems.filter((i) => i.value !== itemToRemove.value);
 
   emit("input", newItems);
