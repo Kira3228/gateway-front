@@ -49,7 +49,7 @@ const handleLoadMore = () => {
   fileStore.incrementPage();
 };
 watch(
-  [messageId, fileNameOrder, fileSizeBytesOrder],
+  [messageId, fileNameOrder, fileSizeBytesOrder,],
   ([newId]) => {
     if (!newId) {
       return;
