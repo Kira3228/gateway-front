@@ -2,11 +2,11 @@
   <div class="tw-flex tw-h-screen">
     <menu-vue></menu-vue>
     <div class="tw-flex tw-flex-col tw-min-w-full">
-      <text-input-vue
+      <!-- <text-input-vue
         placeholder="Поиск"
         isSearch
         class="tw-w-1/3"
-      ></text-input-vue>
+      ></text-input-vue> -->
       <v-divider></v-divider>
       <v-breadcrumbs :items="breadcrumbs" divider="/">
         <template v-slot:divider>
@@ -31,22 +31,13 @@
 </template>
 
 <script lang="ts">
-import MenuVue from "@/shared/UI/Menu/Menu2.vue";
+import MenuVue from "@/shared/UI/Menu/Menu.vue";
 import Vue from "vue";
 import TextInputVue from "@/shared/UI/TextInput/TextInput.vue";
 
 export default Vue.extend({
-  name: `Layout`,
   components: { MenuVue, TextInputVue },
-  data() {
-    return {
-      fullPath: this.$route.fullPath as string,
-    };
-  },
   computed: {
-    test(): string {
-      return this.$route.fullPath;
-    },
     breadcrumbs() {
       return this.$route.matched
         .filter((route) => route.meta && route.meta.breadcrumb)
@@ -56,28 +47,6 @@ export default Vue.extend({
           disabled: index === arr.length - 1,
           exact: true,
         }));
-    },
-  },
-
-  methods: {
-    handleMenuItemClick(payload: { to: string; title: string }) {
-      const { to, title } = payload;
-      if (to && title) {
-        this.$store.commit(`breadcrumbsStore/SET_BREADCRUMBS`, {
-          title: title,
-          disabled: false,
-          to: to,
-          text: title,
-        });
-      }
-    },
-    routerHandler() {},
-  },
-  watch: {
-    test: {
-      handler() {
-        this.routerHandler();
-      },
     },
   },
 });
