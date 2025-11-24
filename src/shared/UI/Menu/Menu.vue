@@ -58,37 +58,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import { menuItems } from "./menuItems";
-export default Vue.extend({
-  data: () => ({
-    items: menuItems,
-    isOpenIndex: null as number | null,
-    menus: [] as boolean[],
-  }),
-  created() {
-    this.menus = this.items.map(() => false);
-  },
-  methods: {
-    openOnly(idx: number) {
-      this.menus = this.menus.map((_, i) => i === idx);
-      this.isOpenIndex = idx;
-    },
-    closeAll() {
-      this.menus = this.menus.map(() => false);
-      this.isOpenIndex = null;
-    },
-    onMenuInput(idx: number) {
-      if (this.menus[idx]) {
-        this.openOnly(idx);
-      } else if (this.isOpenIndex === idx) {
-        this.isOpenIndex = null;
-      }
-    },
-    handleMenuClick(to?: string, title?: string) {
-      this.$emit(`menu-click`, { to, title });
-    },
-  },
-});
+const emit = defineEmits<{
+  (e: "menu-click", payload: { to?: string; title?: string }): void;
+}>();
+const items = ref(menuItems);
+
+const isOpenIndex = ref<number | null>(null);
+
+const menus = ref<boolean[]>(items.value.map(() => false));
+
+const openOnly = (idx: number) => {
+  menus.value = menus.value.map((_, i) => i === idx);
+  isOpenIndex.value = idx;
+};
+
+const onMenuInput = (idx: number) => {
+  if (menus.value[idx]) {
+    openOnly(idx);
+  } else if (isOpenIndex.value === idx) {
+    isOpenIndex.value = null;
+  }
+};
+
+const handleMenuClick = (to?: string, title?: string) => {
+  emit("menu-click", { to, title });
+};
 </script>
