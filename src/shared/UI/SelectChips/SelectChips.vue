@@ -1,15 +1,15 @@
 <template>
   <select-input
     class="tw-mb-6"
-    label="Старый статус"
-    placeholder="Старый статус"
+    :label="label"
+    :placeholder="placeholder"
     multiple
     item-text="label"
     :chips="true"
     itemValue="value"
     :customList="false"
     :items="items"
-    :return-object="false"
+    :return-object="true"
     @debounce="handleDebounce"
     :value="value"
     @input="handleInput"
@@ -31,12 +31,15 @@
   </select-input>
 </template>
 <script lang="ts" setup generic="T">
+import { onMounted } from "vue";
 import SelectInput from "../SelectInput/SelectInput.vue";
 import { TOption } from "../SelectInput/TOptions";
 
 interface IProps {
   items: TOption[];
   value?: TOption[];
+  label: string;
+  placeholder: string;
 }
 
 const props = defineProps<IProps>();
@@ -50,14 +53,16 @@ const handleDebounce = () => {
   emit(`debounced-call`);
 };
 
-const handleInput = (data: any) => {
+const handleInput = (data: TOption[]) => {
   emit(`input`, data);
 };
 
 const handleRemoveChip = (itemToRemove: TOption) => {
   const currentItems = props.value || [];
 
-  const newItems = currentItems.filter((i) => i.value !== itemToRemove.value);
+  const newItems = currentItems.filter((i) => {
+    return i.value !== itemToRemove.value;
+  });
 
   emit("input", newItems);
   handleDebounce();
