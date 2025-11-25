@@ -2,9 +2,10 @@
   <v-dialog
     fullscreen
     hide-overlay
+    persistent
     :value="value"
     @input="onDialogInput"
-    @keydown="close"
+    @keydown.esc="close"
     @click:outside="close"
     transition="dialog-bottom-transition"
     content-class=""
@@ -35,6 +36,7 @@ import MessageFiles from "@/widgets/MessageFiles/MessageFiles.vue";
 import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
 import { TMessageExt } from "@/entities/messageExt/model/types";
 import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
+import { onMounted } from "vue";
 
 interface IDialogWindowProps {
   value: boolean;

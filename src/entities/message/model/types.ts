@@ -46,4 +46,5 @@ export enum SecurityLabelEnum {
 export type MessageRequest = {
   messages: TMessage[]
   messageCount: number
+  totalPage: number
 }

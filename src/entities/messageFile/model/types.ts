@@ -21,3 +21,8 @@ export type TQueryParams = {
   createdAtOrder?: "ASC" | "DESC" | ""
   searchString?: string
 }
+
+export type TMessageFilesResponse = {
+  files: TMessageFile[]
+  totalPage: number
+}
