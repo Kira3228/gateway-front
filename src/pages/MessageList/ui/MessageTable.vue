@@ -3,7 +3,7 @@
     <data-table-vue
       :is-loading="isLoading"
       :headers="headers"
-      :items="messages"
+      :items="messages.messages"
       @click-row="handleRowClick"
       :items-per-page="10"
       :page="1"
@@ -13,15 +13,14 @@
       <template v-slot:select-preset>
         <div class="tw-flex tw-flex-row-reverse tw-w-1/12">
           <!-- <preset-vue></preset-vue> -->
-          asdsad
         </div>
       </template>
     </data-table-vue>
     <pagination
-      :length="20"
+      :length="messages.messageCount"
       :total-visible="10"
       :value="currentPage"
-    ></pagination>
+    />
   </div>
 </template>
 <script lang="ts" setup>

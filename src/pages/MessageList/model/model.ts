@@ -1,4 +1,3 @@
-
 import { useHeaderStore } from "@/entities/header/model/store"
 import { useMessageStore } from "@/entities/message/model/store"
 import { useViewMessageDetailsStore } from "@/features/viewMessageDetails"
@@ -20,13 +19,10 @@ export const useMessageTableModel = () => {
   const openModal = () => {
     viewMessageDetails.openModal()
   }
+
   const closeModal = () => {
     viewMessageDetails.closeModal()
   }
-
-
-
-
   return {
     init,
     headers,
@@ -36,7 +32,5 @@ export const useMessageTableModel = () => {
     openModal,
     closeModal,
     currentId,
-
-
   }
 } 

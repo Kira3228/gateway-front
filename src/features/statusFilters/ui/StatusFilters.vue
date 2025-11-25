@@ -13,12 +13,12 @@
       v-model="newStatuses"
       :items="selectStatusHisotryItems"
     />
-    <select-chips
+    <!-- <select-chips
       label="Тип пользователя"
       placeholder="Тип пользователя"
       v-model="userTypes"
       :items="selectUserType"
-    />
+    /> -->
   </div>
 </template>
 <script lang="ts" setup>

@@ -7,6 +7,7 @@ export interface ISatusHistory {
   error: string
   statusHistory: TStatusHistoryItem[]
   page: number
+  isAvalibleLoading: boolean
 }
 
 
@@ -15,21 +16,32 @@ export const useStatusHistoryStore = defineStore(`history-status-store`, {
     error: '',
     isLoading: false,
     statusHistory: [],
-    page: 1
+    page: 1,
+    isAvalibleLoading: true
   }),
   actions: {
     async getStatusHistory(id: string, params?: TQueryParams) {
       try {
         this.error = ""
-        this.isLoading = true
+        this.isLoading = false
         const history = await fetchStatusHistory(id, params)
-        this.statusHistory = history
+        this.statusHistory = [...this.statusHistory, ...history]
+        if (history.length === 0) {
+          this.isAvalibleLoading = false
+        }
+
+        console.log(`история`, history);
       } catch (error: any) {
         this.error = error.message
+        this.isAvalibleLoading = false
+
       }
       finally {
         this.isLoading = false
       }
+    },
+    resetHistory() {
+      this.statusHistory = []
     },
     incrementPage() {
       this.page++

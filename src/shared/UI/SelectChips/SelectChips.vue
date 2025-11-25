@@ -9,7 +9,7 @@
     itemValue="value"
     :customList="false"
     :items="items"
-    :return-object="true"
+    :return-object="false"
     @debounce="handleDebounce"
     :value="value"
     @input="handleInput"
@@ -36,7 +36,7 @@ import SelectInput from "../SelectInput/SelectInput.vue";
 import { TOption } from "../SelectInput/TOptions";
 
 interface IProps {
-  items: TOption[];
+  items: string[];
   value?: TOption[];
   label: string;
   placeholder: string;

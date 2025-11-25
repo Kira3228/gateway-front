@@ -19,7 +19,7 @@
         <v-btn color="green" @click="() => {}">Повторная отправка</v-btn>
       </v-toolbar>
       <div class="dialog-content tw-gap-2 tw-flex-row tw-flex-1">
-        <message-data-card class="tw-flex-1" :id="id" />
+        <message-data-card :id="id" class="tw-flex-1" />
         <v-divider vertical />
         <message-files :id="id" />
         <v-divider vertical />

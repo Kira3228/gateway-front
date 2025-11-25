@@ -42,13 +42,15 @@ const { changeDatetime, fullName, refresh } =
 
 const statusHistoryStore = useStatusHistoryStore();
 
-const { error, isLoading, statusHistory, page } =
+const { error, isLoading, statusHistory, page, isAvalibleLoading } =
   storeToRefs(statusHistoryStore);
 const { newStatuses, oldStatuses, store } = useStatusFilterModel();
 const { debounce } = useDebounce();
 
 const handleLoadMore = () => {
-  statusHistoryStore.incrementPage();
+  if (isAvalibleLoading.value) {
+    statusHistoryStore.incrementPage();
+  }
 };
 
 const getParams = (pageOverride?: number) => ({
@@ -76,6 +78,7 @@ watch(
 
 watch([changeDatetime, fullName, newStatuses, oldStatuses], () => {
   debounce(() => {
+    statusHistoryStore.resetHistory();
     statusHistoryStore.reset();
     statusHistoryStore.getStatusHistory(messageId.value, getParams(1));
   });

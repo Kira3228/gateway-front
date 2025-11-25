@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-1 tw-min-h-0">
+  <div class="tw-flex tw-flex-col tw-flex-1 tw-min-h-0">
     <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-2">
       <v-skeleton-loader
         v-for="skeleton in skeletonsQuantity"
@@ -34,7 +34,7 @@
             v-if="index === items.length - 1"
             v-intersect="onIntersect"
             style="height: 1px; width: 100%"
-          ></div>
+          />
         </dynamic-scroller-item>
       </template>
     </dynamic-scroller>

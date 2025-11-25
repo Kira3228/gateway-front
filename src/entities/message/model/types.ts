@@ -42,3 +42,8 @@ export enum MessageStatusEnum {
 export enum SecurityLabelEnum {
   НС = "HC", С = "C", СС = "CC", ОВ = "OB"
 }
+
+export type MessageRequest = {
+  messages: TMessage[]
+  messageCount: number
+}

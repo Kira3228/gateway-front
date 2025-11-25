@@ -1,9 +1,9 @@
-import { TMessage } from "./types"
+import { MessageRequest } from "./types"
 import { fetchMessages } from "../api/getMessages"
 import { defineStore } from "pinia"
 
 export interface IMessageState {
-  messages: TMessage[]
+  messages: MessageRequest
   isLoading: boolean
   error: string
 }
@@ -12,7 +12,7 @@ export const useMessageStore = defineStore(`message-store`, {
   state: (): IMessageState => ({
     error: "",
     isLoading: false,
-    messages: []
+    messages: { messageCount: 0, messages: [] }
   }),
   actions: {
     async getMessages(page: number) {
@@ -20,7 +20,7 @@ export const useMessageStore = defineStore(`message-store`, {
         this.error = ""
         this.isLoading = true
         const messages = await fetchMessages(page)
-        this.messages = messages
+        this.messages = { ...messages }
       } catch (error: any) {
         this.error = error.message
       }
