@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import DialogWindow from "@/widgets/dialog-window/ui/DialogWindow.vue";
 import { useViewMessageDetailsModel } from "@/features/viewMessageDetails";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const emits = defineEmits<{
   (e: `close`): void;
@@ -29,7 +29,6 @@ const statusHistory = viewMessageDetailsModel.statusHistory;
 const onInput = (val: boolean) => {
   if (!val) viewMessageDetailsModel.closeModal();
 };
-
 const onClose = () => {
   viewMessageDetailsModel.closeModal();
 };

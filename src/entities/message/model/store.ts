@@ -12,17 +12,19 @@ export const useMessageStore = defineStore(`message-store`, {
   state: (): IMessageState => ({
     error: "",
     isLoading: false,
-    messages: { messageCount: 0, messages: [] }
+    messages: { messageCount: 0, messages: [], totalPage: 0 }
   }),
   actions: {
     async getMessages(page: number) {
       try {
+
         this.error = ""
         this.isLoading = true
         const messages = await fetchMessages(page)
         this.messages = { ...messages }
       } catch (error: any) {
         this.error = error.message
+        console.log(error.response.data);
       }
       finally {
         this.isLoading = false

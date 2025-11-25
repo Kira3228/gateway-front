@@ -29,8 +29,6 @@ export const useStatusHistoryStore = defineStore(`history-status-store`, {
         if (history.length === 0) {
           this.isAvalibleLoading = false
         }
-
-        console.log(`история`, history);
       } catch (error: any) {
         this.error = error.message
         this.isAvalibleLoading = false

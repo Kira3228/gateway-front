@@ -17,24 +17,33 @@
       </template>
     </data-table-vue>
     <pagination
-      :length="messages.messageCount"
+      :length="messages.totalPage"
       :total-visible="10"
       :value="currentPage"
+      @update-page="handleUpdatePage"
     />
   </div>
 </template>
 <script lang="ts" setup>
 import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
-import PresetVue from "@/features/preset/ui/Preset.vue";
 import { onMounted, ref, watch } from "vue";
 import { TMessage } from "@/entities/message/model/types";
 import { useMessageTableModel } from "../model/model";
 import Pagination from "@/shared-ui/src/components/pagination/ui/pagination.vue";
-import { useRoute } from "vue-router/composables";
+import { useRoute, useRouter } from "vue-router/composables";
 
 const { init, headers, isLoading, messages } = useMessageTableModel();
 const route = useRoute();
+const router = useRouter();
 
+const handleUpdatePage = (newPage: number) => {
+  router.push({
+    query: {
+      ...route.query,
+      page: String(newPage),
+    },
+  });
+};
 const currentPage = ref<number>(1);
 
 const emit = defineEmits<{
@@ -58,6 +67,7 @@ watch(
     const page = Number(newPage) || 1;
     currentPage.value = page;
     init(page);
-  }
+  },
+  { immediate: true }
 );
 </script>
