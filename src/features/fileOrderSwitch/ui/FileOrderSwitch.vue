@@ -14,7 +14,10 @@ const { setOrder, refresh } = useFileOrderSwitchModel();
 const handleOrderClick = (data: {
   sortField: string;
   sortOrder: "" | "ASC" | "DESC";
+  key: number;
 }) => {
+  console.log(`data`, data);
+
   setOrder(data.sortField, data.sortOrder);
 };
 

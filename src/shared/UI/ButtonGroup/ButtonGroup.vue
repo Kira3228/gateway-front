@@ -21,7 +21,11 @@ import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 
 const activeBtnKey = ref<number | null>(null);
 
-type TEmitData = { sortField: string; sortOrder: "" | "ASC" | "DESC" };
+type TEmitData = {
+  key: number;
+  sortField: string;
+  sortOrder: "" | "ASC" | "DESC";
+};
 defineProps<{
   height: number;
   items: TButtonGroupItem[][];
@@ -32,18 +36,10 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (btnData: TButtonGroupItem) => {
-  if (activeBtnKey.value === btnData.key) {
-    activeBtnKey.value = null;
-    emit(`click-order`, {
-      sortField: btnData.value.sortField,
-      sortOrder: "",
-    });
-  } else {
-    activeBtnKey.value = btnData.key;
-    emit(`click-order`, {
-      sortField: btnData.value.sortField,
-      sortOrder: btnData.value.sortOrder,
-    });
-  }
+  emit(`click-order`, {
+    key: btnData.key,
+    sortField: btnData.value.sortField,
+    sortOrder: btnData.value.sortOrder,
+  });
 };
 </script>
