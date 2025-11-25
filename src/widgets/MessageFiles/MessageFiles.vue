@@ -7,7 +7,7 @@
       :items="files.files"
       :skeleton-height="100"
       :skeletons-quantity="10"
-      @load-more="handleLoadMore"
+      @load-more="onScrollLoadMore"
     >
       <template #content="{ item }">
         <p class="tw-text-base tw-text-blue-700 tw-font-bold">
@@ -28,10 +28,11 @@ import {
   FileOrderSwitch,
   useFileOrderSwitchModel,
 } from "@/features/fileOrderSwitch/";
-import { onMounted, onUnmounted, toRef, watch } from "vue";
+import { computed, onMounted, onUnmounted, toRef, watch } from "vue";
 import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import { storeToRefs } from "pinia";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
+import { component } from "vue/types/umd";
 
 interface IProps {
   id: string;
@@ -45,37 +46,42 @@ const fileStore = useMessageFileStore();
 
 const { files, error, isLoading, page } = storeToRefs(fileStore);
 
-const handleLoadMore = () => {
-  fileStore.incrementPage();
+const reloadParams = computed(() => ({
+  id: messageId.value,
+  fileNameOrder: fileNameOrder.value,
+  fileSizeBytesOrder: fileSizeBytesOrder.value,
+}));
+
+watch(
+  reloadParams,
+  (newParams) => {
+    if (!newParams.id) return;
+
+    fileStore.getMessageFiles(
+      newParams.id,
+      {
+        fileNameOrder: newParams.fileNameOrder,
+        fileSizeBytesOrder: newParams.fileSizeBytesOrder,
+        limit: 10,
+      },
+      true
+    );
+  },
+  {
+    immediate: true,
+    deep: true,
+  }
+);
+
+const onScrollLoadMore = () => {
+  fileStore.loadMore(messageId.value, {
+    fileNameOrder: fileNameOrder.value,
+    fileSizeBytesOrder: fileSizeBytesOrder.value,
+    limit: 10,
+  });
 };
 
-// onMounted(() => {
-//   fileStore.getMessageFiles(props.id, {
-//     limit: 5,
-//     page: page.value,
-//     fileNameOrder: fileNameOrder.value,
-//     fileSizeBytesOrder: fileSizeBytesOrder.value,
-//   });
-// });
-// onMounted(() => {
-//   fileStore.refresh();
-// });
-onUnmounted(() => {});
-
-// watch([messageId, fileNameOrder, fileSizeBytesOrder], async ([newId]) => {
-//   if (!newId) {
-//     return;
-//   }
-//   fileStore.refresh();
-//   await fileStore.getMessageFiles(props.id, {
-//     page: 1,
-//     fileNameOrder: fileNameOrder.value,
-//     fileSizeBytesOrder: fileSizeBytesOrder.value,
-//     limit: 1,
-//   });
-// });
-// watch(page, (newPage) => {
-//   if (newPage > 1 && messageId.value) {
-//   }
-// });
+onUnmounted(() => {
+  fileStore.resetState();
+});
 </script>

@@ -43,8 +43,8 @@ export const buildURL = (base: string, params?: Record<string, any>): string => 
   }
 
   const qs = sp.toString()
-
-  return qs ? `${BASE_URL}${base}?${qs}` : `${BASE_URL}${base}`
+  const result = qs ? `${BASE_URL}${base}?${qs}` : `${BASE_URL}${base}`
+  return result
 }
 
 export const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {

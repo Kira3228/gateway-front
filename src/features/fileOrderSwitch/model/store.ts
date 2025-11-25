@@ -17,10 +17,14 @@ export const useFileOrderSwitchStore = defineStore(`file-order-switch-store`, {
       switch (sortField) {
         case `filename`: {
           this.fileNameOrder = order;
+          console.log(`filename`, order);
+
           break
         }
         case `filesize`: {
           this.fileSizeBytesOrder = order
+          console.log(`filesize`, order);
+
           break
         }
       }

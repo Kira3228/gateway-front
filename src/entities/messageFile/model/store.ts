@@ -9,28 +9,48 @@ interface IMessageFileState {
   page: number
   isAvalibleLoad: boolean
 }
-const initialState: TMessageFilesResponse = {
+const getInitialFilesState = () => ({
   files: [],
-  totalPage: 0
-}
+  totalPage: 0,
+  count: 0
+});
 export const useMessageFileStore = defineStore(`fileStore`, {
   state: (): IMessageFileState => ({
     error: ``,
-    files: initialState,
+    files: getInitialFilesState(),
     isLoading: false,
     page: 1,
     isAvalibleLoad: true
   }),
   actions: {
-    async getMessageFiles(messageId: string, params?: TQueryParams) {
+    async getMessageFiles(messageId: string, params: TQueryParams, isReload: boolean = false) {
+      if (this.isLoading) return;
+
+      if (isReload) {
+        this.page = 1
+        this.files = getInitialFilesState()
+      }
+
       this.isLoading = false
       this.error = ''
+
       try {
-        if (this.page < this.files.totalPage) {
-          const files = await fetchFiles(messageId, params)
-          this.files.files = [...files.files]
-          this.files.totalPage = files.totalPage
+
+        const fetchParams = {
+          ...params,
+          page: this.page,
+          limit: params.limit || 10
         }
+
+        const files = await fetchFiles(messageId, fetchParams)
+
+        if (isReload) {
+          this.files = files; // Полная замена
+        } else {
+          this.files.files = [...this.files.files, ...files.files];
+          this.files.totalPage = files.totalPage;
+        }
+
       } catch (error: any) {
         this.error = error.message
         console.error(error);
@@ -39,15 +59,18 @@ export const useMessageFileStore = defineStore(`fileStore`, {
         this.isLoading = false
       }
     },
-    incrementPage() {
-      if (this.isAvalibleLoad) {
-        this.page++
-        console.log(this.page);
+    loadMore(messageId: string, params: TQueryParams) {
+      if (this.isLoading || this.page >= this.files.totalPage) {
+        return;
       }
+      this.page++
+      return this.getMessageFiles(messageId, params, false)
     },
-    refresh() {
+    resetState() {
       this.page = 1
-      this.files = { ...initialState }
+      this.files = getInitialFilesState()
+      this.error = ""
+      this.isLoading = false
     }
   },
 })
