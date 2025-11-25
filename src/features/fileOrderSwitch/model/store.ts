@@ -16,15 +16,21 @@ export const useFileOrderSwitchStore = defineStore(`file-order-switch-store`, {
     setOrder(sortField: string, order: "ASC" | "DESC" | "") {
       switch (sortField) {
         case `filename`: {
-          this.fileNameOrder = order;
-          console.log(`filename`, order);
-
+          if (this.fileNameOrder === order) {
+            this.fileNameOrder = ""
+          }
+          else {
+            this.fileNameOrder = order
+          }
           break
         }
         case `filesize`: {
-          this.fileSizeBytesOrder = order
-          console.log(`filesize`, order);
-
+          if (this.fileSizeBytesOrder === order) {
+            this.fileSizeBytesOrder = ""
+          }
+          else {
+            this.fileSizeBytesOrder = order
+          }
           break
         }
       }
