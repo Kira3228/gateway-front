@@ -9,7 +9,7 @@
     itemValue="value"
     :customList="false"
     :items="items"
-    :return-object="false"
+    :return-object="true"
     @debounce="handleDebounce"
     :value="value"
     @input="handleInput"
@@ -31,12 +31,11 @@
   </select-input>
 </template>
 <script lang="ts" setup generic="T">
-import { onMounted } from "vue";
 import SelectInput from "../SelectInput/SelectInput.vue";
 import { TOption } from "../SelectInput/TOptions";
 
 interface IProps {
-  items: string[];
+  items: TOption[];
   value?: TOption[];
   label: string;
   placeholder: string;
@@ -59,11 +58,9 @@ const handleInput = (data: TOption[]) => {
 
 const handleRemoveChip = (itemToRemove: TOption) => {
   const currentItems = props.value || [];
-
   const newItems = currentItems.filter((i) => {
     return i.value !== itemToRemove.value;
   });
-
   emit("input", newItems);
   handleDebounce();
 };

@@ -25,11 +25,11 @@ export const useViewMessageDetailsModel = () => {
       setCurrentId(messageId)
       viewMessageDetailsStore.setCurrentId(messageId)
       messageExtStore.getMessageExt(messageId)
-      historyStatusHistoryStore.getStatusHistory(messageId)
 
     }
     viewMessageDetailsStore.openModal()
   }
+
   //TODO: сделать очистку всех трёх стобиков
   const closeModal = () => {
     viewMessageDetailsStore.closeModal()

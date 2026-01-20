@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup generic="H, I">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 interface IProps {
   isLoading: boolean;
   headers: H;

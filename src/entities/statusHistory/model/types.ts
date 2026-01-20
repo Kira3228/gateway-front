@@ -36,6 +36,11 @@ export type TQueryParams = {
   fullName?: "ASC" | "DESC" | ""
   oldStatuses?: string[]
   newStatuses?: string[]
-  userTypes?: string
+  userTypes?: string[]
   searchString?: string
+}
+
+export type StatusHistoryResponse = {
+  history: TStatusHistoryItem[]
+  totalPage: number
 }

@@ -34,15 +34,10 @@
 import MessageDataCard from "@/widgets/MessageData/ui/MessageDataCard.vue";
 import MessageFiles from "@/widgets/MessageFiles/MessageFiles.vue";
 import StatusHistory from "@/widgets/StatusHistory/StatusHistory.vue";
-import { TMessageExt } from "@/entities/messageExt/model/types";
-import { TStatusHistoryItem } from "@/entities/statusHistory/model/types";
-import { onMounted } from "vue";
 
 interface IDialogWindowProps {
   value: boolean;
   id: string;
-  messageData: TMessageExt;
-  statusHistory: TStatusHistoryItem[];
   toolbarTitle: string;
 }
 

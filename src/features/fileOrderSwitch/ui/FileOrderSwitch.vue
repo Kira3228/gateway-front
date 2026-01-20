@@ -16,8 +16,6 @@ const handleOrderClick = (data: {
   sortOrder: "" | "ASC" | "DESC";
   key: number;
 }) => {
-  console.log(`data`, data);
-
   setOrder(data.sortField, data.sortOrder);
 };
 

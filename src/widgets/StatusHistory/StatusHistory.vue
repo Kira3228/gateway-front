@@ -7,10 +7,10 @@
     <complex-virtual-scroll
       :error="error"
       :is-loading="isLoading"
-      :items="statusHistory"
+      :items="statusHistory.history"
       :skeleton-height="100"
       :skeletons-quantity="6"
-      @load-more="handleLoadMore"
+      @load-more=""
       ><template #content="{ item }">
         <status-history-card :item="item"></status-history-card>
       </template>
@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import StatusHistoryCard from "@/shared/UI/StatusHistoryCard/StatusHistoryCard.vue";
 import ExtDataCard from "@/shared/UI/ExtDataCard/ExtDataCard.vue";
-import { toRef, watch } from "vue";
+import { computed, toRef, watch } from "vue";
 import {
   useStatusHistoryOrderSwitchModel,
   StatusHistoryOrderSwitch,
@@ -31,9 +31,12 @@ import { storeToRefs } from "pinia";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
 import { useStatusFilterModel, StatusFilters } from "@/features/statusFilters";
 import { useDebounce } from "@/shared/lib/debounce";
+import { onjectArrValueToArr } from "@/shared/lib/object-value-to-array";
+
 interface IProps {
   id: string;
 }
+
 const props = defineProps<IProps>();
 const messageId = toRef(props, `id`);
 
@@ -44,49 +47,57 @@ const statusHistoryStore = useStatusHistoryStore();
 
 const { error, isLoading, statusHistory, page, isAvalibleLoading } =
   storeToRefs(statusHistoryStore);
-const { newStatuses, oldStatuses, store } = useStatusFilterModel();
-const { debounce } = useDebounce();
+const { newStatuses, oldStatuses, store, userTypes } = useStatusFilterModel();
+const { debounce, cancelDebounce } = useDebounce();
 
-const handleLoadMore = () => {
-  if (isAvalibleLoading.value) {
-    statusHistoryStore.incrementPage();
-  }
-};
-
-const getParams = (pageOverride?: number) => ({
+const reloadParams = computed(() => ({
+  id: messageId.value,
   changeDatetime: changeDatetime.value,
   fullName: fullName.value,
-  limit: 10,
   newStatuses: newStatuses.value,
   oldStatuses: oldStatuses.value,
-  page: pageOverride || page.value,
-  userTypes: "",
-});
+  userTypes: userTypes.value,
+}));
 
+const fetchHistory = () => {
+  const params = reloadParams.value;
+  if (!params.id) return;
+  statusHistoryStore.getStatusHistory(
+    params.id,
+    {
+      changeDatetime: params.changeDatetime,
+      fullName: params.fullName,
+      limit: 10,
+      newStatuses: onjectArrValueToArr(newStatuses.value),
+      oldStatuses: onjectArrValueToArr(oldStatuses.value),
+      userTypes: onjectArrValueToArr(userTypes.value)
+    },
+    true
+  );
+};
+const onScrollLoadMore = () => {
+  statusHistoryStore.loadMore(messageId.value, {
+    changeDatetime: changeDatetime.value,
+    fullName: fullName.value,
+    newStatuses: newStatuses.value,
+  });
+};
 watch(
-  messageId,
-  (newId) => {
-    if (!newId) {
-      return;
-    }
-    store.reset();
-    statusHistoryStore.reset();
-    statusHistoryStore.getStatusHistory(newId, getParams(1));
+  [
+    () => reloadParams.value.id,
+    () => reloadParams.value.changeDatetime,
+    () => reloadParams.value.fullName,
+  ],
+  () => {
+    cancelDebounce();
+    fetchHistory();
+  }
+);
+watch(
+  [() => reloadParams.value.newStatuses, () => reloadParams.value.oldStatuses],
+  () => {
+    debounce(fetchHistory);
   },
   { immediate: true }
 );
-
-watch([changeDatetime, fullName, newStatuses, oldStatuses], () => {
-  debounce(() => {
-    statusHistoryStore.resetHistory();
-    statusHistoryStore.reset();
-    statusHistoryStore.getStatusHistory(messageId.value, getParams(1));
-  });
-});
-
-watch(page, (newPage, oldPage) => {
-  if (newPage > 1 && newPage > oldPage) {
-    statusHistoryStore.getStatusHistory(messageId.value, getParams(newPage));
-  }
-});
 </script>

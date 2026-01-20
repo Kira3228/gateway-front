@@ -1,6 +1,6 @@
 <template>
   <div class="tw-h-full">
-    <message-table @open-modal="model.openModal"></message-table>
+    <message-table @open-modal="model.openModal" />
     <message-details v-if="model.isOpen.value" @close="model.closeModal" />
   </div>
 </template>

@@ -1,45 +1,71 @@
 import { defineStore } from "pinia";
 import { fetchStatusHistory } from "../api/getStatusHistory";
-import { TQueryParams, TStatusHistoryItem } from "./types";
+import { StatusHistoryResponse, TQueryParams, } from "./types";
 
 export interface ISatusHistory {
   isLoading: boolean
   error: string
-  statusHistory: TStatusHistoryItem[]
+  statusHistory: StatusHistoryResponse
   page: number
   isAvalibleLoading: boolean
 }
 
-
+const getInitialFilesState = (): StatusHistoryResponse => ({
+  history: [],
+  totalPage: 0
+})
 export const useStatusHistoryStore = defineStore(`history-status-store`, {
   state: (): ISatusHistory => ({
     error: '',
     isLoading: false,
-    statusHistory: [],
+    statusHistory: getInitialFilesState(),
     page: 1,
     isAvalibleLoading: true
   }),
   actions: {
-    async getStatusHistory(id: string, params?: TQueryParams) {
+    async getStatusHistory(messageId: string, params: TQueryParams, isReload: boolean = false) {
+      if (this.isLoading) return
+
+      if (isReload) {
+        this.page = 1
+        this.statusHistory = getInitialFilesState()
+      }
+      this.isLoading = false
+      this.error = ''
+
       try {
-        this.error = ""
-        this.isLoading = false
-        const history = await fetchStatusHistory(id, params)
-        this.statusHistory = [...this.statusHistory, ...history]
-        if (history.length === 0) {
-          this.isAvalibleLoading = false
+        const fetchParams = {
+          ...params,
+          page: this.page,
+          limit: params.limit || 10
+        }
+
+        const history = await fetchStatusHistory(messageId, fetchParams)
+
+        if (isReload) {
+          this.statusHistory = history
+        }
+        else {
+          this.statusHistory.history = [...this.statusHistory.history, ...history.history];
+          this.statusHistory.totalPage = history.totalPage
         }
       } catch (error: any) {
         this.error = error.message
-        this.isAvalibleLoading = false
-
+        console.error(error);
       }
       finally {
         this.isLoading = false
       }
     },
+    loadMore(messageId: string, params: TQueryParams) {
+      if (this.isLoading || this.page >= this.statusHistory.totalPage) {
+        return
+      }
+      this.page++
+      return this.getStatusHistory(messageId, params, false)
+    },
     resetHistory() {
-      this.statusHistory = []
+      this.statusHistory.history = []
     },
     incrementPage() {
       this.page++

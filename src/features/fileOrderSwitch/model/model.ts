@@ -29,29 +29,21 @@ export const useFileOrderSwitchModel = () => {
         }
       },
     ],
-    [{
-      component: FileSizeAscSortIcon, key: 3, value: {
-        sortField: `filesize`,
-        sortOrder: "ASC"
-      }
-    }, {
-      component: FileSizeDescSortIcon, key: 4, value: {
-        sortField: `filesize`,
-        sortOrder: "DESC"
-      }
-    },],
-    [{
-      component: SortCalendarAscending, key: 5, value: {
-        sortField: ` `,
-        sortOrder: "ASC"
-      }
-    }, {
-      component: SortCalendarDescending, key: 6, value: {
-        sortField: ``,
-        sortOrder: "DESC"
-      }
-    }]
-  ])
+    [
+      {
+        component: FileSizeAscSortIcon, key: 3, value: {
+          sortField: `filesize`,
+          sortOrder: "ASC"
+        }
+      }, {
+        component: FileSizeDescSortIcon, key: 4, value: {
+          sortField: `filesize`,
+          sortOrder: "DESC"
+        }
+      },
+    ],
+  ]
+  )
 
   const { setOrder, refresh } = useFileOrderSwitchStore()
   const { createdAtOrder, fileNameOrder, fileSizeBytesOrder } = storeToRefs(useFileOrderSwitchStore())

@@ -8,7 +8,7 @@ export const useStatusFilterModel = () => {
   const store = useStatusFilterStore()
   const { newStatuses, oldStatuses, userTypes } = storeToRefs(store)
 
-  const selectStatusHisotryItems: string[] = [
+  const selectStatusHisotryItems: TOption[] = [
     MessageStatusEnum.создано,
     MessageStatusEnum.принимается,
     MessageStatusEnum.принято,
@@ -23,7 +23,10 @@ export const useStatusFilterModel = () => {
     MessageStatusEnum.ошибка_отправки,
     MessageStatusEnum.ошибка_доставки,
     MessageStatusEnum.ошибка_прочтения,
-  ]
+  ].map((status) => ({
+    label: status,
+    value: status
+  }))
 
   const selectUserType: TOption[] = [
     {

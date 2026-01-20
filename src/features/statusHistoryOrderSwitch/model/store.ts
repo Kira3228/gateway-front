@@ -14,11 +14,21 @@ export const useStatusHistoryOrderSwitchStore = defineStore(`status-history-orde
     setOrder(sortField: string, order: "ASC" | "DESC" | "") {
       switch (sortField) {
         case `fullName`: {
-          this.fullName = order;
+          if (this.fullName === order) {
+            this.fullName = ''
+          }
+          else {
+            this.fullName = order
+          }
           break
         }
         case `changeDatetime`: {
-          this.changeDatetime = order
+          if (this.changeDatetime === order) {
+            this.changeDatetime = ""
+          }
+          else {
+            this.changeDatetime = order
+          }
           break
         }
       }

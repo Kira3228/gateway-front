@@ -9,10 +9,9 @@ interface IMessageFileState {
   page: number
   isAvalibleLoad: boolean
 }
-const getInitialFilesState = () => ({
+const getInitialFilesState = (): TMessageFilesResponse => ({
   files: [],
   totalPage: 0,
-  count: 0
 });
 export const useMessageFileStore = defineStore(`fileStore`, {
   state: (): IMessageFileState => ({
@@ -35,7 +34,6 @@ export const useMessageFileStore = defineStore(`fileStore`, {
       this.error = ''
 
       try {
-
         const fetchParams = {
           ...params,
           page: this.page,
@@ -45,7 +43,7 @@ export const useMessageFileStore = defineStore(`fileStore`, {
         const files = await fetchFiles(messageId, fetchParams)
 
         if (isReload) {
-          this.files = files; // Полная замена
+          this.files = files;
         } else {
           this.files.files = [...this.files.files, ...files.files];
           this.files.totalPage = files.totalPage;

@@ -1,9 +1,9 @@
 import { TOption } from "@/shared/UI/SelectInput/TOptions";
 import { defineStore } from "pinia";
 interface StatusFilterStoreState {
-  oldStatuses: string[]
-  newStatuses: string[]
-  userTypes: string[]
+  oldStatuses: TOption[]
+  newStatuses: TOption[]
+  userTypes: TOption[]
 }
 export const useStatusFilterStore = defineStore(`status-filter-store`, {
   state: (): StatusFilterStoreState => ({
