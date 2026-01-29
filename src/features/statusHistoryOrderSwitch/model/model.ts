@@ -15,7 +15,8 @@ export const useStatusHistoryOrderSwitchModel = () => {
         value: {
           sortField: `fullName`,
           sortOrder: 'ASC'
-        }
+        },
+        tooltipText: `Сортировка A-Z`
       },
       {
         key: 2,
@@ -23,7 +24,9 @@ export const useStatusHistoryOrderSwitchModel = () => {
         value: {
           sortField: 'fullName',
           sortOrder: 'DESC'
-        }
+        },
+        tooltipText: `Сортировка Z-A`
+
       },
     ],
     [
@@ -33,7 +36,9 @@ export const useStatusHistoryOrderSwitchModel = () => {
         value: {
           sortField: 'changeDatetime',
           sortOrder: `ASC`
-        }
+        },
+        tooltipText: `Сначала старые`
+
       },
       {
         key: 4,
@@ -41,7 +46,9 @@ export const useStatusHistoryOrderSwitchModel = () => {
         value: {
           sortField: 'changeDatetime',
           sortOrder: `DESC`
-        }
+        },
+        tooltipText: `Сначала новые`
+
       }
     ]
   ];

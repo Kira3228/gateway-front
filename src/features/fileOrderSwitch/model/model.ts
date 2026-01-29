@@ -2,8 +2,6 @@ import FileSizeAscSortIcon from "@/shared/icons/FileSizeAscSort.icon.vue"
 import FileSizeDescSortIcon from "@/shared/icons/FileSizeDescSort.icon.vue"
 import SortAlphabeticalAscending from "@/shared/icons/SortAlphabeticalAscending.vue"
 import SortAlphabeticalDescending from "@/shared/icons/SortAlphabeticalDescending.vue"
-import SortCalendarAscending from "@/shared/icons/SortCalendarAscending.vue"
-import SortCalendarDescending from "@/shared/icons/SortCalendarDescending.vue"
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem"
 import { ref } from "vue"
 import { useFileOrderSwitchStore } from "./store"
@@ -18,7 +16,8 @@ export const useFileOrderSwitchModel = () => {
         value: {
           sortField: `filename`,
           sortOrder: 'ASC'
-        }
+        },
+        tooltipText: `Сортировка A-Z`
       },
       {
         key: 2,
@@ -26,7 +25,9 @@ export const useFileOrderSwitchModel = () => {
         value: {
           sortField: 'filename',
           sortOrder: 'DESC'
-        }
+        },
+        tooltipText: `Сортировка Z-A`
+
       },
     ],
     [
@@ -34,12 +35,15 @@ export const useFileOrderSwitchModel = () => {
         component: FileSizeAscSortIcon, key: 3, value: {
           sortField: `filesize`,
           sortOrder: "ASC"
-        }
+        },
+        tooltipText: `Размер файла по возрастанию`
       }, {
         component: FileSizeDescSortIcon, key: 4, value: {
           sortField: `filesize`,
           sortOrder: "DESC"
-        }
+        },
+        tooltipText: `Размер файла по убыванию`
+
       },
     ],
   ]

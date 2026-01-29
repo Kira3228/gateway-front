@@ -51,7 +51,12 @@ const emit = defineEmits<{
 }>();
 
 const handleRowClick = (data: TMessage) => {
-  emit(`open-modal`, data.messageId);
+  router.push({
+    name: `details`,
+    params: {
+      id: data.messageId,
+    },
+  });
 };
 
 onMounted(() => {
@@ -68,6 +73,6 @@ watch(
     currentPage.value = page;
     init(page);
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

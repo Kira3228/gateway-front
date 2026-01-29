@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="tw-flex tw-gap-3 tw-px-2">
     <select-chips
       label="Старый статус"
       return-object
       placeholder="Старый статус"
       v-model="oldStatuses"
       :items="selectStatusHisotryItems"
+      style="max-width: "
     />
     <select-chips
       label="Новый статус"

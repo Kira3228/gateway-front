@@ -2,56 +2,56 @@
   <ext-data-card title="Метаданные">
     <div class="tw-max-w-xs tw-ml-4 tw-flex tw-flex-col tw-gap-y-2">
       <div class="tw-flex tw-flex-col">
-        <p class="tw-text-xs tw-text-blue-700 tw-font-bold">ID</p>
-        <p class="tw-text-sm">{{ messageExts.id }}</p>
+        <p class="tw-text-sm tw-text-blue-700 tw-font-bold">ID</p>
+        <p class="tw-text-base">{{ id }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">
           Контрольная сумма:
         </p>
-        <p class="tw-text-sm tw-break-all wrap-text">
+        <p class="tw-text-base tw-break-all wrap-text">
           {{ messageExts.checksum }}
         </p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Создано:</p>
-        <p class="tw-text-sm ">{{ messageExts.createdAt }}</p>
+        <p class="tw-text-base">{{ messageExts.createdAt }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Доставлено</p>
-        <p class="tw-text-sm ">{{ messageExts.delivered_at }}</p>
+        <p class="tw-text-base">{{ messageExts.delivered_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Метаданные</p>
-        <p class="tw-text-sm ">{{ messageExts.metadata }}</p>
+        <p class="tw-text-base">{{ messageExts.metadata }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Прочитано</p>
-        <p class="tw-text-sm ">{{ messageExts.read_at }}</p>
+        <p class="tw-text-base">{{ messageExts.read_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получено</p>
-        <p class="tw-text-sm ">{{ messageExts.received_at }}</p>
+        <p class="tw-text-base">{{ messageExts.received_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Получение</p>
-        <p class="tw-text-sm ">{{ messageExts.receiving_at }}</p>
+        <p class="tw-text-base">{{ messageExts.receiving_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправка</p>
-        <p class="tw-text-sm ">{{ messageExts.sending_at }}</p>
+        <p class="tw-text-base">{{ messageExts.sending_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Отправлено</p>
-        <p class="tw-text-sm ">{{ messageExts.sent_at }}</p>
+        <p class="tw-text-base">{{ messageExts.sent_at }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Количесво файлов</p>
-        <p class="tw-text-sm ">{{ messageExts.totalFilesCount }}</p>
+        <p class="tw-text-base">{{ messageExts.totalFilesCount }}</p>
       </div>
       <div>
         <p class="tw-text-xs tw-text-blue-700 tw-font-bold">Размер</p>
-        <p class="tw-text-sm ">{{ messageExts.totalSizeBytes }} байт</p>
+        <p class="tw-text-base">{{ messageExts.totalSizeBytes }} байт</p>
       </div>
     </div>
   </ext-data-card>

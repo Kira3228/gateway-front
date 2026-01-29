@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-gap-2">
+  <div class="tw-flex tw-gap-1">
     <v-btn-toggle v-for="group in items" :key="group[0].key">
       <button-vue
         v-for="btn in group"
@@ -8,6 +8,7 @@
         :height="height"
         outlined
         :elevation="0"
+        :tooltip-text="btn.tooltipText"
       >
         <component :is="btn.component" />
       </button-vue>

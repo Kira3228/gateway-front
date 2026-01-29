@@ -1,20 +1,23 @@
 <template>
   <ext-data-card title="История изменения">
-    <div>
-      <status-history-order-switch />
-      <status-filters />
+    <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
+      <div class="tw-flex tw-flex-shrink-0 tw-mb-4">
+        <status-history-order-switch />
+        <status-filters />
+      </div>
+      <complex-virtual-scroll
+        class="tw-flex-1 tw-min-h-0"
+        :error="error"
+        :is-loading="isLoading"
+        :items="statusHistory.history"
+        :skeleton-height="100"
+        :skeletons-quantity="6"
+        @load-more=""
+        ><template #content="{ item }">
+          <status-history-card :item="item"></status-history-card>
+        </template>
+      </complex-virtual-scroll>
     </div>
-    <complex-virtual-scroll
-      :error="error"
-      :is-loading="isLoading"
-      :items="statusHistory.history"
-      :skeleton-height="100"
-      :skeletons-quantity="6"
-      @load-more=""
-      ><template #content="{ item }">
-        <status-history-card :item="item"></status-history-card>
-      </template>
-    </complex-virtual-scroll>
   </ext-data-card>
 </template>
 
@@ -70,16 +73,15 @@ const fetchHistory = () => {
       limit: 10,
       newStatuses: onjectArrValueToArr(newStatuses.value),
       oldStatuses: onjectArrValueToArr(oldStatuses.value),
-      userTypes: onjectArrValueToArr(userTypes.value)
+      userTypes: onjectArrValueToArr(userTypes.value),
     },
-    true
+    true,
   );
 };
 const onScrollLoadMore = () => {
   statusHistoryStore.loadMore(messageId.value, {
     changeDatetime: changeDatetime.value,
     fullName: fullName.value,
-    newStatuses: newStatuses.value,
   });
 };
 watch(
@@ -91,13 +93,13 @@ watch(
   () => {
     cancelDebounce();
     fetchHistory();
-  }
+  },
 );
 watch(
   [() => reloadParams.value.newStatuses, () => reloadParams.value.oldStatuses],
   () => {
     debounce(fetchHistory);
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

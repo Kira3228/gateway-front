@@ -1,6 +1,5 @@
 <template>
   <select-input
-    class="tw-mb-6"
     :label="label"
     :placeholder="placeholder"
     multiple

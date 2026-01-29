@@ -11,7 +11,6 @@
     dense
     single-line
     color="primary"
-    style="width: 360px"
     :multiple="multiple"
     deletable-chips
     @input="handleSelect"

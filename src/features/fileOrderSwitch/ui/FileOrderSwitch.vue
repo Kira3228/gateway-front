@@ -1,8 +1,9 @@
 <template>
   <ButtonGroup
     @click-order="handleOrderClick"
-    :height="42"
+    :height="32"
     :items="MessageFileSortButtons"
+    
   />
 </template>
 <script lang="ts" setup>

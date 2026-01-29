@@ -1,7 +1,7 @@
 <template>
   <button-group
     @click-order="handleOrderClick"
-    :height="40"
+    :height="32"
     :items="StatusHstorySortButtons"
   />
 </template>

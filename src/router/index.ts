@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import MessageList from "../pages/MessageList/ui/Page.vue"
 import Layout from "../layout/Layout.vue"
 import EmptyRouterView from '../shared/UI/EmptyRouterView.vue'
+import { MessageDetailPage } from '@/pages/MessageDetail'
+import TestPage from '@/pages/testPage.vue'
 
 Vue.use(VueRouter)
 
@@ -41,13 +43,24 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "msg_list",
-        name: "msg_list",
-        component: MessageList,
+        component: EmptyRouterView,
         meta: { breadcrumb: `Сообщения` },
         children: [
-
+          {
+            path: "",
+            name: "msg_list",
+            component: MessageList,
+          },
+          {
+            path: `msg_list/details/:id`,
+            name: `details`,
+            component: MessageDetailPage,
+            // component: TestPage,
+            meta: { breadcrumb: `Детали` }
+          }
         ]
-      }
+      },
+
     ]
   }
 ]

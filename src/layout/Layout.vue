@@ -1,11 +1,11 @@
 <template>
   <div class="tw-flex tw-h-screen">
     <Menu></Menu>
-    <div class="tw-flex tw-flex-col tw-min-w-full">
+    <div class="tw-flex tw-flex-col tw-flex-1">
       <v-divider />
       <breadcrumbs />
       <v-divider />
-      <div class="tw-flex-1">
+      <div class="tw-flex-1 tw-overflow-hidden tw-relative">
         <router-view />
       </div>
     </div>

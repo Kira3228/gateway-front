@@ -1,16 +1,23 @@
 <template>
-  <v-btn
-    @click="$emit('click', $event)"
-    :disabled="isDisabled"
-    :elevation="elevation"
-    :color="color"
-    :height="height"
-    :outlined="outlined"
-  >
-    <template #default>
-      <slot></slot>
+  <v-tooltip top>
+    <template #activator="{ on, attrs }">
+      <v-btn
+        @click="$emit('click', $event)"
+        :disabled="isDisabled"
+        :elevation="elevation"
+        :color="color"
+        :height="height"
+        :outlined="outlined"
+        v-on="on"
+        v-bind="attrs"
+      >
+        <template #default>
+          <slot></slot>
+        </template>
+      </v-btn>
     </template>
-  </v-btn>
+    <span>{{ tooltipText }}</span>
+  </v-tooltip>
 </template>
 <script lang="ts" setup>
 interface IProps {
@@ -20,6 +27,7 @@ interface IProps {
   outlined?: boolean;
   height?: number;
   elevation?: number;
+  tooltipText?: string;
 }
 withDefaults(defineProps<IProps>(), {
   outlined: false,

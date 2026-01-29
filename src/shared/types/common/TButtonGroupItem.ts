@@ -5,4 +5,5 @@ export type TButtonGroupItem = {
   key: number
   component: any
   value: TValue,
+  tooltipText?: string
 }

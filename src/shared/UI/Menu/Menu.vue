@@ -2,57 +2,46 @@
   <div>
     <v-navigation-drawer permanent>
       <v-list>
-        <v-list-item
-          v-for="(item, idx) in items"
-          :key="item.title"
-          link
-          :to="item.to"
-        >
+        <div v-for="(item, idx) in items" :key="item.title">
           <v-menu
-            v-model="menus[idx]"
+            offset-x
+            :close-on-content-click="false"
+            transition="slide-x-transition"
             open-on-hover
             bottom
-            offset-x
-            :close-on-click="true"
-            @input="onMenuInput(idx)"
-            dense
           >
             <template v-slot:activator="{ on, attrs }">
               <v-list-item
                 v-bind="attrs"
-                v-on="{ ...on, mouseenter: () => openOnly(idx) }"
-                class="cursor-pointer"
-                dense
+                v-on="on"
+                link
+                :to="item.to"
                 @click="handleMenuClick(item.to, item.title)"
               >
+                <v-list-item-icon>
+                  <span class="material-icons">{{ item.icon }}</span>
+                </v-list-item-icon>
                 <v-list-item-content>
-                  <div class="tw-flex tw-gap-2">
-                    <span class="material-icons"> {{ item.icon }} </span>
-                    <v-list-item-title dense>{{
-                      item.title
-                    }}</v-list-item-title>
-                  </div>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </template>
-
-            <v-list v-if="Array.isArray(item.subMenu) && item.subMenu.length">
+            <v-list v-if="item.subMenu && item.subMenu.length" dense>
               <v-list-item
-                @click="handleMenuClick(sub.to, sub.title)"
-                dense
                 v-for="(sub, index) in item.subMenu"
                 :key="index"
                 link
                 :to="sub.to"
+                @click="handleMenuClick(sub.to, sub.title)"
               >
-                <div class="tw-flex tw-gap-2">
-                  <span class="material-icons"> {{ sub.icon }} </span>
-                  <v-list-item-title>{{ sub.title }}</v-list-item-title>
-                </div>
+                <v-list-item-icon>
+                  <span class="material-icons">{{ sub.icon }}</span>
+                </v-list-item-icon>
+                <v-list-item-title>{{ sub.title }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
-        </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
   </div>

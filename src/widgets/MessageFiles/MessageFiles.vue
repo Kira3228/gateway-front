@@ -1,24 +1,23 @@
 <template>
   <ext-data-card title="Файлы">
-    <file-order-switch />
-    <complex-virtual-scroll
-      :error="error"
-      :is-loading="isLoading"
-      :items="files.files"
-      :skeleton-height="100"
-      :skeletons-quantity="10"
-      @load-more="onScrollLoadMore"
-    >
-      <template #content="{ item }">
-        <p class="tw-text-base tw-text-blue-700 tw-font-bold">
-          {{ item.fileName }}
-        </p>
-        <p class="tw-text-base tw-text-gray-600">
-          {{ item.filePath }} | {{ item.fileSizeBytes }} байт
-        </p>
-        <span class="tw-text-sm tw-mt-4"> {{ item.description }} </span>
-      </template>
-    </complex-virtual-scroll>
+    <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
+      <div class="tw-flex-shrink-0 tw-mb-4">
+        <file-order-switch />
+      </div>
+      <complex-virtual-scroll
+        class="tw-flex-1 tw-min-h-0"
+        :error="error"
+        :is-loading="isLoading"
+        :items="files.files"
+        :skeleton-height="100"
+        :skeletons-quantity="10"
+        @load-more="onScrollLoadMore"
+      >
+        <template #content="{ item }">
+          <MessageFileCard :item="item" />
+        </template>
+      </complex-virtual-scroll>
+    </div>
   </ext-data-card>
 </template>
 
@@ -28,11 +27,11 @@ import {
   FileOrderSwitch,
   useFileOrderSwitchModel,
 } from "@/features/fileOrderSwitch/";
-import { computed, onMounted, onUnmounted, toRef, watch } from "vue";
+import { computed, onUnmounted, toRef, watch } from "vue";
 import { useMessageFileStore } from "@/entities/messageFile/model/store";
 import { storeToRefs } from "pinia";
 import ComplexVirtualScroll from "@/shared/UI/ComplexVirtualScroll/ComplexVirtualScroll.vue";
-import { component } from "vue/types/umd";
+import { MessageFileCard } from "@/shared/UI/MessageFileCard";
 
 interface IProps {
   id: string;
@@ -62,22 +61,22 @@ watch(
       {
         fileNameOrder: newParams.fileNameOrder,
         fileSizeBytesOrder: newParams.fileSizeBytesOrder,
-        limit: 10,
+        limit: 14,
       },
-      true
+      true,
     );
   },
   {
     immediate: true,
     deep: true,
-  }
+  },
 );
 
 const onScrollLoadMore = () => {
   fileStore.loadMore(messageId.value, {
     fileNameOrder: fileNameOrder.value,
     fileSizeBytesOrder: fileSizeBytesOrder.value,
-    limit: 10,
+    limit: 5,
   });
 };
 
@@ -85,3 +84,8 @@ onUnmounted(() => {
   fileStore.resetState();
 });
 </script>
+<style scoped lang="scss">
+.scroll-item {
+  background-color: #ededed;
+}
+</style>
