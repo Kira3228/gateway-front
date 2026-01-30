@@ -1,4 +1,7 @@
 {
+  "vueCompilerOptions": {
+    "target": "auto"
+  },
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
