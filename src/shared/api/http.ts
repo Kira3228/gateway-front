@@ -1,58 +1,41 @@
 import { BASE_URL } from "@/CONSTANTS"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
+
+const api = axios.create({
+  baseURL: BASE_URL
+})
+
 export const useApi = () => {
   const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
-    const url = buildURL(endpoint, params)
-    const res = await fetch(url, { method: `GET` })
-    if (!res.ok) {
-      throw new Error(`GET ${url} failed ${res.status}`)
+    try {
+      const response: AxiosResponse<T> = await api.get(endpoint, {
+        params
+      })
+      return response.data;
+    } catch (error: any) {
+      throw new Error(`GET ${endpoint} failed: ${error.message}`);
     }
-    return res.json()
   }
-
+  const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
+    try {
+      const response: AxiosResponse<T> = await api.patch(url, body);
+      return response.data;
+    } catch (error: any) {
+      throw new Error(`PATCH ${url} failed: ${error.message}`);
+    }
+  };
+  const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {
+    try {
+      const response: AxiosResponse<Blob> = await api.get(url, {
+        params,
+        responseType: 'blob',
+      });
+      return response.data;
+    } catch (error: any) {
+      throw new Error(`GET BLOB ${url} failed: ${error.message}`);
+    }
+  };
   return {
-    get
+    get, httpPatch, httpGetBlob
   }
-}
-
-export const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
-  const res = await fetch(url, {
-    method: `PATCH`,
-    headers: { 'Content-Type': 'application/json' },
-    body: body ? JSON.stringify(body) : undefined
-  })
-
-  if (!res.ok) {
-    throw new Error(`PATCH ${url} failed ${res.status}`)
-  }
-
-  return res.json() as Promise<T>
-}
-
-
-export const buildURL = (base: string, params?: Record<string, any>): string => {
-  if (!params) {
-    return `${BASE_URL}${base}`
-  }
-
-  const sp = new URLSearchParams()
-
-  for (const [k, v] of Object.entries(params)) {
-    if (v === undefined || v === null || v === "") continue
-    sp.set(k, String(v))
-  }
-
-  const qs = sp.toString()
-  const result = qs ? `${BASE_URL}${base}?${qs}` : `${BASE_URL}${base}`
-  return result
-}
-
-export const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {
-  const final = buildURL(url, params);
-
-  const res = await fetch(final)
-  if (!res.ok) {
-    throw new Error(`GET ${final} failed: ${res.status}`)
-  }
-  return res.blob()
 }
