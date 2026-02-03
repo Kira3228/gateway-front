@@ -1,13 +1,9 @@
 export type TMessage = {
   id: number
   messageId: string
-  messageType: "TEXT" | "BINARY",
-  messageCategory: "normal" | "urgent" | "low",
-  status: MessageStatusEnum,
   priority: number,
   metadataParsed: boolean,
   subject: string,
-  securityLabel: SecurityLabelEnum,
   messageNumber: string,
   messageCopies: number,
   numberCopy: number,
@@ -20,6 +16,10 @@ export type TMessage = {
   targetSystemId: number,
   sourceSystemId: number,
   pointId: number
+  messageType: "TEXT" | "BINARY",
+  messageCategory: "normal" | "urgent" | "low",
+  status: MessageStatusEnum,
+  securityLabel: SecurityLabelEnum,
 }
 
 export enum MessageStatusEnum {

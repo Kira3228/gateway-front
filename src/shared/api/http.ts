@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/CONSTANTS"
-
+import axios from "axios"
 export const useApi = () => {
   const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
     const url = buildURL(endpoint, params)

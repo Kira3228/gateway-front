@@ -1,15 +1,12 @@
 <template>
   <DataTable dense :headers="headers" :items="fields" :items-per-page="21">
-    <template #select-preset> </template>
-    <template #item.align="{ value, item }">
-      <UiSelect return-object :items="alignItems" v-model="value" />
-    </template>
     <template #item.isVisible="{ value, item }">
       <v-switch
         class="v-input--selection-controls"
         dense
         hide-details
-        v-model="value"
+        @change="handleDefaultSortChange(item)"
+        v-model="item.isVisible"
       />
     </template>
     <template #item.sortable="{ value, item }">
@@ -17,12 +14,21 @@
         class="v-input--selection-controls"
         dense
         hide-details
-        v-model="value"
+        @change="handleDefaultSortChange(item)"
+        v-model="item.sortable"
       />
+    </template>
+    <template #item.defaultSort="{ value, item }">
+      <div class="tw-flex tw-gap-4 tw-items-center tw-w-48">
+        <UiSelect
+          clearable
+          :items="[`По возрастанию`, `По убыванию`, `Без сортировки`]"
+        />
+      </div>
     </template>
     <template #footer>
       <div class="tw-flex tw-flex-row-reverse">
-        <Button>Сохранить пресет</Button>
+        <Button class="tw-m-2" :height="24">Сохранить пресет</Button>
       </div>
     </template>
   </DataTable>
@@ -31,8 +37,8 @@
 import { items } from "@/widgets/HeaderList/items";
 import { DataTable, Header } from "@/shared-ui/src/components/DataTable";
 import { ref } from "vue";
-import { UiSelect } from "@/shared-ui/src/components/Select";
 import { Button } from "@/shared-ui/src/components/Button";
+import { UiSelect } from "@/shared-ui/src/components/Select";
 const items1: Header[] = [
   {
     text: `Поле`,
@@ -43,14 +49,6 @@ const items1: Header[] = [
     width: 10,
   },
   {
-    text: `Выравнивание`,
-    align: "start",
-    isVisible: true,
-    sortable: false,
-    value: `align`,
-    width: 100,
-  },
-  {
     text: `Видимость`,
     align: "start",
     isVisible: true,
@@ -59,23 +57,31 @@ const items1: Header[] = [
     width: 30,
   },
   {
-    text: `Сортировка`,
+    text: `Cортируемый`,
     align: "start",
     isVisible: true,
     sortable: false,
     value: `sortable`,
     width: 100,
   },
+  {
+    text: `Сортировка по умолчанию`,
+    align: "start",
+    isVisible: true,
+    sortable: false,
+    value: `defaultSort`,
+    width: 100,
+  },
 ];
 
-const alignItems = ref([
-  {
-    value: `center`,
-    text: `По центру`,
-  },
-]);
 const headers = ref<Header[]>(items1);
 const fields = ref(items);
+
+const mainObject = ref();
+
+const handleDefaultSortChange = (data: any) => {
+  console.log(data);
+};
 </script>
 <style scoped>
 .v-input--selection-controls {

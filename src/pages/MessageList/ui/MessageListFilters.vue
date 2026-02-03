@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-justify-between tw-p-2">
     <div class="tw-flex tw-flex-1 tw-gap-5">
-      <UiSelect />
+      <UiSelect :items="[`asdas`]" />
       <UiSelect />
       <UiSelect />
       <UiSelect />

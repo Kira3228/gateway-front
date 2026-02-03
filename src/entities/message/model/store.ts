@@ -1,6 +1,7 @@
 import { MessageRequest } from "./types"
 import { fetchMessages } from "../api/getMessages"
 import { defineStore } from "pinia"
+import { ref } from "vue"
 
 export interface IMessageState {
   messages: MessageRequest
@@ -8,27 +9,24 @@ export interface IMessageState {
   error: string
 }
 
-export const useMessageStore = defineStore(`message-store`, {
-  state: (): IMessageState => ({
-    error: "",
-    isLoading: false,
-    messages: { messageCount: 0, messages: [], totalPage: 0 }
-  }),
-  actions: {
-    async getMessages(page: number) {
-      try {
+export const useMessageStore = defineStore(`message-store`, () => {
+  const error = ref<string>("")
+  const isLoading = ref<boolean>(false)
+  const messages = ref<MessageRequest>({ messageCount: 0, messages: [], totalPage: 0 })
 
-        this.error = ""
-        this.isLoading = true
-        const messages = await fetchMessages(page)
-        this.messages = { ...messages }
-      } catch (error: any) {
-        this.error = error.message
-        console.log(error.response.data);
-      }
-      finally {
-        this.isLoading = false
-      }
+  const getMessages = async (page: number, presetName: string) => {
+    try {
+      isLoading.value = true
+      const messageRequest = await fetchMessages(page)
+      messages.value = messageRequest
+    } catch (e: any) {
+      error.value = e
+    } finally {
+      isLoading.value = false
     }
+  }
+
+  return {
+    error, isLoading, messages, getMessages
   }
 })

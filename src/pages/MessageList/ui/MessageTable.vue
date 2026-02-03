@@ -1,8 +1,7 @@
 <template>
   <div class="tw-flex tw-flex-col tw-h-full">
-    <data-table-vue
+    <DataTable
       :is-loading="isLoading"
-      :headers="headers"
       :items="messages.messages"
       @click-row="handleRowClick"
       :items-per-page="10"
@@ -10,12 +9,8 @@
       :pagination-length="10"
       :total-visible="10"
     >
-      <template v-slot:select-preset>
-        <div class="tw-flex tw-flex-row-reverse">
-          <Options @click="handleSettingsClick" :items="settings" />
-        </div>
-      </template>
-    </data-table-vue>
+      <template #select-preset> <PresetSelect /> </template>
+    </DataTable>
     <pagination
       :length="messages.totalPage"
       :total-visible="10"
@@ -25,13 +20,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import DataTableVue from "@/shared/UI/DataTable/DataTable.vue";
+import { PresetSelect } from "@/features/preset-sync";
 import { onMounted, ref, watch } from "vue";
 import { TMessage } from "@/entities/message/model/types";
 import { useMessageTableModel } from "../model/model";
-import Pagination from "@/shared-ui/src/components/pagination/ui/pagination.vue";
 import { useRoute, useRouter } from "vue-router/composables";
-import { Option, Options } from "@/shared-ui/src/components/Options";
 
 const { init, headers, isLoading, messages } = useMessageTableModel();
 const route = useRoute();
@@ -45,17 +38,6 @@ const handleUpdatePage = (newPage: number) => {
     },
   });
 };
-
-const handleSettingsClick = (data: Option) => {
-  console.log(data);
-};
-
-const settings: Option[] = [
-  {
-    text: "Настройки",
-    to: `/msg_list/settings`,
-  },
-];
 
 const currentPage = ref<number>(1);
 

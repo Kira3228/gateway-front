@@ -8,6 +8,7 @@
     "dev1": "vue-cli-service serve"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "pinia": "^2.0.36",
     "vue": "2.7.16",
