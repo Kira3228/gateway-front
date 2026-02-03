@@ -1,20 +1,25 @@
-import { useMessageStore } from "@/entities/message/model/store";
-import { MessageRequest } from "@/entities/message/model/types";
+import { TMessage } from "@/entities/message/model/types";
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router/composables";
 
 export const useMessageViewStore = defineStore(`message-view-store`, () => {
   const currentPage = ref<number>(1)
   const totalPage = ref<number>(0)
+  const limit = ref<number>(15)
 
-
-
-  const { isLoading, error, messages, getMessages } = useMessageStore()
-
-
+  const router = useRouter()
+  const handleRowClick = (data: TMessage) => {
+    router.push({
+      name: `details`,
+      params: {
+        id: data.messageId,
+      },
+    });
+  };
 
 
   return {
+    currentPage, totalPage, limit, handleRowClick
   }
-
 })

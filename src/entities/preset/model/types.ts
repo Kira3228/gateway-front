@@ -38,7 +38,7 @@ export interface Header {
   sortable: boolean;
   isVisible: boolean;
   width: number;
-  align?: string;
+  align: 'start' | 'center' | 'end';
 }
 
 

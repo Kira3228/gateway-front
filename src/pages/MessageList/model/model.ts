@@ -1,5 +1,5 @@
 import { useHeaderStore } from "@/entities/header/model/store"
-import { useMessageStore } from "@/entities/message/model/store"
+import { useMessageStore } from "@/entities/message/model/use-message-store"
 import { useViewMessageDetailsStore } from "@/features/viewMessageDetails"
 import { storeToRefs } from "pinia"
 
@@ -9,7 +9,7 @@ export const useMessageTableModel = () => {
   const viewMessageDetails = useViewMessageDetailsStore()
 
   const { headers } = storeToRefs(headerStore)
-  const { error, isLoading, messages } = storeToRefs(messageStore)
+  const { messages } = storeToRefs(messageStore)
   const { isOpen, currentId } = storeToRefs(viewMessageDetails)
 
   const init = async (page: number) => {
@@ -27,7 +27,6 @@ export const useMessageTableModel = () => {
     init,
     headers,
     messages,
-    isLoading,
     isOpen,
     openModal,
     closeModal,

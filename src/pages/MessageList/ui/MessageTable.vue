@@ -1,7 +1,6 @@
 <template>
   <div class="tw-flex tw-flex-col tw-h-full">
     <DataTable
-      :is-loading="isLoading"
       :items="messages.messages"
       @click-row="handleRowClick"
       :items-per-page="10"
@@ -28,7 +27,7 @@ import { useRoute, useRouter } from "vue-router/composables";
 import { DataTable } from "@/shared-ui/src/components/DataTable";
 import { Pagination } from "@/shared-ui/src/components/pagination";
 
-const { init, headers, isLoading, messages } = useMessageTableModel();
+const { init, headers, messages } = useMessageTableModel();
 const route = useRoute();
 const router = useRouter();
 

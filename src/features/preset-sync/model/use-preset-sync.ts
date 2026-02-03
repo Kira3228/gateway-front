@@ -1,4 +1,4 @@
-import { usePresetStore } from "@/entities/preset/model/store"
+import { usePresetStore } from "@/entities/preset/model/use-preset-store"
 import { updateUrl } from "@/shared/lib/update-url"
 import { onMounted, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router/composables"
@@ -8,8 +8,10 @@ export const usePresetSync = () => {
   const router = useRouter()
   const presetStore = usePresetStore()
 
+  const DEFAULT_PRESET = 'standart';
+
   const presetName = ref<string | undefined>(
-    (route.query.preset as string) || undefined,
+    (route.query.preset as string) || DEFAULT_PRESET,
   );
 
   onMounted(() => {
@@ -17,22 +19,24 @@ export const usePresetSync = () => {
   })
 
   watch(presetName, (newPresetName) => {
+
+    const urlValue = newPresetName === DEFAULT_PRESET ? null : newPresetName;
+
     updateUrl({
       preset: newPresetName
     }, route, router)
   });
-
   watch(
     () => route.query.preset,
-    (newPresetFromUrl) => {
-      const newPreset = (newPresetFromUrl as string) || undefined;
+    async (newPresetFromUrl) => {
+      const targetPreset = (newPresetFromUrl as string) || DEFAULT_PRESET;
 
-      if (presetName.value !== newPreset) {
-        presetName.value = newPreset;
+      if (presetName.value !== targetPreset) {
+        presetName.value = targetPreset;
       }
 
-      if (newPreset) {
-        presetStore.loadPreset(newPreset);
+      if (presetStore.currentPreset?.presetName !== targetPreset) {
+        await presetStore.loadPreset(targetPreset);
       }
     },
     { immediate: true }

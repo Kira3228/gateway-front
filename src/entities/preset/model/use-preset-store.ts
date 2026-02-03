@@ -5,7 +5,8 @@ import { Preset } from "./types";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetList = ref<string[]>([])
-  const currentPreset = ref<Preset | null>(null)
+  const currentPreset = ref<Preset>()
+  const currentPresetName = ref<string>()
 
   const loadPresets = async () => {
     const list = await fetchPresets()
@@ -18,6 +19,6 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   }
 
   return {
-    presetList, loadPresets, loadPreset
+    presetList, loadPresets, loadPreset, currentPreset, currentPresetName
   }
 })
