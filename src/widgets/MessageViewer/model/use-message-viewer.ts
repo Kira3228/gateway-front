@@ -3,7 +3,7 @@ import { onMounted } from "vue"
 import { useRoute, useRouter } from "vue-router/composables";
 
 export const useMessageViewer = () => {
-  const { getMessages } = useMessageStore()
+  const messageStore = useMessageStore()
   const route = useRoute();
   const router = useRouter();
 
@@ -11,7 +11,7 @@ export const useMessageViewer = () => {
     const pageFromUrl = Number(route.query.page) || 1;
     const presetFromUrl = String(route.query.preset) || undefined
 
-    getMessages(pageFromUrl)
+    messageStore.getMessages(pageFromUrl, presetFromUrl)
   })
 
 

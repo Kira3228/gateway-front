@@ -11,7 +11,7 @@
     >
       <template #select-preset> <PresetSelect /> </template>
     </DataTable>
-    <pagination
+    <Pagination
       :length="messages.totalPage"
       :total-visible="10"
       :value="currentPage"
@@ -25,6 +25,8 @@ import { onMounted, ref, watch } from "vue";
 import { TMessage } from "@/entities/message/model/types";
 import { useMessageTableModel } from "../model/model";
 import { useRoute, useRouter } from "vue-router/composables";
+import { DataTable } from "@/shared-ui/src/components/DataTable";
+import { Pagination } from "@/shared-ui/src/components/pagination";
 
 const { init, headers, isLoading, messages } = useMessageTableModel();
 const route = useRoute();
