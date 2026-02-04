@@ -10,18 +10,19 @@
       />
     </template>
     <template #item.sortable="{ value, item }">
-      <v-switch
-        class="v-input--selection-controls"
-        dense
-        hide-details
-        @change="handleDefaultSortChange(item)"
-        v-model="item.sortable"
-      />
+      <div>
+        <v-switch
+          class="v-input--selection-controls"
+          dense
+          hide-details
+          @change="handleDefaultSortChange(item)"
+          v-model="item.sortable"
+        />
+      </div>
     </template>
     <template #item.defaultSort="{ value, item }">
-      <div class="tw-flex tw-gap-4 tw-items-center tw-w-48">
+      <div class="">
         <UiSelect
-          clearable
           :items="[`По возрастанию`, `По убыванию`, `Без сортировки`]"
         />
       </div>
@@ -62,15 +63,15 @@ const items1: Header[] = [
     isVisible: true,
     sortable: false,
     value: `sortable`,
-    width: 100,
+    width: 30,
   },
   {
     text: `Сортировка по умолчанию`,
-    align: "start",
+    align: "center",
     isVisible: true,
     sortable: false,
     value: `defaultSort`,
-    width: 100,
+    width: 190,
   },
 ];
 
@@ -87,5 +88,12 @@ const handleDefaultSortChange = (data: any) => {
 .v-input--selection-controls {
   margin: 0;
   padding: 0;
+}
+
+:deep(.v-select__selection) {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
