@@ -1,14 +1,16 @@
 import { useMessageStore } from "@/entities/message/model/use-message-store"
-import { computed, watch } from "vue"
+import { computed, ref, watch } from "vue"
 import { useMessageViewStore } from "./use-message-view-store"
 import { usePresetSync } from "@/features/preset-sync/model/use-preset-sync"
 import { usePresetStore } from "@/entities/preset/model/use-preset-store"
+import { Option } from "@/shared-ui/src/components/Options"
 
 export const useMessageViewer = () => {
   const messageStore = useMessageStore()
   const messageViewStore = useMessageViewStore()
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
+  const settingsIsOpen = ref<boolean>(false);
 
   watch([() => messageViewStore.currentPage,
 
@@ -21,18 +23,20 @@ export const useMessageViewer = () => {
     }
   )
 
-
   const headers = computed(() => {
-    return presetStore.currentPreset?.headers || [];
+    return presetStore.currentPreset?.headers.filter(header => header.isVisible) || [];
   });
 
-  const clickHandler = (data: any) => {
-    console.log(data);
-
-
+  const clickHandler = (data: Option) => {
+    switch (data.to?.name) {
+      case `settings`:
+        settingsIsOpen.value = true
+        break
+    }
+    console.log(data.to?.name);
   }
 
   return {
-    headers, clickHandler
+    headers, clickHandler, settingsIsOpen
   }
 }

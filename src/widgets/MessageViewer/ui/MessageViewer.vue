@@ -32,7 +32,7 @@
       :value="messageViewStore.currentPage"
       @update-page=""
     />
-    <MessageViewSettings />
+    <MessageViewSettings v-model="settingsIsOpen" />
   </div>
 </template>
 <script setup lang="ts">
@@ -44,8 +44,10 @@ import { useMessageStore } from "@/entities/message/model/use-message-store";
 import { useMessageViewStore } from "../model/use-message-view-store";
 import { Options } from "@/shared-ui/src/components/Options";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
+import { ref } from "vue";
 
 const messageViewStore = useMessageViewStore();
-const { headers, clickHandler } = useMessageViewer();
+const { headers, clickHandler, settingsIsOpen } = useMessageViewer();
+
 const messageStore = useMessageStore();
 </script>

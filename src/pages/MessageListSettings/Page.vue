@@ -6,5 +6,5 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { HeaderTable } from "@/widgets/HeaderTable";
+import { HeaderTable } from "@/widgets/HeaderTable/ui";
 </script>

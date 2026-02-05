@@ -5,7 +5,7 @@ export const items: Header[] = [
     value: "msg.id",
     align: "center",
     isVisible: true,
-    sortable: true,
+    sortable: false,
     text: `Id`,
     width: 100
   },
