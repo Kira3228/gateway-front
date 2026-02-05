@@ -11,6 +11,7 @@
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "pinia": "^2.0.36",
+    "sortablejs": "^1.15.6",
     "vue": "2.7.16",
     "vue-class-component": "^7.2.x",
     "vue-property-decorator": "^9.1.2",
@@ -20,6 +21,7 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "@types/sortablejs": "^1.15.9",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "@vue/cli-plugin-babel": "~4.5.19",
