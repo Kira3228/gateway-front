@@ -16,6 +16,7 @@
               <PresetSelect class="tw-flex-1 pa-3" />
             </div>
             <Options
+              @click="clickHandler"
               :items="[
                 { text: `Настройки отображения`, to: { name: 'settings' } },
               ]"
@@ -31,6 +32,7 @@
       :value="messageViewStore.currentPage"
       @update-page=""
     />
+    <MessageViewSettings />
   </div>
 </template>
 <script setup lang="ts">
@@ -41,8 +43,9 @@ import { PresetSelect } from "@/features/preset-sync";
 import { useMessageStore } from "@/entities/message/model/use-message-store";
 import { useMessageViewStore } from "../model/use-message-view-store";
 import { Options } from "@/shared-ui/src/components/Options";
+import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
 
 const messageViewStore = useMessageViewStore();
-const { headers } = useMessageViewer();
+const { headers, clickHandler } = useMessageViewer();
 const messageStore = useMessageStore();
 </script>

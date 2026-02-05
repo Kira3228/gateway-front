@@ -1,5 +1,5 @@
 <template>
-  <DataTable dense :headers="headers" :items="fields" :items-per-page="21">
+  <DataTable :headers="headers" :items="fields" :items-per-page="21">
     <template #item.isVisible="{ value, item }">
       <v-switch
         class="v-input--selection-controls"
@@ -21,7 +21,7 @@
       </div>
     </template>
     <template #item.defaultSort="{ value, item }">
-      <div class="">
+      <div>
         <UiSelect
           :items="[`По возрастанию`, `По убыванию`, `Без сортировки`]"
         />
@@ -77,8 +77,6 @@ const items1: Header[] = [
 
 const headers = ref<Header[]>(items1);
 const fields = ref(items);
-
-const mainObject = ref();
 
 const handleDefaultSortChange = (data: any) => {
   console.log(data);

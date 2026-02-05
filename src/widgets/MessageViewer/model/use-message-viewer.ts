@@ -10,8 +10,8 @@ export const useMessageViewer = () => {
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
 
-
   watch([() => messageViewStore.currentPage,
+
   () => presetSync.presetName.value
   ], ([newPage, newPreset]) => {
     messageStore.getMessages(newPage, messageViewStore.limit, newPreset)
@@ -26,7 +26,13 @@ export const useMessageViewer = () => {
     return presetStore.currentPreset?.headers || [];
   });
 
+  const clickHandler = (data: any) => {
+    console.log(data);
+
+
+  }
+
   return {
-    headers
+    headers, clickHandler
   }
 }
