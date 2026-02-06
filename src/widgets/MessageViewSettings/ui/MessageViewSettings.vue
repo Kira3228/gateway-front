@@ -11,9 +11,7 @@
   </Dialog>
 </template>
 <script lang="ts" setup>
-import { Button } from "@/shared-ui/src/components/Button";
 import { Dialog } from "@/shared-ui/src/components/Dialog";
-import { CloseIcon, SaveIcon } from "@/shared-ui/src/components/Icons";
 import { HeaderTable } from "@/widgets/HeaderTable/ui/";
 
 interface MessageViewSettingsProps {

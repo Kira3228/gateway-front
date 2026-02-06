@@ -16,6 +16,15 @@ export const useApi = () => {
       throw new Error(`GET ${endpoint} failed: ${error.message}`);
     }
   }
+  const post = async <T>(endpoint: string, body: any,): Promise<T> => {
+    try {
+      const response: AxiosResponse<T> = await api.post(endpoint, body, { headers: { 'Content-Type': 'application/json', } })
+
+      return response.data
+
+    }
+    catch (error: any) { throw new Error(`post ${endpoint} failed: ${error.message}`); }
+  }
   const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await api.patch(url, body);
@@ -36,6 +45,6 @@ export const useApi = () => {
     }
   };
   return {
-    get, httpPatch, httpGetBlob
+    get, httpPatch, httpGetBlob, post
   }
 }
