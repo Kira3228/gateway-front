@@ -12,17 +12,37 @@
           пресеты</v-tab
         >
         <v-tab-item>
-          <HeaderTable />
+          <SettingsTable
+            v-model="presetStore.newCustomPreset"
+            :presetName.sync="presetStore.newCustomPresetName"
+            :headers="headers"
+            @save="handleSave"
+          />
         </v-tab-item>
         <v-tab-item>
-          <v-tabs vertical>
-            <v-tab>asdsad </v-tab>
-            <v-tab>asdsad2 </v-tab>
-            <v-tab-item>
-              <HeaderTable />
-            </v-tab-item>
-            <v-tab-item>
-              <HeaderTable />
+          <v-tabs
+            @change="tabsChangeHandler"
+            v-model="activePresetIdx"
+            vertical
+          >
+            <v-tab
+              @click="tabClickHandler(presetName)"
+              v-for="presetName in presetStore.presetList"
+              :key="presetName"
+            >
+              {{ presetName }}
+            </v-tab>
+            <v-tab-item v-for="(n, index) in presetStore.presetList.length">
+              <SettingsTable
+                v-if="
+                  activePresetIdx === index ||
+                  index === activePresetIdx + 1 ||
+                  index === activePresetIdx - 1
+                "
+                v-model="fields"
+                :presetName.sync="presetName"
+                :headers="headers"
+              />
             </v-tab-item>
           </v-tabs>
         </v-tab-item>
@@ -32,8 +52,12 @@
   </Dialog>
 </template>
 <script lang="ts" setup>
+import { Header } from "@/shared-ui/src/components/DataTable";
 import { Dialog } from "@/shared-ui/src/components/Dialog";
-import { HeaderTable } from "@/widgets/HeaderTable/ui/";
+import { SettingsTable } from "@/shared/UI/SettingsTable";
+import { useHeaderTable } from "@/widgets/HeaderTable/model/use-header-table";
+import { usePresetStore } from "@/entities/preset/model/use-preset-store";
+import { ref, watch } from "vue";
 
 interface MessageViewSettingsProps {
   value?: boolean;
@@ -44,4 +68,25 @@ const props = defineProps<MessageViewSettingsProps>();
 const emit = defineEmits<{
   (e: `input`, data: any): void;
 }>();
+
+const presetStore = usePresetStore();
+
+const { fields, headers, presetName, save } = useHeaderTable();
+
+const handleSave = (data: { presetName: string; settingsBody: Header[] }) => {
+  console.log(data);
+};
+
+const tabClickHandler = (data: any) => {
+  console.log(data);
+};
+
+const tabsChangeHandler = (data: any) => {
+  console.log(`@change`, data);
+};
+
+const activePresetIdx = ref();
+watch(activePresetIdx, () => {
+  console.log({ test: activePresetIdx.value });
+});
 </script>

@@ -7,7 +7,7 @@
     item-key="value"
     :itemsPerPage="21"
   >
-    <template #item.drag="{ item }">
+    <template #item.drag>
       <div class="drag-handle" style="cursor: move; font-size: 20px">
         <span>⋮⋮</span>
       </div>
@@ -32,7 +32,7 @@
         />
       </div>
     </template>
-    <template #item.defaultSort="{ value, item }">
+    <template #item.defaultSort>
       <div>
         <UiSelect
           :items="[`По возрастанию`, `По убыванию`, `Без сортировки`]"
@@ -70,11 +70,7 @@ import { DataTable } from "@/shared-ui/src/components/DataTable";
 import { Button } from "@/shared-ui/src/components/Button";
 import { UiSelect } from "@/shared-ui/src/components/Select";
 import { TextInput } from "@/shared-ui/src/components/TextInput";
-import {
-  CloseIcon,
-  SaveIcon,
-  UpdateIcon,
-} from "@/shared-ui/src/components/Icons";
+import { CloseIcon, SaveIcon } from "@/shared-ui/src/components/Icons";
 import { useHeaderTable } from "../model/use-header-table";
 
 const { fields, headers, presetName, save } = useHeaderTable();
