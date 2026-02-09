@@ -5,7 +5,28 @@
     title="Настройки представления"
   >
     <template #content>
-      <HeaderTable />
+      <v-tabs vertical>
+        <v-tab>Создать пресет</v-tab>
+        <v-tab
+          >Сохранённые <br />
+          пресеты</v-tab
+        >
+        <v-tab-item>
+          <HeaderTable />
+        </v-tab-item>
+        <v-tab-item>
+          <v-tabs vertical>
+            <v-tab>asdsad </v-tab>
+            <v-tab>asdsad2 </v-tab>
+            <v-tab-item>
+              <HeaderTable />
+            </v-tab-item>
+            <v-tab-item>
+              <HeaderTable />
+            </v-tab-item>
+          </v-tabs>
+        </v-tab-item>
+      </v-tabs>
     </template>
     <template #actions> </template>
   </Dialog>

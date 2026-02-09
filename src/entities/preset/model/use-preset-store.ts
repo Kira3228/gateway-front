@@ -2,11 +2,14 @@ import { defineStore } from "pinia";
 import { fetchPresets, fetchPreset } from "../api";
 import { ref } from "vue";
 import { Preset } from "./types";
-import { createPreset } from "../api/create-preset";
+import { defaultHeadersState } from './default-state'
+
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetList = ref<string[]>([])
-  const currentPreset = ref<Preset>({ default_filters: { sertDesc: [], sortBy: [] }, displayName: '', exceptions: [], headers: [], presetName: "" })
+  
+  const currentPreset = ref<Preset>({ default_filters: { sertDesc: [], sortBy: [] }, displayName: '', exceptions: [], headers: defaultHeadersState, presetName: "" })
+  
   const currentPresetName = ref<string>()
 
   const loadPresets = async () => {

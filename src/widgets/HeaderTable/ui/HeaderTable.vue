@@ -3,9 +3,9 @@
     :headers="headers"
     :items="fields"
     class="settings-table"
-    :page="page"
+    :page="1"
     item-key="value"
-    :itemsPerPage="itemsPerPage"
+    :itemsPerPage="21"
   >
     <template #item.drag="{ item }">
       <div class="drag-handle" style="cursor: move; font-size: 20px">
@@ -42,25 +42,22 @@
     <template #footer>
       <div class="tw-flex tw-flex-col tw-gap-2 tw-m-3">
         <TextInput label="Название" v-model="presetName" />
-        <div class="tw-flex tw-items-center tw-gap-1 tw-mt-2">
+        <div
+          class="tw-flex tw-justify-between tw-items-center tw-gap-1 tw-mt-2"
+        >
           <Button @click="save" outlined height="auto" color="blue">
             <div class="tw-flex tw-items-center tw-gap-1">
               <SaveIcon color="#2196F3" height="20" />
-              Сохранить <br />
-              новый
-            </div>
-          </Button>
-          <Button outlined height="auto" color="blue">
-            <div class="tw-flex tw-items-center tw-gap-1">
-              <UpdateIcon height="20" />
-              Обновить <br />
-              текущий
+              <span>
+                Сохранить <br />
+                новый
+              </span>
             </div>
           </Button>
           <Button outlined height="32" color="red">
             <div class="tw-flex tw-items-center tw-gap-1">
               <CloseIcon height="20" />
-              Отмена
+              <span>Отмена </span>
             </div>
           </Button>
         </div>
@@ -70,7 +67,6 @@
 </template>
 <script lang="ts" setup>
 import { DataTable } from "@/shared-ui/src/components/DataTable";
-import { ref } from "vue";
 import { Button } from "@/shared-ui/src/components/Button";
 import { UiSelect } from "@/shared-ui/src/components/Select";
 import { TextInput } from "@/shared-ui/src/components/TextInput";
@@ -79,14 +75,9 @@ import {
   SaveIcon,
   UpdateIcon,
 } from "@/shared-ui/src/components/Icons";
-import { usePresetStore } from "@/entities/preset/model/use-preset-store";
 import { useHeaderTable } from "../model/use-header-table";
 
-const page = ref(1);
-const itemsPerPage = ref(21);
-
 const { fields, headers, presetName, save } = useHeaderTable();
-const presetStore = usePresetStore();
 </script>
 <style scoped>
 .v-input--selection-controls {

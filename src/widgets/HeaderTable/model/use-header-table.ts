@@ -16,7 +16,6 @@ export const useHeaderTable = () => {
     (newPreset) => {
       if (newPreset?.headers) {
         fields.value = JSON.parse(JSON.stringify(newPreset.headers));
-
         if (newPreset.displayName) {
           presetName.value = newPreset.displayName;
         }
