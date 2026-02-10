@@ -7,10 +7,8 @@
     <template #content>
       <v-tabs vertical>
         <v-tab>Создать пресет</v-tab>
-        <v-tab
-          >Сохранённые <br />
-          пресеты</v-tab
-        >
+        <v-tab>Сохранённые пресеты</v-tab>
+
         <v-tab-item>
           <SettingsTable
             v-model="presetStore.newCustomPreset"
@@ -19,36 +17,47 @@
             @save="handleSave"
           />
         </v-tab-item>
-        <v-tab-item>
-          <v-tabs
-            @change="tabsChangeHandler"
-            v-model="activePresetIdx"
-            vertical
-          >
-            <v-tab
-              @click="tabClickHandler(presetName)"
-              v-for="presetName in presetStore.presetList"
-              :key="presetName"
+        <v-tab-item class="tw-h-full">
+          <div class="tw-flex">
+            <div
+              class="tw-w-1/4 tw-border-r tw-h-full tw-overflow-y-auto tw-shrink-0"
             >
-              {{ presetName }}
-            </v-tab>
-            <v-tab-item v-for="(n, index) in presetStore.presetList.length">
-              <SettingsTable
-                v-if="
-                  activePresetIdx === index ||
-                  index === activePresetIdx + 1 ||
-                  index === activePresetIdx - 1
-                "
-                v-model="fields"
-                :presetName.sync="presetName"
-                :headers="headers"
-              />
-            </v-tab-item>
-          </v-tabs>
+              <v-list dense class="tw-h-full preset__list">
+                <v-list-item-group v-model="activePresetIdx" color="primary">
+                  <v-list-item
+                    v-for="presetName in presetStore.presetList"
+                    :key="presetName"
+                    @click="tabClickHandler(presetName)"
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title>{{ presetName }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </div>
+
+            <div class="tw-w-3/4 tw-h-full tw-overflow-y-auto tw-p-2">
+              <v-window v-model="activePresetIdx" vertical>
+                <v-window-item
+                  v-for="(presetName, index) in presetStore.presetList"
+                  :key="presetName"
+                  :value="index"
+                  class="tw-h-full"
+                >
+                  <SettingsTable
+                    v-if="Math.abs(activePresetIdx - index) <= 1"
+                    v-model="fields"
+                    :presetName.sync="presetName"
+                    :headers="headers"
+                  />
+                </v-window-item>
+              </v-window>
+            </div>
+          </div>
         </v-tab-item>
       </v-tabs>
     </template>
-    <template #actions> </template>
   </Dialog>
 </template>
 <script lang="ts" setup>
@@ -90,3 +99,12 @@ watch(activePresetIdx, () => {
   console.log({ test: activePresetIdx.value });
 });
 </script>
+<style scoped>
+:deep(.v-window__container) {
+  height: 100%;
+}
+
+.preset__list {
+  height: 500px;
+}
+</style>
