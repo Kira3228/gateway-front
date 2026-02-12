@@ -101,11 +101,22 @@ const emit = defineEmits<{
 const instance = getCurrentInstance();
 
 const valid = ref<boolean>(true);
-
-const localFields = ref<Header[]>(
-  JSON.parse(JSON.stringify(props.value || [])),
-);
+const formRef = ref<any>(null);
+const localFields = ref<Header[]>([]);
 const localPresetName = ref(props.presetName || "");
+
+const clone = (v: any) => JSON.parse(JSON.stringify(v ?? []));
+
+watch(
+  () => props.value,
+  (newVal) => {
+    const incoming = clone(newVal);
+    if (JSON.stringify(incoming) !== JSON.stringify(localFields.value)) {
+      localFields.value = incoming;
+    }
+  },
+  { immediate: true, deep: true },
+);
 
 watch(
   () => props.presetName,
@@ -127,16 +138,20 @@ watch(localPresetName, (data) => {
 });
 
 const handleSave = () => {
-  emit("save", {
-    presetName: localPresetName.value,
-    settingsBody: localFields.value,
-  });
+  const isValid = formRef.value?.validate();
+
+  if (isValid) {
+    emit("save", {
+      presetName: localPresetName.value,
+      settingsBody: localFields.value,
+    });
+  }
 };
 
 const nameRules = [
-  (v: string) => !!v || "Имя обязательно!",
+  (v: string) => !!v || "Название обязательно!",
   (v: string) =>
-    (v && v.length <= 15) || "Имя должно быть не длиннее 10 символов!",
+    (v && v.length <= 15) || "Название должно быть не длиннее 10 символов!",
   (v: string) => !/\d/.test(v) || "Цифры запрещены!",
 ];
 

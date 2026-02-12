@@ -8,65 +8,28 @@
       <v-tabs vertical>
         <v-tab>Создать пресет</v-tab>
         <v-tab>Сохранённые пресеты</v-tab>
-
         <v-tab-item>
           <SettingsTable
             v-model="presetStore.newCustomPreset"
             :presetName.sync="presetStore.newCustomPresetName"
             :headers="headers"
-            @save="handleSave"
+            @save="handleCreatePreset"
           />
         </v-tab-item>
-        <v-tab-item class="tw-h-full">
-          <div class="tw-flex">
-            <div
-              class="tw-w-1/4 tw-border-r tw-h-full tw-overflow-y-auto tw-shrink-0"
-            >
-              <v-list dense class="tw-h-full preset__list">
-                <v-list-item-group v-model="activePresetIdx" color="primary">
-                  <v-list-item
-                    v-for="presetName in presetStore.presetList"
-                    :key="presetName"
-                    @click="tabClickHandler(presetName)"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title>{{ presetName }}</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </div>
-
-            <div class="tw-w-3/4 tw-h-full tw-overflow-y-auto tw-p-2">
-              <v-window v-model="activePresetIdx" vertical>
-                <v-window-item
-                  v-for="(presetName, index) in presetStore.presetList"
-                  :key="presetName"
-                  :value="index"
-                  class="tw-h-full"
-                >
-                  <SettingsTable
-                    v-if="Math.abs(activePresetIdx - index) <= 1"
-                    v-model="fields"
-                    :presetName.sync="presetName"
-                    :headers="headers"
-                  />
-                </v-window-item>
-              </v-window>
-            </div>
-          </div>
-        </v-tab-item>
+        <v-tab-item class="tw-h-full"> <UpdatePresetTab /></v-tab-item>
       </v-tabs>
     </template>
   </Dialog>
 </template>
 <script lang="ts" setup>
-import { Header } from "@/shared-ui/src/components/DataTable";
 import { Dialog } from "@/shared-ui/src/components/Dialog";
 import { SettingsTable } from "@/shared/UI/SettingsTable";
-import { useHeaderTable } from "@/widgets/HeaderTable/model/use-header-table";
+import { useHeaderTable } from "@/widgets/MessageViewSettings/model/use-header-table";
 import { usePresetStore } from "@/entities/preset/model/use-preset-store";
-import { ref, watch } from "vue";
+import { computed, ref } from "vue";
+import { Preset } from "@/features/preset-sync";
+import { useCreatePreset } from "../model/use-create-preset";
+import UpdatePresetTab from "./UpdatePresetTab.vue";
 
 interface MessageViewSettingsProps {
   value?: boolean;
@@ -79,25 +42,21 @@ const emit = defineEmits<{
 }>();
 
 const presetStore = usePresetStore();
+const { handleCreatePreset } = useCreatePreset();
+const { fields, headers } = useHeaderTable();
 
-const { fields, headers, presetName, save } = useHeaderTable();
+const activePresetIdx = ref();
 
-const handleSave = (data: { presetName: string; settingsBody: Header[] }) => {
-  console.log(data);
-};
-
-const tabClickHandler = (data: any) => {
-  console.log(data);
+const deletePreset = (presetName: string) => {
+  presetStore.deleteTablePreset(presetName);
+  console.log(`Удаление: ${presetName}`);
 };
 
 const tabsChangeHandler = (data: any) => {
   console.log(`@change`, data);
 };
 
-const activePresetIdx = ref();
-watch(activePresetIdx, () => {
-  console.log({ test: activePresetIdx.value });
-});
+const handleUpdate = (data: Preset) => {};
 </script>
 <style scoped>
 :deep(.v-window__container) {

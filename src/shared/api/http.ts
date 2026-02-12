@@ -1,5 +1,6 @@
 import { BASE_URL } from "@/CONSTANTS"
 import axios, { AxiosResponse } from "axios"
+import { formatDate } from "../lib/formatDate"
 
 const api = axios.create({
   baseURL: BASE_URL
@@ -19,13 +20,13 @@ export const useApi = () => {
   const post = async <T>(endpoint: string, body: any,): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await api.post(endpoint, body, { headers: { 'Content-Type': 'application/json', } })
-
       return response.data
 
     }
     catch (error: any) { throw new Error(`post ${endpoint} failed: ${error.message}`); }
   }
-  const httpPatch = async <T>(url: string, body?: any): Promise<T> => {
+
+  const patch = async <T>(url: string, body?: any): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await api.patch(url, body);
       return response.data;
@@ -33,6 +34,19 @@ export const useApi = () => {
       throw new Error(`PATCH ${url} failed: ${error.message}`);
     }
   };
+
+  const httpDelete = async<T>(url: string, body?: any): Promise<T> => {
+    try {
+      console.log(`http`, body);
+      const config = body ? { data: body } : undefined;
+      const response: AxiosResponse<T> = await api.delete(url, config);
+      return response.data
+    }
+    catch (error: any) {
+      throw new Error(`DELETE ${url} failed: ${error.message}`);
+    }
+  }
+
   const httpGetBlob = async (url: string, params?: Record<string, any>): Promise<Blob> => {
     try {
       const response: AxiosResponse<Blob> = await api.get(url, {
@@ -45,6 +59,6 @@ export const useApi = () => {
     }
   };
   return {
-    get, httpPatch, httpGetBlob, post
+    get, patch, httpGetBlob, post, httpDelete
   }
 }

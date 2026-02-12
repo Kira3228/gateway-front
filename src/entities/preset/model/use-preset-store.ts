@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import { fetchPresets, fetchPreset } from "../api";
+import { fetchPresets, fetchPreset, deletePreset } from "../api";
 import { ref } from "vue";
 import { Header, Preset } from "./types";
 import { defaultHeadersState } from './default-state'
+import { createPreset } from "../api/create-preset";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetList = ref<string[]>([])
@@ -12,14 +13,15 @@ export const usePresetStore = defineStore(`preset-store`, () => {
       sertDesc: [],
       sortBy: []
     },
-    displayName: '',
     exceptions: [],
     headers: [],
     presetName: ""
   })
-
   const newCustomPreset = ref<Header[]>(defaultHeadersState)
   const newCustomPresetName = ref<string>('')
+
+  const presetForSettings = ref<Header[]>([])
+  const selectedPresetName = ref<string>('')
 
   const loadPresets = async () => {
     const list = await fetchPresets()
@@ -31,17 +33,36 @@ export const usePresetStore = defineStore(`preset-store`, () => {
     currentPreset.value = preset
   }
 
-  const createNewPreset = async (presetName: string, body: any) => {
-    console.log({
-      presetName,
-      body
-    });
+  const loadPresetForSettings = async (presetName: string) => {
+    const preset = await fetchPreset({ presetName })
+    presetForSettings.value = preset.headers || []
+    selectedPresetName.value = preset.presetName
+  }
 
-    // const preset = await createPreset()
+  const createNewPreset = async (data: Preset) => {
+    const preset = await createPreset(data)
+  }
+
+  const updatePreset = async (presetName: string, body: any) => {
+
+  }
+  const deleteTablePreset = async (presetName: string) => {
+    const result = await deletePreset(presetName)
+    await loadPresets()
   }
 
   return {
-    presetList, loadPresets, loadPreset, currentPreset, currentPresetName, createNewPreset,
-    newCustomPreset, newCustomPresetName
+    presetList,
+    loadPresets,
+    loadPreset,
+    currentPreset,
+    currentPresetName,
+    createNewPreset,
+    newCustomPreset,
+    newCustomPresetName,
+    deleteTablePreset,
+    loadPresetForSettings,
+    presetForSettings,
+    selectedPresetName
   }
 })

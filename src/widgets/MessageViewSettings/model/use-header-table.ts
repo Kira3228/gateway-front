@@ -2,7 +2,7 @@ import { onMounted, ref, watch } from "vue";
 import Sortable from "sortablejs";
 import { usePresetStore } from "@/entities/preset/model/use-preset-store";
 import { Header } from "@/shared-ui/src/components/DataTable";
-import { settingsHeaders } from "../../MessageViewSettings/ui/settings-headers";
+import { settingsHeaders } from "../ui/settings-headers";
 import { defaultHeadersState } from '@/entities/preset/model/default-state'
 export const useHeaderTable = () => {
   const presetStore = usePresetStore();
@@ -33,14 +33,11 @@ export const useHeaderTable = () => {
     }
   });
 
-  const save = async () => {
-    await presetStore.createNewPreset(presetName.value, fields.value);
-  }
+
 
   return {
     headers,
     fields,
     presetName,
-    save
   }
 }

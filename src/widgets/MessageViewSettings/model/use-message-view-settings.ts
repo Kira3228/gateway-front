@@ -1,5 +1,3 @@
+export const useMessageViewSettings = () => {
 
-
-export const useMessageViewSettings = () => { 
-  
 }
