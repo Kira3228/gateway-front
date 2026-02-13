@@ -34,12 +34,13 @@ export const usePresetList = () => {
   }
 
   const handleUpdatePreset = async () => {
-    // Реализация обновления
+    presetStore
   }
 
   return {
     activePresetIndex,
     handlePresetChange,
     handleDeletePreset,
+    handleUpdatePreset
   }
 }

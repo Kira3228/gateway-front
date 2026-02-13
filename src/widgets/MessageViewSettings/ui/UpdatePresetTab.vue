@@ -14,7 +14,11 @@
             <v-list-item-content>
               <div class="tw-flex tw-gap-2">
                 <v-list-item-title>{{ presetName }}</v-list-item-title>
-                <Button width="20" @click="handleDeletePreset(presetName)" icon>
+                <Button
+                  width="20"
+                  @click.stop="handleDeletePreset(presetName)"
+                  icon
+                >
                   <DeleteIcon />
                 </Button>
               </div>
@@ -28,6 +32,7 @@
       <SettingsTable
         :headers="headers"
         v-model="presetStore.presetForSettings"
+        @save="handleUpdatePreset"
       />
     </div>
   </div>
@@ -41,8 +46,12 @@ import { usePresetList } from "../model/use-preset-list";
 import { usePresetStore } from "@/entities/preset/model/use-preset-store";
 import { useHeaderTable } from "../model/use-header-table";
 
-const { activePresetIndex, handlePresetChange, handleDeletePreset } =
-  usePresetList();
+const {
+  activePresetIndex,
+  handlePresetChange,
+  handleDeletePreset,
+  handleUpdatePreset,
+} = usePresetList();
 
 const presetStore = usePresetStore();
 const { headers } = useHeaderTable();
