@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { Header, Preset } from "./types";
 import { defaultHeadersState } from './default-state'
 import { createPreset } from "../api/create-preset";
+import { __makeTemplateObject } from "tslib";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetList = ref<string[]>([])
@@ -41,7 +42,16 @@ export const usePresetStore = defineStore(`preset-store`, () => {
 
   const createNewPreset = async (data: Preset) => {
     const preset = await createPreset(data)
+    presetList.value = preset
 
+    console.log(`До`, newCustomPreset.value,
+      newCustomPresetName.value);
+
+    newCustomPreset.value = [...defaultHeadersState]
+    newCustomPresetName.value = ""
+
+    console.log(`После`, newCustomPreset.value,
+      newCustomPresetName.value);
   }
 
   const updatePreset = async (presetName: string, body: any) => {
@@ -49,21 +59,22 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   }
   const deleteTablePreset = async (presetName: string) => {
     const result = await deletePreset(presetName)
-    await loadPresets()
+    presetList.value = [...result]
   }
 
   return {
-    presetList,
-    loadPresets,
     loadPreset,
-    currentPreset,
-    currentPresetName,
+    loadPresets,
+    updatePreset,
     createNewPreset,
-    newCustomPreset,
-    newCustomPresetName,
     deleteTablePreset,
     loadPresetForSettings,
+    presetList,
+    currentPreset,
+    newCustomPreset,
+    currentPresetName,
     presetForSettings,
-    selectedPresetName
+    selectedPresetName,
+    newCustomPresetName,
   }
 })
