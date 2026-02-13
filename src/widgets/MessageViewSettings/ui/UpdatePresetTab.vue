@@ -14,11 +14,7 @@
             <v-list-item-content>
               <div class="tw-flex tw-gap-2">
                 <v-list-item-title>{{ presetName }}</v-list-item-title>
-                <Button
-                  width="20"
-                  @click.stop="handleDeletePreset(presetName)"
-                  icon
-                >
+                <Button width="20" @click="handleDeletePreset(presetName)" icon>
                   <DeleteIcon />
                 </Button>
               </div>

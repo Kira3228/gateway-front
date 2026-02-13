@@ -41,6 +41,7 @@ export const usePresetStore = defineStore(`preset-store`, () => {
 
   const createNewPreset = async (data: Preset) => {
     const preset = await createPreset(data)
+
   }
 
   const updatePreset = async (presetName: string, body: any) => {
