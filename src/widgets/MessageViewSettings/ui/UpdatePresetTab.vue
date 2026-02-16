@@ -8,7 +8,7 @@
           @change="handlePresetChange"
         >
           <v-list-item
-            v-for="presetName in presetStore.presetList"
+            v-for="presetName in presetStore.presetNameList"
             :key="presetName"
           >
             <v-list-item-content>
@@ -46,12 +46,7 @@
           <div
             class="tw-flex tw-justify-between tw-items-center tw-gap-1 tw-mt-2 tw-m-3"
           >
-            <Button
-              @click="handleUpdatePreset()"
-              outlined
-              height="32"
-              color="blue"
-            >
+            <Button outlined height="32" color="blue">
               <div class="tw-flex tw-items-center tw-gap-1">
                 <SaveIcon color="#2196F3" height="20" />
                 <span> Сохранить </span>
