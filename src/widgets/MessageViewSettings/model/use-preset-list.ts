@@ -11,8 +11,8 @@ export const usePresetList = () => {
   onMounted(async () => {
     await presetStore.loadPresets()
 
-    if (presetStore.presetList.length > 0) {
-      await presetStore.loadPresetForSettings(presetStore.presetList[0])
+    if (presetStore.presetNameList.length > 0) {
+      await presetStore.loadPresetForSettings(presetStore.presetNameList[0])
       activePresetIndex.value = 0
     }
   })
@@ -21,7 +21,7 @@ export const usePresetList = () => {
   const handlePresetChange = async (index: number | null) => {
     if (index === null) return
 
-    const presetName = presetStore.presetList[index]
+    const presetName = presetStore.presetNameList[index]
     await presetStore.loadPresetForSettings(presetName)
   }
 
