@@ -1,9 +1,8 @@
 <template>
   <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
-    <div
-      class="tw-flex-1 tw-overflow-auto tw-overflow-x-auto tw-min-w-full tw-min-h-0"
-    >
+    <div class="tw-flex-1 tw-min-h-0 tw-w-full">
       <DataTable
+        style="min-width: 100%; width: 0px"
         :items="messageStore.messages.messages"
         :headers="headers"
         :items-per-page="10"
@@ -53,3 +52,23 @@ const { headers, clickHandler, settingsIsOpen } = useMessageViewer();
 
 const messageStore = useMessageStore();
 </script>
+<style scoped>
+/* 
+  Глубокий селектор для внутренней обертки Vuetify.
+  Именно .v-data-table__wrapper отвечает за скролл.
+*/
+:deep(.v-data-table__wrapper) {
+  overflow-x: auto !important; /* Разрешаем гориз. скролл */
+  overflow-y: auto !important; /* Разрешаем верт. скролл */
+  height: 100% !important; /* Растягиваем на всю высоту родителя */
+}
+
+/* 
+  Фикс для sticky header при горизонтальном скролле 
+  (чтобы хедер не уезжал вверх, но скроллился влево-вправо)
+*/
+:deep(.v-data-table > .v-data-table__wrapper > table) {
+  width: 100%;
+  border-spacing: 0;
+}
+</style>
