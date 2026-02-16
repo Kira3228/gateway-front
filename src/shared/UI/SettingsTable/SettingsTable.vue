@@ -67,7 +67,6 @@ const emit = defineEmits<{
 
 const instance = getCurrentInstance();
 
-const formRef = ref<any>(null);
 const localFields = ref<Header[]>([]);
 
 const clone = (v: any) => JSON.parse(JSON.stringify(v ?? []));

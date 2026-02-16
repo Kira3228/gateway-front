@@ -46,7 +46,17 @@
           <div
             class="tw-flex tw-justify-between tw-items-center tw-gap-1 tw-mt-2 tw-m-3"
           >
-            <Button outlined height="32" color="blue">
+            <Button
+              outlined
+              height="32"
+              color="blue"
+              @click="
+                handleUpdatePreset({
+                  headers: presetStore.presetForSettings,
+                  presetName: presetStore.selectedPresetName,
+                })
+              "
+            >
               <div class="tw-flex tw-items-center tw-gap-1">
                 <SaveIcon color="#2196F3" height="20" />
                 <span> Сохранить </span>

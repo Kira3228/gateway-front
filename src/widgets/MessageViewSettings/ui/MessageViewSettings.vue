@@ -77,10 +77,11 @@ const emit = defineEmits<{
 }>();
 
 const presetStore = usePresetStore();
-const { handleCreatePreset } = useCreatePreset();
 const { headers } = useHeaderTable();
 
 const valid = ref<boolean>(true);
+const formRef = ref<any>(null);
+const { handleCreatePreset } = useCreatePreset(formRef);
 
 const nameRules = [
   (v: string) => !!v || "Название обязательно!",

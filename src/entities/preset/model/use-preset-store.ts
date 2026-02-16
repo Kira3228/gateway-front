@@ -49,12 +49,21 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   }
 
   const updateTablePreset = async (config: Preset) => {
-    const result = await updatePreset(config)
+    await updatePreset(config)
+    if (config.presetName === currentPreset.value.presetName) {
 
+      console.log({
+        preset: config.presetName,
+        old: currentPreset.value.presetName
+      });
+
+      await loadPreset(config.presetName)
+    }
   }
   const deleteTablePreset = async (presetName: string) => {
     const result = await deletePreset(presetName)
     presetNameList.value = [...result]
+    loadPreset(`standart`)
   }
 
   return {
