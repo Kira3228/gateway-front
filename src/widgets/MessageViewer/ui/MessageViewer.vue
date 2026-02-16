@@ -16,12 +16,25 @@
             <div>
               <PresetSelect class="tw-flex-1 pa-3" />
             </div>
-            <Options
-              @click="clickHandler"
-              :items="[
-                { text: `Настройки отображения`, to: { name: 'settings' } },
-              ]"
-            />
+            <div class="tw-flex">
+              <Button
+                @click="handleFilterButtonClick"
+                color="black"
+                :height="28"
+                outlined
+              >
+                <div class="tw-flex tw-items-center tw-gap-2">
+                  <FilterIcon width="18" />
+                  Все фильтры
+                </div>
+              </Button>
+              <Options
+                @click="clickHandler"
+                :items="[
+                  { text: `Настройки отображения`, to: { name: 'settings' } },
+                ]"
+              />
+            </div>
           </div>
         </template>
       </DataTable>
@@ -34,6 +47,7 @@
       @update-page=""
     />
     <MessageViewSettings v-model="settingsIsOpen" />
+    <FilterDrawer v-model="drawerIsOpen" />
   </div>
 </template>
 <script setup lang="ts">
@@ -45,30 +59,20 @@ import { useMessageStore } from "@/entities/message/model/use-message-store";
 import { useMessageViewStore } from "../model/use-message-view-store";
 import { Options } from "@/shared-ui/src/components/Options";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
+import { Button } from "@/shared-ui/src/components/Button";
+import { FilterIcon } from "@/shared-ui/src/components/Icons";
+import { ref } from "vue";
+import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
 
 const messageViewStore = useMessageViewStore();
 
 const { headers, clickHandler, settingsIsOpen } = useMessageViewer();
 
 const messageStore = useMessageStore();
-</script>
-<style scoped>
-/* 
-  Глубокий селектор для внутренней обертки Vuetify.
-  Именно .v-data-table__wrapper отвечает за скролл.
-*/
-:deep(.v-data-table__wrapper) {
-  overflow-x: auto !important; /* Разрешаем гориз. скролл */
-  overflow-y: auto !important; /* Разрешаем верт. скролл */
-  height: 100% !important; /* Растягиваем на всю высоту родителя */
-}
 
-/* 
-  Фикс для sticky header при горизонтальном скролле 
-  (чтобы хедер не уезжал вверх, но скроллился влево-вправо)
-*/
-:deep(.v-data-table > .v-data-table__wrapper > table) {
-  width: 100%;
-  border-spacing: 0;
-}
-</style>
+const drawerIsOpen = ref<boolean>(false);
+
+const handleFilterButtonClick = () => {
+  drawerIsOpen.value = true;
+};
+</script>
