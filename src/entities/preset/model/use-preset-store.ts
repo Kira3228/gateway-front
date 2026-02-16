@@ -5,10 +5,11 @@ import { Header, Preset } from "./types";
 import { defaultHeadersState } from './default-state'
 import { createPreset } from "../api/create-preset";
 import { __makeTemplateObject } from "tslib";
+import { updatePreset } from "../api/update-preset";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetList = ref<string[]>([])
-  const currentPresetName = ref<string>()
+
   const currentPreset = ref<Preset>({
     default_filters: {
       sertDesc: [],
@@ -18,6 +19,7 @@ export const usePresetStore = defineStore(`preset-store`, () => {
     headers: [],
     presetName: ""
   })
+  
   const newCustomPreset = ref<Header[]>(defaultHeadersState)
   const newCustomPresetName = ref<string>('')
 
@@ -43,19 +45,13 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   const createNewPreset = async (data: Preset) => {
     const preset = await createPreset(data)
     presetList.value = preset
-
-    console.log(`До`, newCustomPreset.value,
-      newCustomPresetName.value);
-
     newCustomPreset.value = [...defaultHeadersState]
     newCustomPresetName.value = ""
-
-    console.log(`После`, newCustomPreset.value,
-      newCustomPresetName.value);
   }
 
-  const updatePreset = async (presetName: string, body: any) => {
-
+  const updateTablePreset = async (config: Preset) => {
+    const result = await updatePreset(config)
+    preset
   }
   const deleteTablePreset = async (presetName: string) => {
     const result = await deletePreset(presetName)
@@ -65,14 +61,13 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   return {
     loadPreset,
     loadPresets,
-    updatePreset,
     createNewPreset,
     deleteTablePreset,
     loadPresetForSettings,
+    updateTablePreset,
     presetList,
     currentPreset,
     newCustomPreset,
-    currentPresetName,
     presetForSettings,
     selectedPresetName,
     newCustomPresetName,

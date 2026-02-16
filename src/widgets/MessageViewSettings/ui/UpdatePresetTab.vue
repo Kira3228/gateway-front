@@ -15,11 +15,19 @@
               <div class="tw-flex tw-gap-2">
                 <v-list-item-title>{{ presetName }}</v-list-item-title>
                 <Button
+                  :class="
+                    presetName === `standart`
+                      ? `tw-cursor-not-allowed`
+                      : 'tw-cursor-pointer'
+                  "
+                  :disabled="presetName === `standart`"
                   width="20"
                   @click.stop="handleDeletePreset(presetName)"
                   icon
                 >
-                  <DeleteIcon />
+                  <DeleteIcon
+                    :color="presetName === `standart` ? `#757575` : '#000000'"
+                  />
                 </Button>
               </div>
             </v-list-item-content>
@@ -32,8 +40,32 @@
       <SettingsTable
         :headers="headers"
         v-model="presetStore.presetForSettings"
-        @save="handleUpdatePreset"
-      />
+        :preset-name.sync="presetStore.selectedPresetName"
+      >
+        <template #footer>
+          <div
+            class="tw-flex tw-justify-between tw-items-center tw-gap-1 tw-mt-2 tw-m-3"
+          >
+            <Button
+              @click="handleUpdatePreset()"
+              outlined
+              height="32"
+              color="blue"
+            >
+              <div class="tw-flex tw-items-center tw-gap-1">
+                <SaveIcon color="#2196F3" height="20" />
+                <span> Сохранить </span>
+              </div>
+            </Button>
+            <Button outlined height="32" color="red">
+              <div class="tw-flex tw-items-center tw-gap-1">
+                <CloseIcon height="20" />
+                <span>Отмена </span>
+              </div>
+            </Button>
+          </div>
+        </template>
+      </SettingsTable>
     </div>
   </div>
 </template>

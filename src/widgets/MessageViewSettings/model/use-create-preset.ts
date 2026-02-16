@@ -5,7 +5,6 @@ import { ref } from "vue"
 export const useCreatePreset = () => {
   const presetStore = usePresetStore()
 
-  const test = ref()
 
   const handleCreatePreset = async () => {
     const newPreset: Preset = {
@@ -16,6 +15,5 @@ export const useCreatePreset = () => {
   }
   return {
     handleCreatePreset,
-    test
   }
 }

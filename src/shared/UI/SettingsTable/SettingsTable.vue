@@ -12,7 +12,7 @@
         <span class="tw-m-3">⋮⋮</span>
       </div>
     </template>
-    <template #item.isVisible="{ value, item }">
+    <template #item.isVisible="{ item }">
       <v-switch
         inset
         class="v-input--selection-controls"
@@ -40,37 +40,7 @@
       </div>
     </template>
     <template #footer>
-      <div class="tw-flex tw-flex-col tw-gap-2 tw-m-3">
-        <v-form ref="formRef" v-model="valid" lazy-validation>
-          <TextInput
-            :rules="nameRules"
-            label="Название"
-            v-model="localPresetName"
-          />
-          <div
-            class="tw-flex tw-justify-between tw-items-center tw-gap-1 tw-mt-2"
-          >
-            <Button
-              :disabled="!valid"
-              @click="handleSave"
-              outlined
-              height="32"
-              color="blue"
-            >
-              <div class="tw-flex tw-items-center tw-gap-1">
-                <SaveIcon color="#2196F3" height="20" />
-                <span> Сохранить </span>
-              </div>
-            </Button>
-            <Button outlined height="32" color="red">
-              <div class="tw-flex tw-items-center tw-gap-1">
-                <CloseIcon height="20" />
-                <span>Отмена </span>
-              </div>
-            </Button>
-          </div>
-        </v-form>
-      </div>
+      <slot name="footer" />
     </template>
   </DataTable>
 </template>
@@ -78,10 +48,7 @@
 import { DataTable, Header } from "@/shared-ui/src/components/DataTable";
 import { onMounted, ref, watch } from "vue";
 import Sortable from "sortablejs";
-import { Button } from "@/shared-ui/src/components/Button";
 import { UiSelect } from "@/shared-ui/src/components/Select";
-import { TextInput } from "@/shared-ui/src/components/TextInput";
-import { CloseIcon, SaveIcon } from "@/shared-ui/src/components/Icons";
 import { getCurrentInstance } from "vue";
 
 interface SettingsTableProps {
@@ -100,10 +67,8 @@ const emit = defineEmits<{
 
 const instance = getCurrentInstance();
 
-const valid = ref<boolean>(true);
 const formRef = ref<any>(null);
 const localFields = ref<Header[]>([]);
-const localPresetName = ref(props.presetName || "");
 
 const clone = (v: any) => JSON.parse(JSON.stringify(v ?? []));
 
@@ -119,41 +84,12 @@ watch(
 );
 
 watch(
-  () => props.presetName,
-  (newVal) => {
-    localPresetName.value = newVal || "";
-  },
-);
-
-watch(
   localFields,
   (newVal) => {
     emit("input", newVal);
   },
   { deep: true },
 );
-
-watch(localPresetName, (data) => {
-  emit("update:presetName", data);
-});
-
-const handleSave = () => {
-  const isValid = formRef.value?.validate();
-
-  if (isValid) {
-    emit("save", {
-      presetName: localPresetName.value,
-      settingsBody: localFields.value,
-    });
-  }
-};
-
-const nameRules = [
-  (v: string) => !!v || "Название обязательно!",
-  (v: string) =>
-    (v && v.length <= 15) || "Название должно быть не длиннее 10 символов!",
-  (v: string) => !/\d/.test(v) || "Цифры запрещены!",
-];
 
 onMounted(() => {
   const tableEl = instance?.proxy?.$el.querySelector(
