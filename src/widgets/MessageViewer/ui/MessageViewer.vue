@@ -1,6 +1,8 @@
 <template>
   <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
-    <div class="tw-flex-1 tw-overflow-auto tw-min-h-0">
+    <div
+      class="tw-flex-1 tw-overflow-auto tw-overflow-x-auto tw-min-w-full tw-min-h-0"
+    >
       <DataTable
         :items="messageStore.messages.messages"
         :headers="headers"
@@ -44,9 +46,9 @@ import { useMessageStore } from "@/entities/message/model/use-message-store";
 import { useMessageViewStore } from "../model/use-message-view-store";
 import { Options } from "@/shared-ui/src/components/Options";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
-import { ref } from "vue";
 
 const messageViewStore = useMessageViewStore();
+
 const { headers, clickHandler, settingsIsOpen } = useMessageViewer();
 
 const messageStore = useMessageStore();

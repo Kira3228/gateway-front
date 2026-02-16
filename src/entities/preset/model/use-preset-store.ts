@@ -1,17 +1,33 @@
 import { defineStore } from "pinia";
-import { fetchPresets, fetchPreset } from "../api";
+import { fetchPresets, fetchPreset, deletePreset } from "../api";
 import { ref } from "vue";
-import { Preset } from "./types";
+import { Header, Preset } from "./types";
+import { defaultHeadersState } from './default-state'
 import { createPreset } from "../api/create-preset";
+import { __makeTemplateObject } from "tslib";
+import { updatePreset } from "../api/update-preset";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
-  const presetList = ref<string[]>([])
-  const currentPreset = ref<Preset>({ default_filters: { sertDesc: [], sortBy: [] }, displayName: '', exceptions: [], headers: [], presetName: "" })
-  const currentPresetName = ref<string>()
+  const presetNameList = ref<string[]>([])
+  const currentPreset = ref<Preset>({
+    default_filters: {
+      sertDesc: [],
+      sortBy: []
+    },
+    exceptions: [],
+    headers: [],
+    presetName: ""
+  })
+
+  const newCustomPreset = ref<Header[]>(defaultHeadersState)
+  const newCustomPresetName = ref<string>('')
+
+  const presetForSettings = ref<Header[]>([])
+  const selectedPresetName = ref<string>('')
 
   const loadPresets = async () => {
     const list = await fetchPresets()
-    presetList.value = list
+    presetNameList.value = list
   }
 
   const loadPreset = async (presetName?: string) => {
@@ -19,16 +35,49 @@ export const usePresetStore = defineStore(`preset-store`, () => {
     currentPreset.value = preset
   }
 
-  const createNewPreset = async (presetName: string, body: any) => {
-    console.log({
-      presetName,
-      body
-    });
+  const loadPresetForSettings = async (presetName: string) => {
+    const preset = await fetchPreset({ presetName })
+    presetForSettings.value = preset.headers || []
+    selectedPresetName.value = preset.presetName
+  }
 
-    // const preset = await createPreset()
+  const createNewPreset = async (data: Preset) => {
+    const preset = await createPreset(data)
+    presetNameList.value = preset
+    newCustomPreset.value = [...defaultHeadersState]
+    newCustomPresetName.value = ""
+  }
+
+  const updateTablePreset = async (config: Preset) => {
+    await updatePreset(config)
+    if (config.presetName === currentPreset.value.presetName) {
+
+      console.log({
+        preset: config.presetName,
+        old: currentPreset.value.presetName
+      });
+
+      await loadPreset(config.presetName)
+    }
+  }
+  const deleteTablePreset = async (presetName: string) => {
+    const result = await deletePreset(presetName)
+    presetNameList.value = [...result]
+    loadPreset(`standart`)
   }
 
   return {
-    presetList, loadPresets, loadPreset, currentPreset, currentPresetName, createNewPreset,
+    loadPreset,
+    loadPresets,
+    createNewPreset,
+    deleteTablePreset,
+    loadPresetForSettings,
+    updateTablePreset,
+    presetNameList,
+    currentPreset,
+    newCustomPreset,
+    presetForSettings,
+    selectedPresetName,
+    newCustomPresetName,
   }
 })

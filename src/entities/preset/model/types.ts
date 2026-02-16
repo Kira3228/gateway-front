@@ -16,10 +16,9 @@ export interface IPresetComputed {
 
 export interface Preset {
   presetName: string;
-  displayName: string;
   headers: Header[];
-  exceptions: Exception[];
-  default_filters: DefaultFilters;
+  exceptions?: Exception[];
+  default_filters?: DefaultFilters;
 }
 
 export interface DefaultFilters {

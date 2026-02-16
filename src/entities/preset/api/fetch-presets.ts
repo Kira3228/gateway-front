@@ -1,4 +1,5 @@
 import { useApi } from "@/shared/api/http";
+import { Preset } from "../model/types";
 
 const { get } = useApi()
 

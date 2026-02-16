@@ -1,7 +1,7 @@
 <template>
   <UiSelect
     label="Пресет"
-    :items="presetStore.presetList"
+    :items="presetStore.presetNameList"
     v-model="presetName"
   />
 </template>

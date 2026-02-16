@@ -4,8 +4,6 @@ import MessageList from "../pages/MessageList/ui/Page.vue"
 import Layout from "../layout/Layout.vue"
 import EmptyRouterView from '../shared/UI/EmptyRouterView.vue'
 import { MessageDetailPage } from '@/pages/MessageDetail'
-import TestPage from '@/pages/testPage.vue'
-import { MessageListSettingsPage } from '@/pages/MessageListSettings'
 
 Vue.use(VueRouter)
 
@@ -61,7 +59,6 @@ const routes: Array<RouteConfig> = [
           {
             path: `settings`,
             name: `settings`,
-            component: MessageListSettingsPage,
             meta: { breadcrumb: `Настройки` }
           }
         ]

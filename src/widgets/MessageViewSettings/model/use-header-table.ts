@@ -2,28 +2,14 @@ import { onMounted, ref, watch } from "vue";
 import Sortable from "sortablejs";
 import { usePresetStore } from "@/entities/preset/model/use-preset-store";
 import { Header } from "@/shared-ui/src/components/DataTable";
-import { settingsHeaders } from "./settings-headers";
-
+import { settingsHeaders } from "../ui/settings-headers";
+import { defaultHeadersState } from '@/entities/preset/model/default-state'
 export const useHeaderTable = () => {
   const presetStore = usePresetStore();
 
-  const fields = ref<Header[]>([]);
+  const fields = ref<Header[]>(defaultHeadersState);
   const presetName = ref('');
   const headers = ref<Header[]>(settingsHeaders);
-
-  watch(
-    () => presetStore.currentPreset,
-    (newPreset) => {
-      if (newPreset?.headers) {
-        fields.value = JSON.parse(JSON.stringify(newPreset.headers));
-
-        if (newPreset.displayName) {
-          presetName.value = newPreset.displayName;
-        }
-      }
-    },
-    { immediate: true }
-  );
 
   onMounted(() => {
     const tbody = document.querySelector(".settings-table tbody") as HTMLElement;
@@ -47,14 +33,11 @@ export const useHeaderTable = () => {
     }
   });
 
-  const save = async () => {
-    await presetStore.createNewPreset(presetName.value, fields.value);
-  }
+
 
   return {
     headers,
     fields,
     presetName,
-    save
   }
 }
