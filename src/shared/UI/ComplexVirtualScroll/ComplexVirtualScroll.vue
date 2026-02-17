@@ -49,7 +49,6 @@
   </div>
 </template>
 <script lang="ts" setup generic="T">
-import ListItem from "../ListItem/ListItem.vue";
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller";
 import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 interface IProps {

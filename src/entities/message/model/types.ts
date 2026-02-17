@@ -1,3 +1,5 @@
+import ExportIcon from "@/shared/icons/export.icon.vue"
+
 export type TMessage = {
   id: number
   messageId: string
@@ -16,8 +18,8 @@ export type TMessage = {
   targetSystemId: number,
   sourceSystemId: number,
   pointId: number
-  messageType: "TEXT" | "BINARY",
-  messageCategory: "normal" | "urgent" | "low",
+  messageType: MessageType,
+  messageCategory: MessageCategory,
   status: MessageStatusEnum,
   securityLabel: SecurityLabelEnum,
 }
@@ -47,4 +49,12 @@ export type MessageRequest = {
   messages: TMessage[]
   messageCount: number
   totalPage: number
+}
+
+export enum MessageType {
+  TEXT = "TEXT", BINARY = "BINARY"
+}
+
+export enum MessageCategory {
+  urgent = 'urgent', normal = 'normal', low = 'low'
 }

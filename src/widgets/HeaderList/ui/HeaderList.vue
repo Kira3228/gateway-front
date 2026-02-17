@@ -30,7 +30,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Header } from "@/shared-ui/src/components/DataTable";
 import { ref } from "vue";
 import { items } from "../items";
 import ButtonGroup from "@/shared/UI/ButtonGroup/ButtonGroup.vue";

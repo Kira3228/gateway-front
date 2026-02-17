@@ -1,5 +1,4 @@
 import { usePresetStore } from "@/entities/preset/model/use-preset-store"
-import { Header } from "@/shared-ui/src/components/DataTable"
 import { onMounted, ref } from "vue"
 import { Preset } from "@/entities/preset/model/types"
 

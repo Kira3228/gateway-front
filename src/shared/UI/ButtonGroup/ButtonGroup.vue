@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-gap-1">
     <v-btn-toggle v-for="group in items" :key="group[0].key">
-      <button-vue
+      <Button
         v-for="btn in group"
         @click="handleClick(btn)"
         :key="btn.key"
@@ -11,13 +11,13 @@
         :tooltip-text="btn.tooltipText"
       >
         <component :is="btn.component" />
-      </button-vue>
+      </Button>
     </v-btn-toggle>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import ButtonVue from "../Button/Button.vue";
+import { Button } from "@/shared-ui/src/components/Button";
 import { TButtonGroupItem } from "@/shared/types/common/TButtonGroupItem";
 
 const activeBtnKey = ref<number | null>(null);
