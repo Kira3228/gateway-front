@@ -62,7 +62,6 @@ import MetadataFilter from "./MetadataFilter.vue";
 import { ref } from "vue";
 import CheckboxFilter from "./CheckboxFilter.vue";
 import { Button } from "@/shared-ui/src/components/Button";
-import { useMessageFiltersStore } from "../model/use-message-filters-store";
 import { useAcceptFilters } from "../model/use-accept-filters";
 import {
   MessageCategory,
