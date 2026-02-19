@@ -1,6 +1,6 @@
 <template>
   <AccordionSection title="Тип сообщения">
-    <CheckBoxGroup :items="Object.values(MessageType)" />
+    <CheckBoxGroup  />
   </AccordionSection>
 </template>
 <script setup lang="ts">

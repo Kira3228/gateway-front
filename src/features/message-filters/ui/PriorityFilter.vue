@@ -6,7 +6,6 @@
 <script setup lang="ts">
 import { AccordionSection } from "@/shared-ui/src/components/AccordionSection";
 import { Range } from "@/shared-ui/src/components/Range";
-import { useMessageFiltersStore } from "../model/use-message-filters-store";
 
 interface Props {
   value?: [number | null, number | null];

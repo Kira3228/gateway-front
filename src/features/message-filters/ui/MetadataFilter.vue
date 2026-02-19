@@ -10,7 +10,7 @@
         ></v-radio>
       </v-radio-group>
     </div>
-    <Button small text>Сбросить</Button>
+    <Button @click="handleReset" small text>Сбросить</Button>
   </accordion-section>
 </template>
 
@@ -30,12 +30,17 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  (e: "input", value: string | boolean): void;
+  (e: "input", value: string | boolean | null): void;
 }>();
 
 const handleChange = (newValue: string | boolean) => {
   console.log("Selected:", newValue);
   emit("input", newValue);
+};
+
+const handleReset = () => {
+  console.log(false);
+  emit("input", null);
 };
 
 const metadataFilters: RadioButtonItem[] = [

@@ -17,10 +17,26 @@ export const useMessageViewer = () => {
   watch(
     [() => messageViewStore.currentPage,
     () => presetSync.presetName.value,
-    () => messageFilterStore.priority],
-    ([newPage, newPreset, newPriority]) => {
-      
-      console.log(123);
+    () => messageFilterStore.priority,
+    () => messageFilterStore.createDateRange,
+    () => messageFilterStore.updateDateRange,
+    () => messageFilterStore.messageTypes,
+    () => messageFilterStore.securityLabels,
+    () => messageFilterStore.statuses,
+    () => messageFilterStore.categories,
+    () => messageFilterStore.metadata,
+    ],
+    ([newPage,
+      newPreset,
+      newPriority,
+      newCreateDateRange,
+      newUpdateDateRange,
+      newMessageTypes,
+      newSecurityLabels,
+      newStatuses,
+      newCategories,
+      newMetadata,
+    ]) => {
       messageStore.getMessages(newPage, messageViewStore.limit, newPreset)
     },
     {
