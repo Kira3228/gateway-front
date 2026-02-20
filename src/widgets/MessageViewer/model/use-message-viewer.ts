@@ -37,7 +37,20 @@ export const useMessageViewer = () => {
       newCategories,
       newMetadata,
     ]) => {
-      messageStore.getMessages(newPage, messageViewStore.limit, newPreset)
+
+      messageStore.getMessages({
+        limit: 10,
+        page: newPage,
+        categories: newCategories,
+        createDateRange: newCreateDateRange,
+        messageTypes: newMessageTypes,
+        metadata: newMetadata,
+        presetName: newPreset,
+        priority: newPriority,
+        securityLabels: newSecurityLabels,
+        statuses: newStatuses,
+        updateDateRange: newUpdateDateRange
+      })
     },
     {
       immediate: true

@@ -73,10 +73,13 @@ import DateFilter from "./DateFilter.vue";
 
 const { handleAcceptFilters } = useAcceptFilters();
 
-const priority = ref<[number | null, number | null]>([null, null]);
-const metadata = ref<boolean | null>(null);
-const createDateRange = ref<[string | null, string | null]>([null, null]);
-const updateDateRange = ref<[string | null, string | null]>([null, null]);
+const priority = ref<[number | undefined, number | undefined]>([
+  undefined,
+  undefined,
+]);
+const metadata = ref<boolean | undefined>(undefined);
+const createDateRange = ref<[string, string]>(["", ""]);
+const updateDateRange = ref<[string, string]>(["", ""]);
 const categories = ref<string[]>([]);
 const messageTypes = ref<string[]>([]);
 const statuses = ref<string[]>([]);

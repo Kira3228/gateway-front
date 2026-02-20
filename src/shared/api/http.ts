@@ -7,7 +7,8 @@ const api = axios.create({
 })
 
 export const useApi = () => {
-  const get = async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
+
+  const get = async <T, P>(endpoint: string, params?: P): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await api.get(endpoint, {
         params
@@ -17,6 +18,7 @@ export const useApi = () => {
       throw new Error(`GET ${endpoint} failed: ${error.message}`);
     }
   }
+
   const post = async <T>(endpoint: string, body: any,): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await api.post(endpoint, body, { headers: { 'Content-Type': 'application/json', } })

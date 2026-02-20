@@ -58,3 +58,17 @@ export enum MessageType {
 export enum MessageCategory {
   urgent = 'urgent', normal = 'normal', low = 'low'
 }
+
+export type MessageParams = {
+  page: number,
+  limit: number,
+  presetName?: string,
+  priority?: [number | undefined, number | undefined],
+  metadata?: boolean | undefined,
+  createDateRange?: [string, string],
+  updateDateRange?: [string, string],
+  categories?: string[],
+  messageTypes?: string[],
+  statuses?: string[],
+  securityLabels?: string[]
+}

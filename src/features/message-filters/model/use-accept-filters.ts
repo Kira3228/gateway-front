@@ -5,8 +5,6 @@ export const useAcceptFilters = () => {
   const messageFiltersStore = useMessageFiltersStore()
 
   const handleAcceptFilters = (data: AcceptedFilters) => {
-    console.log(data, `useAcceptFilters`);
-
     messageFiltersStore.setPriority(data.priority)
     messageFiltersStore.setCategories(data.categories)
     messageFiltersStore.setCreateDate(data.createDateRange)

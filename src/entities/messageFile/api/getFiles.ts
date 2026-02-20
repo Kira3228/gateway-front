@@ -3,6 +3,6 @@ import { TMessageFile, TMessageFilesResponse, TQueryParams } from "../model/type
 
 export const fetchFiles = async (messageId: string, params?: TQueryParams) => {
   const { get } = useApi()
-  const files = await get<TMessageFilesResponse>(`/messages/files/${messageId}`, params)
+  const files = await get<TMessageFilesResponse, TQueryParams>(`/messages/files/${messageId}`, params)
   return files
 }
