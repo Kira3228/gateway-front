@@ -1,9 +1,9 @@
 import { useApi } from "@/shared/api/http"
-import { MessageRequest, } from "../model/types"
+import { MessageParams, MessageRequest, } from "../model/types"
 
 
-export const fetchMessages = async (page: number, limit: number, presetName?: string) => {
+export const fetchMessages = async (params: MessageParams) => {
   const { get } = useApi()
-  const messages = await get<MessageRequest>(`/messages/all`, { page: page, limit: limit, presetName: presetName })
+  const messages = await get<MessageRequest, MessageParams>(`/messages/all`, params)
   return messages
 }
