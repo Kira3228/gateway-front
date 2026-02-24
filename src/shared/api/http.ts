@@ -7,12 +7,14 @@ const api = axios.create({
 })
 
 export const useApi = () => {
-
   const get = async <T, P>(endpoint: string, params?: P): Promise<T> => {
+    console.log(endpoint);
+
     try {
       const response: AxiosResponse<T> = await api.get(endpoint, {
         params
       })
+
       return response.data;
     } catch (error: any) {
       throw new Error(`GET ${endpoint} failed: ${error.message}`);

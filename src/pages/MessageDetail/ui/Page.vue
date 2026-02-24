@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 import { MessageDataCard } from "@/widgets/MessageData";
-import { MessageFiles } from "@/widgets/MessageFiles";
+import { MessageFiles } from "@/widgets/MessageFiles/ui";
 import { StatusHistory } from "@/widgets/StatusHistory";
 
 import { useRoute } from "vue-router/composables";

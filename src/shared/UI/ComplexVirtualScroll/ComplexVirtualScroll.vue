@@ -31,7 +31,6 @@
           <div>
             <slot name="content" :item="item" />
           </div>
-
           <div
             v-if="index === items.length - 1"
             v-intersect="onIntersect"
