@@ -12,6 +12,8 @@ export const useMessageViewer = () => {
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
   const settingsIsOpen = ref<boolean>(false);
+  const exportWindowIsOpen = ref<boolean>(false);
+
   const router = useRouter()
 
   const messageFilterStore = useMessageFiltersStore()
@@ -71,10 +73,13 @@ export const useMessageViewer = () => {
       case `settings`:
         settingsIsOpen.value = true
         break
+      case `export`:
+        exportWindowIsOpen.value = true
+        break
     }
   }
 
   return {
-    headers, clickHandler, settingsIsOpen, handleRowClick, currentPage, messages
+    headers, clickHandler, settingsIsOpen, handleRowClick, currentPage, messages, exportWindowIsOpen
   }
 }

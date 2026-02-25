@@ -34,6 +34,7 @@
                 @click="clickHandler"
                 :items="[
                   { text: `Настройки отображения`, to: { name: 'settings' } },
+                  { text: `Экспорт`, to: { name: 'export' } },
                 ]"
               />
             </div>
@@ -49,6 +50,7 @@
       @update-page=""
     />
     <MessageViewSettings v-model="settingsIsOpen" />
+    <MessageExportWindow v-model="exportWindowIsOpen" />
     <FilterDrawer v-model="drawerIsOpen" />
   </div>
 </template>
@@ -64,6 +66,7 @@ import { Button } from "@/shared-ui/src/components/Button";
 import { FilterIcon } from "@/shared-ui/src/components/Icons";
 import { ref } from "vue";
 import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
+import { MessageExportWindow } from "@/widgets/MessageExportWindow/ui";
 
 const {
   headers,
@@ -72,12 +75,12 @@ const {
   handleRowClick,
   currentPage,
   messages,
+  exportWindowIsOpen,
 } = useMessageViewer();
 
 const messageStore = useMessageStore();
 
 const drawerIsOpen = ref<boolean>(false);
-
 const handleFilterButtonClick = () => {
   drawerIsOpen.value = true;
 };
