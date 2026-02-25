@@ -8,11 +8,13 @@ const api = axios.create({
 
 export const useApi = () => {
   const get = async <T, P>(endpoint: string, params?: P): Promise<T> => {
-    console.log(endpoint);
+    console.log(BASE_URL + endpoint);
 
     try {
       const response: AxiosResponse<T> = await api.get(endpoint, {
-        params
+        params: {
+          ...params
+        }
       })
 
       return response.data;
@@ -41,7 +43,6 @@ export const useApi = () => {
 
   const httpDelete = async<T>(url: string, body?: any): Promise<T> => {
     try {
-      console.log(`http`, body);
       const config = body ? { data: body } : undefined;
       const response: AxiosResponse<T> = await api.delete(url, config);
       return response.data

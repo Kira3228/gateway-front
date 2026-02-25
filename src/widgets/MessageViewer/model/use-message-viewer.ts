@@ -67,7 +67,6 @@ export const useMessageViewer = () => {
         settingsIsOpen.value = true
         break
     }
-    console.log(data.to?.name);
   }
 
   return {

@@ -1,10 +1,10 @@
 <template>
   <div class="tw-h-full tw-bg-red-100 tw-flex">
     <div class="tw-flex-shrink-1">
-      <MessageDataCard :id="id" />
+      <MessageDataCard />
     </div>
     <div class="tw-flex-1 tw-w-full">
-      <MessageFiles :id="id" />
+      <MessageFileList />
     </div>
     <div class="tw-flex-1 tw-w-full">
       <StatusHistory :id="id" />
@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 import { MessageDataCard } from "@/widgets/MessageData";
-import { MessageFiles } from "@/widgets/MessageFiles/ui";
+import { MessageFileList } from "@/widgets/MessageFileList/ui";
 import { StatusHistory } from "@/widgets/StatusHistory";
 
 import { useRoute } from "vue-router/composables";
