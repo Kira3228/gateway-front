@@ -1,10 +1,28 @@
 import { BASE_URL } from "@/CONSTANTS"
 import axios, { AxiosResponse } from "axios"
 import { formatDate } from "../lib/formatDate"
+import qs from 'qs';
 
 const api = axios.create({
-  baseURL: BASE_URL
-})
+  baseURL: BASE_URL,
+  paramsSerializer: (params) => {
+    const searchParams = new URLSearchParams();
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach(item => {
+          if (item !== undefined && item !== null && item !== '') {
+            searchParams.append(key, item);
+          }
+        });
+      } else if (value !== undefined && value !== null && value !== '') {
+        searchParams.append(key, value as string);
+      }
+    });
+
+    return searchParams.toString();
+  }
+});
 
 export const useApi = () => {
   const get = async <T, P>(endpoint: string, params?: P): Promise<T> => {
