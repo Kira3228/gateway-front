@@ -25,7 +25,6 @@
 <script lang="ts" setup>
 import SelectChips from "@/shared/UI/SelectChips/SelectChips.vue";
 import { useStatusFilterModel } from "../model/model";
-import { TOption } from "@/shared/UI/SelectInput/TOptions";
 
 const {
   selectStatusHisotryItems,
