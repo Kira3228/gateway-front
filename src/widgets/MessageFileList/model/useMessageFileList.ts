@@ -19,13 +19,12 @@ export const useMessageFileList = () => {
     reloadParams,
     (newParams) => {
       if (!newParams.id) return;
+
       fileStore.getMessageFiles(
         newParams.id,
         {
           fileNameOrder: newParams.fileNameOrder,
-          page: 1,
           fileSizeBytesOrder: newParams.fileSizeBytesOrder,
-          limit: 14,
         },
         true,
       );
@@ -41,12 +40,13 @@ export const useMessageFileList = () => {
   });
 
   const onScrollLoadMore = () => {
+
     fileStore.loadMore(id, {
       fileNameOrder: fileNameOrder.value,
       fileSizeBytesOrder: fileSizeBytesOrder.value,
-      limit: 5,
     });
   };
+
   return {
     id, onScrollLoadMore
   }

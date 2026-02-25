@@ -6,8 +6,8 @@
       </div>
       <complex-virtual-scroll
         class="tw-flex-1 tw-min-h-0"
-        :error="fileStore.error"
-        :is-loading="fileStore.isLoading"
+        :error="''"
+        :is-loading="false"
         :items="fileStore.files"
         :skeleton-height="100"
         :skeletons-quantity="10"
@@ -30,7 +30,9 @@ import { MessageFileCard } from "@/shared/UI/MessageFileCard";
 import { useMessageFileList } from "../model/useMessageFileList";
 
 const fileStore = useMessageFileStore();
+
 const messageFileList = useMessageFileList();
+
 </script>
 <style scoped lang="scss">
 .scroll-item {

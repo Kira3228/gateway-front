@@ -52,10 +52,7 @@ export const usePresetStore = defineStore(`preset-store`, () => {
     await updatePreset(config)
     if (config.presetName === currentPreset.value.presetName) {
 
-      console.log({
-        preset: config.presetName,
-        old: currentPreset.value.presetName
-      });
+
 
       await loadPreset(config.presetName)
     }
