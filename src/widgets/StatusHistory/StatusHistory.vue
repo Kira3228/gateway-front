@@ -1,7 +1,7 @@
 <template>
   <ext-data-card title="История изменения">
     <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
-      <div class="tw-flex tw-flex-shrink-0 tw-mb-4">
+      <div class="tw-flex tw-flex-col tw-flex-shrink-0 tw-mb-4">
         <status-history-order-switch />
         <status-filters />
       </div>

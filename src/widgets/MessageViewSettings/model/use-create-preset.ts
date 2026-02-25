@@ -5,7 +5,6 @@ import { ref } from "vue"
 export const useCreatePreset = (formRef: any) => {
   const presetStore = usePresetStore()
 
-
   const handleCreatePreset = async () => {
     if (!formRef.value?.validate()) return;
 

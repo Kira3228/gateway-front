@@ -1,12 +1,16 @@
 <template>
-  <div class="tw-h-full tw-bg-red-100 tw-flex">
-    <div class="tw-flex-shrink-1">
+  <div
+    class="tw-h-full tw-bg-red-100 tw-grid tw-grid-cols-3 tw-w-full tw-overflow-hidden"
+  >
+    <div class="tw-min-h-0">
       <MessageDataCard />
     </div>
-    <div class="tw-flex-1 tw-w-full">
+
+    <div class="tw-min-h-0">
       <MessageFileList />
     </div>
-    <div class="tw-flex-1 tw-w-full">
+
+    <div class="tw-min-h-0">
       <StatusHistory />
     </div>
   </div>

@@ -6,20 +6,31 @@ import qs from 'qs';
 const api = axios.create({
   baseURL: BASE_URL,
   paramsSerializer: (params) => {
-    console.log(`params`, params);
-
     const searchParams = new URLSearchParams();
 
     Object.entries(params).forEach(([key, value]) => {
+      // 1. Игнорируем null, undefined и абсолютно пустые строки
+      if (value === null || value === undefined || value === '') {
+        return;
+      }
+
       if (Array.isArray(value)) {
-        if (value.length > 0) {
-          searchParams.append(key, value.join(','));
+        // 2. Если это массив, фильтруем его от пустых значений
+        const filteredArray = value.filter(v => v !== '' && v !== null && v !== undefined);
+
+        if (filteredArray.length > 0) {
+          // Если твой бэкенд для СТАТУСОВ хочет запятые:
+          searchParams.append(key, filteredArray.join(','));
+
+          // ЕСЛИ ЖЕ бэкенд всё-таки заработал с repeat (key=1&key=2), 
+          // то лучше использовать: 
+          // filteredArray.forEach(v => searchParams.append(key, v));
         }
-      } else if (value !== undefined && value !== null && value !== '') {
+      } else {
+        // 3. Обычное значение
         searchParams.append(key, value as string);
       }
     });
-    console.log(`searchParams`, searchParams.toString());
 
     return searchParams.toString();
   }

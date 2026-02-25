@@ -3,13 +3,15 @@
     <div class="tw-flex-1 tw-min-h-0 tw-w-full">
       <DataTable
         style="min-width: 100%; width: 0px"
-        :items="messageStore.messages.messages"
+        :items="messages"
         :headers="headers"
-        :items-per-page="10"
+        :items-per-page="50"
         :page="1"
         :pagination-length="10"
         :total-visible="10"
-        @click-row="messageViewStore.handleRowClick"
+        height="500"
+        @click-row="handleRowClick"
+        :is-loading="messageStore.isLoading"
       >
         <template #select-preset>
           <div class="tw-flex tw-justify-between tw-items-baseline">
@@ -43,7 +45,7 @@
       class="w-shrink-0 tw-border-t tw-p-2"
       :length="messageStore.messages.totalPage"
       :total-visible="10"
-      :value="messageViewStore.currentPage"
+      :value="currentPage"
       @update-page=""
     />
     <MessageViewSettings v-model="settingsIsOpen" />
@@ -56,7 +58,6 @@ import { Pagination } from "@/shared-ui/src/components/pagination";
 import { useMessageViewer } from "../model/use-message-viewer";
 import { PresetSelect } from "@/features/preset-sync";
 import { useMessageStore } from "@/entities/message/model/use-message-store";
-import { useMessageViewStore } from "../model/use-message-view-store";
 import { Options } from "@/shared-ui/src/components/Options";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
 import { Button } from "@/shared-ui/src/components/Button";
@@ -64,9 +65,14 @@ import { FilterIcon } from "@/shared-ui/src/components/Icons";
 import { ref } from "vue";
 import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
 
-const messageViewStore = useMessageViewStore();
-
-const { headers, clickHandler, settingsIsOpen } = useMessageViewer();
+const {
+  headers,
+  clickHandler,
+  settingsIsOpen,
+  handleRowClick,
+  currentPage,
+  messages,
+} = useMessageViewer();
 
 const messageStore = useMessageStore();
 

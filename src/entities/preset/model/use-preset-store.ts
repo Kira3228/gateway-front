@@ -4,8 +4,8 @@ import { ref } from "vue";
 import { Header, Preset } from "./types";
 import { defaultHeadersState } from './default-state'
 import { createPreset } from "../api/create-preset";
-import { __makeTemplateObject } from "tslib";
 import { updatePreset } from "../api/update-preset";
+import { useToast } from "@/shared-ui/src/components/Toast/use-toast";
 
 export const usePresetStore = defineStore(`preset-store`, () => {
   const presetNameList = ref<string[]>([])
@@ -25,6 +25,8 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   const presetForSettings = ref<Header[]>([])
   const selectedPresetName = ref<string>('')
 
+  const { showToast } = useToast()
+
   const loadPresets = async () => {
     const list = await fetchPresets()
     presetNameList.value = list
@@ -42,18 +44,23 @@ export const usePresetStore = defineStore(`preset-store`, () => {
   }
 
   const createNewPreset = async (data: Preset) => {
-    const preset = await createPreset(data)
-    presetNameList.value = preset
-    newCustomPreset.value = [...defaultHeadersState]
-    newCustomPresetName.value = ""
+    try {
+      const preset = await createPreset(data)
+      presetNameList.value = preset
+      newCustomPreset.value = [...defaultHeadersState]
+      newCustomPresetName.value = ""
+      showToast(`Пресет сохранён`, "success", 4000)
+    }
+    catch (err) {
+      showToast(`Ошибка сохранения`, "error", 4000)
+    }
+
+
   }
 
   const updateTablePreset = async (config: Preset) => {
     await updatePreset(config)
     if (config.presetName === currentPreset.value.presetName) {
-
-
-
       await loadPreset(config.presetName)
     }
   }
