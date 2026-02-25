@@ -3,7 +3,7 @@ import { StatusHistoryResponse, TQueryParams, TStatusHistoryItem } from "../mode
 
 
 // TODO: добавить параметры
-export const fetchStatusHistory = async (id: string, params?: TQueryParams) => {
+export const fetchStatusHistory = async (id: string, params: TQueryParams) => {
   const { get } = useApi()
 
   const history = await get<StatusHistoryResponse, TQueryParams>(`/messages/history/${id}`, params)

@@ -12,7 +12,6 @@ export const useMessageStore = defineStore(`message-store`, () => {
       const messageRequest = await fetchMessages(params)
       messages.value = messageRequest
     } catch (e: any) {
-      console.log(e);
 
     } finally {
     }

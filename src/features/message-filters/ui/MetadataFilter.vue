@@ -34,12 +34,10 @@ const emit = defineEmits<{
 }>();
 
 const handleChange = (newValue: string | boolean) => {
-  console.log("Selected:", newValue);
   emit("input", newValue);
 };
 
 const handleReset = () => {
-  console.log(false);
   emit("input", null);
 };
 
