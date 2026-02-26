@@ -15,7 +15,7 @@ export const settingsHeaders: Header[] = [
     isVisible: true,
     sortable: false,
     value: `text`,
-    width: 10,
+    width: 200,
   },
   {
     text: `Видимость`,

@@ -15,7 +15,8 @@ const props = defineProps<{
     <div>
       <PresetSelect class="tw-flex-1 pa-3" />
     </div>
-    <div class="tw-flex">
+
+    <div class="tw-flex tw-gap-2">
       <Button @click="onFilter" color="black" :height="28" outlined>
         <div class="tw-flex tw-items-center tw-gap-2">
           <FilterIcon width="18" />

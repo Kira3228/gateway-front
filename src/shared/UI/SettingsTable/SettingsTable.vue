@@ -14,9 +14,7 @@
     </template>
     <template #item.isVisible="{ item }">
       <v-switch
-        inset
         class="v-input--selection-controls"
-        dense
         hide-details
         v-model="item.isVisible"
       />
@@ -24,9 +22,7 @@
     <template #item.sortable="{ item }">
       <div>
         <v-switch
-          inset
           class="v-input--selection-controls"
-          dense
           hide-details
           v-model="item.sortable"
         />
@@ -119,3 +115,9 @@ onMounted(() => {
   }
 });
 </script>
+<style scoped>
+.v-input--selection-controls {
+  margin-top: 0;
+  padding: 0;
+}
+</style>

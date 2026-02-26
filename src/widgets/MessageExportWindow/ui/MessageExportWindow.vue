@@ -10,12 +10,9 @@
           />
           <Select class="tw-w-1/4" />
         </div>
-        <div class="tw-flex tw-gap-1 tw-items-center">
-          <TextInput label="Первые" placeholder="1000 строчек" />
-          <v-checkbox label="Все" v-model="value" value="value"></v-checkbox>
-        </div>
+        <Select class="" label="Шаблон" />
       </div>
-      <v-checkbox label="Включить невидимые поля" />
+      <v-checkbox label="Включить невидимые строки" />
     </template>
     <template #actions>
       <div class="">
