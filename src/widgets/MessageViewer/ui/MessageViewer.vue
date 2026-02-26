@@ -12,6 +12,9 @@
         height="500"
         @click-row="handleRowClick"
         :is-loading="messageStore.isLoading"
+        @change="handle"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
       >
         <template #select-preset>
           <div class="tw-flex tw-justify-between tw-items-baseline">
@@ -83,5 +86,12 @@ const messageStore = useMessageStore();
 const drawerIsOpen = ref<boolean>(false);
 const handleFilterButtonClick = () => {
   drawerIsOpen.value = true;
+};
+
+const sortBy = ref([]);
+const sortDesc = ref([]);
+
+const handle = (data: any) => {
+  console.log(data);
 };
 </script>
