@@ -44,6 +44,8 @@ import { Pagination } from "@/shared-ui/src/components/pagination";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
 import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
 import { MessageExportWindow } from "@/widgets/MessageExportWindow/ui";
+import { ref } from "vue";
+import TopBar from "./TopBar.vue";
 
 const {
   headers,
@@ -55,12 +57,11 @@ const {
   drawerIsOpen,
   messages,
   exportWindowIsOpen,
+  sortBy,
+  sortDesc,
 } = useMessageViewer();
 
 const messageStore = useMessageStore();
-
-const sortBy = ref([]);
-const sortDesc = ref([]);
 
 const handle = (data: any) => {
   console.log(data);

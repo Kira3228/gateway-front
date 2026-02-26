@@ -12,13 +12,15 @@ export const useMessageViewer = () => {
   const messageFilterStore = useMessageFiltersStore()
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
-  const settingsIsOpen = ref<boolean>(false);
   const exportWindowIsOpen = ref<boolean>(false);
 
   const router = useRouter()
 
   const settingsIsOpen = ref<boolean>(false);
   const drawerIsOpen = ref<boolean>(false);
+
+  const sortBy = ref([]);
+  const sortDesc = ref([]);
 
   const currentPage = computed(() => {
     return messageStore.currentPage
@@ -32,19 +34,15 @@ export const useMessageViewer = () => {
     return messageStore.isLoading ? [] : messageStore.messages.messages
   })
 
-  const handleRowClick = (data: TMessage) => {
-    router.push({
-      name: `details`,
-      params: {
-        id: data.messageId,
-      },
-    });
-  };
+
 
   const optionClickHandler = (data: Option) => {
     switch (data.to?.name) {
       case `settings`:
         settingsIsOpen.value = true
+        break
+      case `export`:
+        exportWindowIsOpen.value = true
         break
     }
   }
@@ -91,23 +89,15 @@ export const useMessageViewer = () => {
     });
   };
 
-  const clickHandler = (data: Option) => {
-    switch (data.to?.name) {
-      case `settings`:
-        settingsIsOpen.value = true
-        break
-      case `export`:
-        exportWindowIsOpen.value = true
-        break
-    }
-  }
-
   return {
+    sortBy,
     headers,
+    sortDesc,
     messages,
     currentPage,
     drawerIsOpen,
     settingsIsOpen,
+    exportWindowIsOpen,
     handleRowClick,
     optionClickHandler,
     handleFilterButtonClick

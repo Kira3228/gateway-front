@@ -24,7 +24,10 @@ const props = defineProps<{
       </Button>
       <Options
         @click="onOptions"
-        :items="[{ text: `Настройки отображения`, to: { name: 'settings' } }]"
+        :items="[
+          { text: `Настройки отображения`, to: { name: 'settings' } },
+          { text: `Эксопрт данных`, to: { name: 'export' } },
+        ]"
       />
     </div>
   </div>
