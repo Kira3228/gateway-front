@@ -9,13 +9,13 @@ import { TMessage } from "@/entities/message/model"
 
 export const useMessageViewer = () => {
   const messageStore = useMessageStore()
+  const messageFilterStore = useMessageFiltersStore()
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
-  const settingsIsOpen = ref<boolean>(false);
   const router = useRouter()
 
-  const messageFilterStore = useMessageFiltersStore()
-
+  const settingsIsOpen = ref<boolean>(false);
+  const drawerIsOpen = ref<boolean>(false);
 
   const currentPage = computed(() => {
     return messageStore.currentPage
@@ -28,6 +28,28 @@ export const useMessageViewer = () => {
   const messages = computed(() => {
     return messageStore.isLoading ? [] : messageStore.messages.messages
   })
+
+  const handleRowClick = (data: TMessage) => {
+    router.push({
+      name: `details`,
+      params: {
+        id: data.messageId,
+      },
+    });
+  };
+
+  const optionClickHandler = (data: Option) => {
+    switch (data.to?.name) {
+      case `settings`:
+        settingsIsOpen.value = true
+        break
+    }
+  }
+
+  const handleFilterButtonClick = () => {
+    drawerIsOpen.value = true;
+  };
+
 
   watch(
     [() => messageStore.currentPage, () => presetSync.presetName.value,
@@ -57,24 +79,15 @@ export const useMessageViewer = () => {
   )
 
 
-  const handleRowClick = (data: TMessage) => {
-    router.push({
-      name: `details`,
-      params: {
-        id: data.messageId,
-      },
-    });
-  };
-
-  const clickHandler = (data: Option) => {
-    switch (data.to?.name) {
-      case `settings`:
-        settingsIsOpen.value = true
-        break
-    }
-  }
 
   return {
-    headers, clickHandler, settingsIsOpen, handleRowClick, currentPage, messages
+    headers,
+    messages,
+    currentPage,
+    drawerIsOpen,
+    settingsIsOpen,
+    handleRowClick,
+    optionClickHandler,
+    handleFilterButtonClick
   }
 }

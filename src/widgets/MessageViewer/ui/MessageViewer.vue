@@ -14,30 +14,10 @@
         :is-loading="messageStore.isLoading"
       >
         <template #select-preset>
-          <div class="tw-flex tw-justify-between tw-items-baseline">
-            <div>
-              <PresetSelect class="tw-flex-1 pa-3" />
-            </div>
-            <div class="tw-flex">
-              <Button
-                @click="handleFilterButtonClick"
-                color="black"
-                :height="28"
-                outlined
-              >
-                <div class="tw-flex tw-items-center tw-gap-2">
-                  <FilterIcon width="18" />
-                  Все фильтры
-                </div>
-              </Button>
-              <Options
-                @click="clickHandler"
-                :items="[
-                  { text: `Настройки отображения`, to: { name: 'settings' } },
-                ]"
-              />
-            </div>
-          </div>
+          <TopBar
+            :on-options="optionClickHandler"
+            :on-filter="handleFilterButtonClick"
+          />
         </template>
       </DataTable>
     </div>
@@ -53,32 +33,24 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useMessageViewer } from "../model/use-message-viewer";
+import { useMessageStore } from "@/entities/message/model/use-message-store";
 import { DataTable } from "@/shared-ui/src/components/DataTable";
 import { Pagination } from "@/shared-ui/src/components/pagination";
-import { useMessageViewer } from "../model/use-message-viewer";
-import { PresetSelect } from "@/features/preset-sync";
-import { useMessageStore } from "@/entities/message/model/use-message-store";
-import { Options } from "@/shared-ui/src/components/Options";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
-import { Button } from "@/shared-ui/src/components/Button";
-import { FilterIcon } from "@/shared-ui/src/components/Icons";
-import { ref } from "vue";
 import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
+import TopBar from "./TopBar.vue";
 
 const {
   headers,
-  clickHandler,
   settingsIsOpen,
+  optionClickHandler,
   handleRowClick,
+  handleFilterButtonClick,
   currentPage,
+  drawerIsOpen,
   messages,
 } = useMessageViewer();
 
 const messageStore = useMessageStore();
-
-const drawerIsOpen = ref<boolean>(false);
-
-const handleFilterButtonClick = () => {
-  drawerIsOpen.value = true;
-};
 </script>
