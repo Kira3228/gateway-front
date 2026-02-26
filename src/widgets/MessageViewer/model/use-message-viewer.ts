@@ -12,6 +12,9 @@ export const useMessageViewer = () => {
   const messageFilterStore = useMessageFiltersStore()
   const presetSync = usePresetSync()
   const presetStore = usePresetStore();
+  const settingsIsOpen = ref<boolean>(false);
+  const exportWindowIsOpen = ref<boolean>(false);
+
   const router = useRouter()
 
   const settingsIsOpen = ref<boolean>(false);
@@ -79,6 +82,25 @@ export const useMessageViewer = () => {
   )
 
 
+  const handleRowClick = (data: TMessage) => {
+    router.push({
+      name: `details`,
+      params: {
+        id: data.messageId,
+      },
+    });
+  };
+
+  const clickHandler = (data: Option) => {
+    switch (data.to?.name) {
+      case `settings`:
+        settingsIsOpen.value = true
+        break
+      case `export`:
+        exportWindowIsOpen.value = true
+        break
+    }
+  }
 
   return {
     headers,

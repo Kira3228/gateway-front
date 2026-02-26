@@ -12,6 +12,9 @@
         height="500"
         @click-row="handleRowClick"
         :is-loading="messageStore.isLoading"
+        @change="handle"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
       >
         <template #select-preset>
           <TopBar
@@ -29,6 +32,7 @@
       @update-page=""
     />
     <MessageViewSettings v-model="settingsIsOpen" />
+    <MessageExportWindow v-model="exportWindowIsOpen" />
     <FilterDrawer v-model="drawerIsOpen" />
   </div>
 </template>
@@ -39,7 +43,7 @@ import { DataTable } from "@/shared-ui/src/components/DataTable";
 import { Pagination } from "@/shared-ui/src/components/pagination";
 import { MessageViewSettings } from "@/widgets/MessageViewSettings/ui";
 import { FilterDrawer } from "@/widgets/FilterDrawer/ui";
-import TopBar from "./TopBar.vue";
+import { MessageExportWindow } from "@/widgets/MessageExportWindow/ui";
 
 const {
   headers,
@@ -50,7 +54,15 @@ const {
   currentPage,
   drawerIsOpen,
   messages,
+  exportWindowIsOpen,
 } = useMessageViewer();
 
 const messageStore = useMessageStore();
+
+const sortBy = ref([]);
+const sortDesc = ref([]);
+
+const handle = (data: any) => {
+  console.log(data);
+};
 </script>
