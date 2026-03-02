@@ -85,7 +85,19 @@ export const useApi = () => {
       throw new Error(`GET BLOB ${url} failed: ${error.message}`);
     }
   };
+  const downloadBlob = (blob: Blob, options: { filename: string }) => {
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement(`a`)
+    link.href = url
+    link.download = options.filename
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    window.URL.revokeObjectURL(url);
+  }
   return {
-    get, patch, httpGetBlob, post, httpDelete
+    get, patch, httpGetBlob, post, httpDelete, downloadBlob
   }
 }

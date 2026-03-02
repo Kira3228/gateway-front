@@ -15,7 +15,7 @@ export const defaultHeadersState: Header[] = [
     "isVisible": false,
     "sortable": false,
     "text": "Id Сообщения",
-    "width": 100
+    "width": 300
   },
   {
     "value": "messageType",
@@ -63,7 +63,7 @@ export const defaultHeadersState: Header[] = [
     "isVisible": false,
     "sortable": false,
     "text": "Субъект",
-    "width": 100
+    "width": 200
   },
   {
     "value": "securityLabel",
@@ -111,7 +111,7 @@ export const defaultHeadersState: Header[] = [
     "isVisible": false,
     "sortable": false,
     "text": "Создано",
-    "width": 100
+    "width": 250
   },
   {
     "value": "updatedAt",
@@ -119,7 +119,7 @@ export const defaultHeadersState: Header[] = [
     "isVisible": false,
     "sortable": false,
     "text": "Обновлено",
-    "width": 100
+    "width": 250
   },
   {
     "value": "userFromId",

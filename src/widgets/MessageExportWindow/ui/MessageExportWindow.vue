@@ -7,16 +7,25 @@
             class="tw-w-3/4"
             label="Имя файла"
             placeholder="document"
+            v-model="messageExportStore.fileName"
           />
-          <Select class="tw-w-1/4" />
+          <Select
+            class="tw-w-1/4"
+            :items="[`json`, `csv`]"
+            v-model="messageExportStore.format"
+            placeholder="json"
+          />
         </div>
         <Select class="" label="Шаблон" />
       </div>
-      <v-checkbox label="Включить невидимые строки" />
+      <div>
+        <v-checkbox label="Включить невидимые строки" />
+        <v-checkbox label="Включить невидимые поля" />
+      </div>
     </template>
     <template #actions>
-      <div class="">
-        <Button height="28">Экспорт</Button>
+      <div>
+        <Button @click="handleDownloadClick" height="28">Экспорт</Button>
       </div>
     </template>
   </Dialog>
@@ -26,6 +35,8 @@ import { Button } from "@/shared-ui/src/components/Button";
 import { Dialog } from "@/shared-ui/src/components/Dialog";
 import Select from "@/shared-ui/src/components/Select/Select.vue";
 import { TextInput } from "@/shared-ui/src/components/TextInput";
+import { useMessageExport } from "../model/use-message-export";
+import { useMessageExportStore } from "../model/use-message-export-store";
 
 interface Props {
   value?: boolean;
@@ -36,4 +47,10 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<Props>();
+const { handleDownloadClick } = useMessageExport();
+const messageExportStore = useMessageExportStore();
+
+const logFormat = (data: any) => {
+  console.log(data);
+};
 </script>

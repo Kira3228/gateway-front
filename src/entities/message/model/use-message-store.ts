@@ -2,6 +2,7 @@ import { MessageParams, MessageRequest } from "./types"
 import { fetchMessages } from "../api/getMessages"
 import { defineStore } from "pinia"
 import { ref } from "vue"
+import { getJsonReport } from "../api/getReport"
 
 export const useMessageStore = defineStore(`message-store`, () => {
   const messages = ref<MessageRequest>({ messageCount: 0, messages: [], totalPage: 0 })
@@ -21,11 +22,30 @@ export const useMessageStore = defineStore(`message-store`, () => {
       error.value = e
     } finally {
       isLoading.value = false
+    }
+  }
+
+  const getReport = async (format: string,
+    fileName: string,
+    invisibleFieldsIsAvailable?: boolean,
+    params?: {
+      priority?: [number, number]
+      metadata?: boolean
+      createDateRange?: [string, string]
+      updateDateRange?: [string, string]
+      categories?: string
+      messageTypes?: string
+      statuses?: string
+      securityLabels?: string
+    }) => {
+    try {
+      await getJsonReport(format, fileName, invisibleFieldsIsAvailable, params)
+    } catch (error) {
 
     }
   }
 
   return {
-    messages, getMessages, isLoading, error, currentPage
+    messages, getMessages, isLoading, error, currentPage, getReport
   }
 })
