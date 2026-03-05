@@ -61,7 +61,7 @@ export const useMessageViewer = () => {
     ([newPage, newPreset, newPriority, newCreateDateRange, newUpdateDateRange,
       newMessageTypes, newSecurityLabels, newStatuses, newCategories, newMetadata]) => {
       messageStore.getMessages({
-        limit: 1,
+        limit: 100,
         page: newPage,
         categories: newCategories,
         createDateRange: newCreateDateRange,

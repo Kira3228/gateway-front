@@ -25,11 +25,11 @@ export const useMessageStore = defineStore(`message-store`, () => {
     }
   }
 
-  const getReport = async (format: string,
-    fileName: string,
-    invisibleFieldsIsAvailable?: boolean,
+  const getReport = async (format: string = 'csv',
+    fileName: string = `document`,
     params?: {
-      priority?: [number, number]
+      invisibleFieldsIsAvailable?: boolean,
+      priority?: [number | undefined, number | undefined] | undefined
       metadata?: boolean
       createDateRange?: [string, string]
       updateDateRange?: [string, string]
@@ -37,9 +37,17 @@ export const useMessageStore = defineStore(`message-store`, () => {
       messageTypes?: string
       statuses?: string
       securityLabels?: string
+      presetName?: string
     }) => {
     try {
-      await getJsonReport(format, fileName, invisibleFieldsIsAvailable, params)
+
+      const finalParams = {
+        ...params,
+        invisibleFieldsIsAvailable: params?.invisibleFieldsIsAvailable ?? true
+      };
+      console.log(format);
+
+      await getJsonReport(format, fileName, finalParams)
     } catch (error) {
 
     }

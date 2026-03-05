@@ -20,7 +20,10 @@
       </div>
       <div>
         <v-checkbox label="Включить невидимые строки" />
-        <v-checkbox label="Включить невидимые поля" />
+        <v-checkbox
+          v-model="messageExportStore.invisibleFieldsIsAvailable"
+          label="Включить невидимые поля"
+        />
       </div>
     </template>
     <template #actions>
@@ -41,7 +44,6 @@ import { useMessageExportStore } from "../model/use-message-export-store";
 interface Props {
   value?: boolean;
 }
-
 const emit = defineEmits<{
   (e: `input`, data: any): void;
 }>();
@@ -49,8 +51,4 @@ const emit = defineEmits<{
 const props = defineProps<Props>();
 const { handleDownloadClick } = useMessageExport();
 const messageExportStore = useMessageExportStore();
-
-const logFormat = (data: any) => {
-  console.log(data);
-};
 </script>

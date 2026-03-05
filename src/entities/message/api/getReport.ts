@@ -3,9 +3,9 @@ import { useApi } from "@/shared/api/http"
 export const getJsonReport = async (
   format: string,
   fileName: string,
-  invisibleFieldsIsAvailable?: boolean,
   params?: {
-    priority?: [number, number]
+    invisibleFieldsIsAvailable?: boolean,
+    priority?: [number | undefined, number | undefined] | undefined
     metadata?: boolean
     createDateRange?: [string, string]
     updateDateRange?: [string, string]
@@ -15,7 +15,11 @@ export const getJsonReport = async (
     securityLabels?: string
   }
 ) => {
+
+  console.log(format, fileName);
+
+
   const { httpGetBlob, downloadBlob } = useApi()
-  const blob = await httpGetBlob(`/report/message/json`)
-  downloadBlob(blob, { filename: `rep` })
+  const blob = await httpGetBlob(`/report/message/${format}`, params)
+  downloadBlob(blob, { filename: fileName })
 }

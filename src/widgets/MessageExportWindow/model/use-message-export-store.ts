@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useMessageExportStore = defineStore(`message-export-store`, () => {
-  const format = ref<string>("")
-  const fileName = ref<string>("")
-
+  const format = ref<string>("csv")
+  const fileName = ref<string>("document")
+  const invisibleFieldsIsAvailable = ref<boolean>(false)
 
   return {
-    format, fileName
+    format, fileName, invisibleFieldsIsAvailable
   }
 })

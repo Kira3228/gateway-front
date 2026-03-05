@@ -54,8 +54,6 @@ export const usePresetStore = defineStore(`preset-store`, () => {
     catch (err) {
       showToast(`Ошибка сохранения`, "error", 4000)
     }
-
-
   }
 
   const updateTablePreset = async (config: Preset) => {

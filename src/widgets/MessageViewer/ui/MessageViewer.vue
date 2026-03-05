@@ -10,7 +10,6 @@
         :pagination-length="10"
         :total-visible="10"
         height="500"
-        @click-row="handleRowClick"
         :is-loading="messageStore.isLoading"
         @change="handle"
         :sort-by.sync="sortBy"
