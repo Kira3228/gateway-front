@@ -1,12 +1,12 @@
 <template>
-  <div class="tw-h-screen tw-flex tw-relative">
+  <div class="tw-h-screen tw-flex tw-relative tw-overflow-hidden">
     <Menu />
-    <div class="tw-flex tw-flex-col tw-flex-1">
+    <div class="tw-flex tw-flex-col tw-flex-1 tw-min-h-0 tw-overflow-hidden">
       <v-divider />
       <breadcrumbs />
       <v-divider />
       <div
-        class="tw-p-4 tw-flex-1 tw-min-w-0 tw-overflow-hidden tw-flex tw-flex-col"
+        class="tw-p-4 tw-flex-1 tw-min-w-0 tw-min-h-0  tw-overflow-hidden tw-flex tw-flex-col"
       >
         <router-view />
       </div>

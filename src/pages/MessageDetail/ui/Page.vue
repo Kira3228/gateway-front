@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-h-full tw-bg-red-100 tw-grid tw-grid-cols-3 tw-w-full tw-overflow-hidden"
+    class="tw-h-full  tw-grid tw-grid-cols-3 tw-w-full tw-overflow-hidden"
   >
     <div class="tw-min-h-0">
       <MessageDataCard />

@@ -1,11 +1,11 @@
 <template>
-  <div class="tw-h-full tw-flex tw-flex-col tw-min-w-0 tw-overflow-hidden">
+  <div
+    class="tw-h-full  tw-flex tw-flex-col tw-min-w-0 tw-overflow-hidden"
+  >
     <message-list-filters />
-    <v-lazy min-height="500px" transition="fade-transition" :threshold="100">
-      <div class="tw-flex-1 tw-min-h-0 tw-overflow-hidden">
-        <MessageViewer class="tw-h-full" />
-      </div>
-    </v-lazy>
+    <div class="tw-flex-1  tw-min-h-0 tw-overflow-hidden">
+      <MessageViewer class="tw-h-full" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

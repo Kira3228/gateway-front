@@ -12,7 +12,7 @@
           :size-dependencies="[item.message]"
           :data-index="index"
         >
-          <div class="tw-bg-red-300 tw-h-32">{{ item.id }}</div>
+          <div class="tw-h-32">{{ item.id }}</div>
           <div class="text">{{ item.message }}</div>
         </DynamicScrollerItem>
       </template>

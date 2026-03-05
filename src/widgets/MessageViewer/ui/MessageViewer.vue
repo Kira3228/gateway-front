@@ -1,30 +1,30 @@
 <template>
   <div class="tw-h-full tw-flex tw-flex-col tw-overflow-hidden">
-    <div class="tw-flex-1 tw-min-h-0 tw-w-full">
-      <DataTable
-        style="min-width: 100%; width: 0px"
-        :items="messages"
-        :headers="headers"
-        :items-per-page="50"
-        :page="1"
-        :pagination-length="10"
-        :total-visible="10"
-        height="500"
-        :is-loading="messageStore.isLoading"
-        @change="handle"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
-      >
-        <template #select-preset>
-          <TopBar
-            :on-options="optionClickHandler"
-            :on-filter="handleFilterButtonClick"
-          />
-        </template>
-      </DataTable>
-    </div>
+    <DataTable
+      class="tw-flex-1 tw-min-h-0 tw-overflow-auto"
+      style="min-width: 100%; width: 0px"
+      :items="messages"
+      :headers="headers"
+      :items-per-page="50"
+      :page="1"
+      :pagination-length="10"
+      :total-visible="10"
+      height="auto"
+      :is-loading="messageStore.isLoading"
+      @change="handle"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+    >
+      <template #select-preset>
+        <TopBar
+          :on-options="optionClickHandler"
+          :on-filter="handleFilterButtonClick"
+        />
+      </template>
+    </DataTable>
+
     <Pagination
-      class="w-shrink-0 tw-border-t tw-p-2"
+      class="tw-shrink-0 tw-border-t tw-p-2"
       :length="messageStore.messages.totalPage"
       :total-visible="10"
       :value="currentPage"
